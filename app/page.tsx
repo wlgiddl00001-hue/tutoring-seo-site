@@ -1,8 +1,15 @@
+import type { Metadata } from "next";
 import Link from "next/link";
 import { LessonIllustration } from "@/app/components/lesson-illustration";
 import { RegionSelector } from "@/app/components/region-selector";
 import { SiteHeader } from "@/app/components/site-header";
 import { regions, services } from "@/lib/tutoring-pages";
+
+export const metadata: Metadata = {
+  title: "호빈샘 과외 | 온라인·초등·중등·고등·검정고시·지역별 과외",
+  description:
+    "전국 지역별 과외와 온라인 과외를 학년, 과목, 학습 상황에 맞춰 안내하는 과외 홈페이지입니다. 초등·중등·고등 과외부터 검정고시 준비까지 필요한 수업 정보를 확인할 수 있습니다.",
+};
 
 const gradeGroups = [
   { key: "elementary", name: "초등", description: "기초 개념과 공부 습관을 차근차근 잡아가는 수업" },
