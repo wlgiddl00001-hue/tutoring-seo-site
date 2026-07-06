@@ -1,5 +1,9 @@
 import { SITE_URL } from "@/lib/site";
-import { tutoringPages, type TutoringPage } from "@/lib/tutoring-pages";
+import {
+  getPublicPageSlug,
+  tutoringPages,
+  type TutoringPage,
+} from "@/lib/tutoring-pages";
 
 export const dynamic = "force-static";
 
@@ -27,7 +31,7 @@ function formatLastModified(value: string): string | undefined {
 }
 
 function getPriority(page: TutoringPage): SitemapPriority {
-  const isOnlineTutoring = page.slug.startsWith("online/");
+  const isOnlineTutoring = getPublicPageSlug(page).startsWith("online-");
   const isExamTutoring = page.page_type.includes("exam");
   return isOnlineTutoring || isExamTutoring ? "0.8" : "0.7";
 }
@@ -48,7 +52,7 @@ export function GET() {
   const pageEntries = tutoringPages
     .filter((page) => page.status === "발행" && page.slug.trim())
     .map<SitemapEntry>((page) => ({
-      loc: `${SITE_URL}/${page.slug.replace(/^\/+|\/+$/g, "")}`,
+      loc: `${SITE_URL}/${getPublicPageSlug(page).replace(/^\/+|\/+$/g, "")}`,
       lastModified: formatLastModified(page.created_at),
       changeFrequency: "monthly",
       priority: getPriority(page),

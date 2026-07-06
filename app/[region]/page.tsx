@@ -3,9 +3,10 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { SiteHeader } from "@/app/components/site-header";
 import {
-  examStaticPageParams,
+  getPublicPageSlug,
   getRelatedPages,
-  getTutoringPage,
+  getSingleSlugTutoringPage,
+  singleSlugPageParams,
   type TutoringPage,
 } from "@/lib/tutoring-pages";
 
@@ -74,7 +75,7 @@ const parentRegionNames = [
 export const dynamicParams = false;
 
 export function generateStaticParams() {
-  return examStaticPageParams.map(({ slug }) => ({ region: slug }));
+  return singleSlugPageParams.map(({ slug }) => ({ region: slug }));
 }
 
 function formatServiceName(serviceName: string) {
@@ -172,7 +173,7 @@ export async function generateMetadata({
   params,
 }: PageProps): Promise<Metadata> {
   const { region } = await params;
-  const page = getTutoringPage(region);
+  const page = getSingleSlugTutoringPage(region);
 
   if (!page) {
     return { title: "과외 안내를 찾을 수 없습니다" };
@@ -188,7 +189,7 @@ export async function generateMetadata({
   return {
     title,
     description,
-    alternates: { canonical: `/${page.slug}` },
+    alternates: { canonical: `/${getPublicPageSlug(page)}` },
     openGraph: { title, description, type: "article" },
   };
 }
@@ -203,7 +204,7 @@ function ArrowIcon() {
 
 export default async function TutoringDetailPage({ params }: PageProps) {
   const { region } = await params;
-  const page = getTutoringPage(region);
+  const page = getSingleSlugTutoringPage(region);
 
   if (!page) {
     notFound();
@@ -514,7 +515,7 @@ export default async function TutoringDetailPage({ params }: PageProps) {
               </div>
               <div>
                 {relatedPages.map((related) => (
-                  <Link href={`/${related.slug}`} key={related.slug}>
+                  <Link href={`/${getPublicPageSlug(related)}`} key={related.slug}>
                     {formatServiceName(related.업종).replace("검정고시 ", "").replace(" 과외", "")} <span>↗</span>
                   </Link>
                 ))}

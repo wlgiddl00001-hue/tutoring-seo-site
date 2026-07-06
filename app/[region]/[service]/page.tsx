@@ -3,6 +3,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { SiteHeader } from "@/app/components/site-header";
 import {
+  getPublicPageSlug,
   getRelatedPages,
   getTutoringPage,
   staticPageParams,
@@ -188,7 +189,7 @@ export async function generateMetadata({
   return {
     title,
     description,
-    alternates: { canonical: `/${page.slug}` },
+    alternates: { canonical: `/${getPublicPageSlug(page)}` },
     openGraph: { title, description, type: "article" },
   };
 }
@@ -449,7 +450,7 @@ const relatedPages = getRelatedPages(page, 18).filter((related) =>
               </div>
               <div>
                 {relatedPages.map((related) => (
-                  <Link href={`/${related.slug}`} key={related.slug}>
+                  <Link href={`/${getPublicPageSlug(related)}`} key={related.slug}>
                     {formatServiceName(related.업종)} <span>→</span>
                   </Link>
                 ))}

@@ -45,14 +45,18 @@ export const staticPageParams = tutoringPages.flatMap((page) => {
 
 const examPageTypes = new Set(["exam-tutoring", "online-exam-tutoring"]);
 
-export const examStaticPageParams = tutoringPages
-  .filter(
-    (page) =>
-      examPageTypes.has(page.page_type) &&
-      Boolean(page.slug) &&
-      !page.slug.includes("/"),
-  )
-  .map((page) => ({ slug: page.slug }));
+export function getPublicPageSlug(page: TutoringPage) {
+  if (page.slug.startsWith("online/")) {
+    return page.slug.replace("online/", "online-");
+  }
+
+  return page.slug;
+}
+
+export const singleSlugPageParams = tutoringPages.flatMap((page) => {
+  const slug = getPublicPageSlug(page);
+  return slug && !slug.includes("/") ? [{ slug }] : [];
+});
 
 export const regions = Array.from(
   new Map(
@@ -77,6 +81,18 @@ export const services = Array.from(
 export function getTutoringPage(region: string, service?: string) {
   const slug = service ? `${region}/${service}` : region;
   return pageBySlug.get(slug);
+}
+
+export function getSingleSlugTutoringPage(slug: string) {
+  const exactPage = pageBySlug.get(slug);
+
+  if (exactPage && !exactPage.slug.includes("/")) {
+    return exactPage;
+  }
+
+  if (slug.startsWith("online-")) {
+    return pageBySlug.get(slug.replace("online-", "online/"));
+  }
 }
 
 export function getRelatedPages(page: TutoringPage, limit = 4) {
