@@ -250,15 +250,40 @@ svg {
   .site-header.home-header .header-inner {
     width: calc(100% - 34px);
     min-height: 88px;
+    flex-wrap: wrap;
     gap: 18px;
+    row-gap: 0;
+    padding-top: 8px;
   }
 
   .site-header.home-header .main-nav {
-    display: none;
+    display: flex;
+    width: 100%;
+    order: 3;
+    gap: 6px;
+    margin-left: 0;
+    overflow-x: auto;
+    overscroll-behavior-inline: contain;
+    padding: 2px 0 10px;
+    scrollbar-color: rgba(15, 86, 63, 0.3) transparent;
+    scrollbar-width: thin;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .site-header.home-header .main-nav a {
+    min-height: 46px;
+    flex: 0 0 auto;
+    padding: 0 14px;
   }
 
   .site-header.home-header .header-phone {
     margin-left: auto;
+  }
+
+  .section-anchor,
+  .home-page section[id],
+  .home-page nav[id] {
+    scroll-margin-top: 160px;
   }
 }
 

@@ -283,7 +283,8 @@ export function RegionSelector({ regions, services }: RegionSelectorProps) {
             <h3>원하는 지역을 선택해 주세요</h3>
           </div>
           <p className="region-panel-guide">
-  초등·중등·고등 과목별 과외를 지역에 맞춰 확인할 수 있어요. 가까운 방문 수업이 어렵다면 온라인 과외도 함께 상담할 수 있습니다.
+  <span>초등·중등·고등 과목별 과외를 지역에 맞춰 확인할 수 있어요.</span>
+  <span>가까운 방문 수업이 어렵다면 온라인 과외도 함께 상담할 수 있습니다.</span>
 </p>
         </div>
         <div className="seoul-districts" aria-label={`${selectedProvince} 지역 선택`}>
@@ -356,10 +357,10 @@ export function RegionSelector({ regions, services }: RegionSelectorProps) {
     <span aria-hidden="true">＋</span>
     <div>
       <strong>원하는 지역을 선택해 주세요.</strong>
-      <p>
-        초등·중등·고등 과목별 과외를 지역에 맞춰 확인할 수 있어요.
-        가까운 방문 수업이 어렵다면 온라인 과외도 함께 상담할 수 있습니다.
-      </p>
+      <p className="region-guide-copy">
+  <span>초등·중등·고등 과목별 과외를 지역에 맞춰 확인할 수 있어요.</span>
+  <span>가까운 방문 수업이 어렵다면 온라인 과외도 함께 상담할 수 있습니다.</span>
+</p>
     </div>
   </div>
 )}
