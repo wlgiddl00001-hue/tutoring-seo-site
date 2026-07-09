@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
+import { ConsultationFormCard, ConsultationProcessBox } from "@/app/components/consultation-box";
 import { SiteHeader } from "@/app/components/site-header";
 import {
   getPublicPageSlug,
@@ -522,9 +523,9 @@ export default async function TutoringDetailPage({ params }: PageProps) {
               </div>
             </aside>
 
-            <section className="detail-consult-cta" id="consult">
-              <div className="detail-consult-content">
-                <p>{page.지역} 과외 상담 문의</p>
+            <section className="detailConsultSection" id="consult">
+              <div className="detailConsultText">
+                <p className="detailConsultLabel">{page.지역} 과외 상담 문의</p>
                 <h2>
                   상담으로 아이에게 맞는
                   <br />
@@ -534,10 +535,10 @@ export default async function TutoringDetailPage({ params }: PageProps) {
                   현재 학년과 과목, 가장 어려워하는 부분부터 편하게 말씀해
                   주세요.
                 </span>
-                <strong>010-8286-7620</strong>
-                <a href="tel:01082867620">
-                  상담 문의하기 <ArrowIcon />
-                </a>
+                <ConsultationProcessBox className="detailConsultSteps" />
+              </div>
+              <div className="detailConsultFormArea">
+                <ConsultationFormCard className="detailConsultForm" />
               </div>
             </section>
           </div>

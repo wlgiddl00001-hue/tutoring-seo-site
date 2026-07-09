@@ -22,9 +22,14 @@ export function SiteHeader() {
           <Link href="/#concerns">학습 고민</Link>
         </nav>
 
-        <a className="header-phone" href="tel:01082867620" aria-label="010-8286-7620으로 전화 상담">
-          <span aria-hidden="true">☎</span><strong>010-8286-7620</strong>
-        </a>
+        <div className="siteHeaderActions header-actions">
+          <a className="header-phone" href="tel:01082867620" aria-label="010-8286-7620으로 전화 상담">
+            <span aria-hidden="true">☎</span><strong>010-8286-7620</strong>
+          </a>
+          <a className="headerConsultButton header-apply" href="#consult">
+            상담 신청
+          </a>
+        </div>
       </div>
     </header>
   );

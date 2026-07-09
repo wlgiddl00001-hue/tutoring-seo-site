@@ -1,14 +1,15 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import { ConsultationFormCard, ConsultationProcessBox } from "@/app/components/consultation-box";
 import { LessonIllustration } from "@/app/components/lesson-illustration";
 import { RegionSelector } from "@/app/components/region-selector";
 import { SiteHeader } from "@/app/components/site-header";
 import { regions, services } from "@/lib/tutoring-pages";
 
 export const metadata: Metadata = {
-  title: "호빈샘 과외 | 온라인·초등·중등·고등·검정고시·지역별 과외",
+  title: "호빈샘 과외 | 초등·중등·고등 맞춤 과외",
   description:
-    "전국 지역별 과외와 온라인 과외를 학년, 과목, 학습 상황에 맞춰 안내하는 과외 홈페이지입니다. 초등·중등·고등 과외부터 검정고시 준비까지 필요한 수업 정보를 확인할 수 있습니다.",
+    "초등·중등·고등 학생을 위한 과목별 맞춤 과외 상담을 안내합니다. 현재 학년과 과목, 학습 고민에 맞춰 수업 방향을 확인해보세요.",
 };
 
 const gradeGroups = [
@@ -570,22 +571,16 @@ export default function Home() {
           </div>
         </section>
 
-        <section className="main-consult-section" id="consult">
-          <div className="shell main-consult-box">
-            <div>
-              <p className="section-label light-label">PHONE CONSULTATION</p>
+        <section className="mainConsultSection" id="consult">
+          <div className="shell mainConsultGrid">
+            <div className="mainConsultText">
+              <p className="mainConsultLabel">PHONE CONSULTATION</p>
               <h2>아이에게 맞는 과외 방향이 고민된다면<br />상담부터 받아보세요</h2>
-              <p className="main-consult-summary">현재 학년과 과목, 어려워하는 부분을 알려주시면 필요한 수업 방향을 함께 살펴봅니다.</p>
+              <p className="mainConsultSummary">현재 학년과 과목, 어려워하는 부분을 알려주시면 필요한 수업 방향을 함께 살펴봅니다.</p>
+              <ConsultationProcessBox className="mainConsultSteps" />
             </div>
-            <div className="consult-phone-area">
-              <span>상담 문의</span>
-              <strong>010-8286-7620</strong>
-              <p className="consult-phone-description">
-                아이의 현재 학년, 과목, 어려워하는 단원이나 시험 준비 상황을 알려주시면 방문과외,
-                온라인 과외, 검정고시 과외 중 어떤 수업 방향이 맞을지 함께 안내해드립니다. 지금 바로
-                전화 상담으로 필요한 수업 방향을 편하게 확인해보세요.
-              </p>
-              <a href="tel:01082867620">전화 상담하기 <ArrowIcon /></a>
+            <div className="mainConsultFormArea">
+              <ConsultationFormCard className="mainConsultForm" />
             </div>
           </div>
         </section>
