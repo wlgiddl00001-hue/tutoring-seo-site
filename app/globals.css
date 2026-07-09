@@ -5308,3 +5308,44 @@ select {
     width: 100%;
   }
 }
+/* 모바일 상단 카테고리 메뉴 강제 표시 */
+@media (max-width: 760px) {
+  .site-header .header-inner,
+  .site-header.home-header .header-inner {
+    display: flex !important;
+    flex-wrap: wrap !important;
+    align-items: center !important;
+    row-gap: 8px !important;
+    padding-bottom: 8px !important;
+  }
+
+  .site-header .main-nav,
+  .site-header.home-header .main-nav {
+    display: flex !important;
+    width: 100% !important;
+    order: 3 !important;
+    flex: 0 0 100% !important;
+    gap: 6px !important;
+    margin-left: 0 !important;
+    overflow-x: auto !important;
+    overflow-y: hidden !important;
+    padding: 4px 0 8px !important;
+    white-space: nowrap !important;
+    -webkit-overflow-scrolling: touch !important;
+  }
+
+  .site-header .main-nav a,
+  .site-header.home-header .main-nav a {
+    display: inline-flex !important;
+    flex: 0 0 auto !important;
+    min-height: 38px !important;
+    align-items: center !important;
+    justify-content: center !important;
+    border-radius: 9px !important;
+    padding: 0 12px !important;
+    color: #344b42 !important;
+    font-size: 14px !important;
+    font-weight: 800 !important;
+    white-space: nowrap !important;
+  }
+}
