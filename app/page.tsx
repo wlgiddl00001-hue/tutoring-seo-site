@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { ConsultationFormCard, ConsultationProcessBox } from "@/app/components/consultation-box";
 import { LessonIllustration } from "@/app/components/lesson-illustration";
+import { OnlineTutoringGuide } from "@/app/components/online-tutoring-guide";
 import { RegionSelector } from "@/app/components/region-selector";
 import { SiteHeader } from "@/app/components/site-header";
 import { regions, services } from "@/lib/tutoring-pages";
@@ -373,6 +374,14 @@ export default function Home() {
                   </article>
               ))}
             </div>
+          </div>
+        </section>
+
+        <section className="main-section">
+          <div className="shell">
+            <OnlineTutoringGuide
+              intro="지역과 일정에 맞춰 방문 과외를 우선 안내하며, 방문 배정이 어렵거나 온라인 수업을 선호하는 경우 실시간 1:1 온라인 과외로 진행할 수 있습니다."
+            />
           </div>
         </section>
                   <section className="main-section exam-section" id="exam">

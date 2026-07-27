@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { ConsultationFormCard, ConsultationProcessBox } from "@/app/components/consultation-box";
+import { OnlineTutoringGuide } from "@/app/components/online-tutoring-guide";
 import { SiteHeader } from "@/app/components/site-header";
 import {
   getPublicPageSlug,
@@ -461,6 +462,11 @@ const relatedPages = getRelatedPages(page, 18).filter((related) =>
                 ))}
               </div>
             </section>
+
+            <OnlineTutoringGuide
+              variant="compact"
+              intro={`방문 수업 배정이 어렵거나 일정 조율이 필요한 경우에는 동일한 학년과 과목의 온라인 전문 선생님을 연결할 수 있습니다. 온라인 수업도 실시간 1:1 방식으로 진행하며, 무료 모의수업을 통해 수업 환경을 먼저 확인할 수 있습니다.`}
+            />
 
             <aside className="related-lesson-box">
               <div>

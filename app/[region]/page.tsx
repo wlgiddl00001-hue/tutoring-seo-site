@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { ConsultationFormCard, ConsultationProcessBox } from "@/app/components/consultation-box";
+import { OnlineTutoringGuide } from "@/app/components/online-tutoring-guide";
 import { SiteHeader } from "@/app/components/site-header";
 import {
   getPublicPageSlug,
@@ -17,6 +18,10 @@ import {
   toSentence,
   withJosa,
 } from "@/lib/korean-text";
+import {
+  getOnlineTutoringGuideIntro,
+  isOnlineGradeSubjectTutoringPage,
+} from "@/lib/tutoring-content";
 
 type PageProps = {
   params: Promise<{ region: string }>;
@@ -292,6 +297,8 @@ export default async function TutoringDetailPage({ params }: PageProps) {
   const coverImage = getTutoringImage(page, 0);
   const middleImage = getTutoringImage(page, 3);
   const subImage = getTutoringImage(page, 5);
+  const showOnlineGuide = isOnlineGradeSubjectTutoringPage(page);
+  const onlineGuideIntro = getOnlineTutoringGuideIntro(page, serviceName);
 
   const faqs = [
     {
@@ -456,6 +463,10 @@ export default async function TutoringDetailPage({ params }: PageProps) {
                 <p>{formatLessonDifference(page)}</p>
               </div>
             </section>
+
+            {showOnlineGuide ? (
+              <OnlineTutoringGuide intro={onlineGuideIntro} />
+            ) : null}
 
             <section className="article-section article-section-with-image" id="consult-check">
               <div>

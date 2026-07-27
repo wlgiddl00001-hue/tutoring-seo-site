@@ -373,6 +373,54 @@ function isRegionalLocalTutoringPage(page: TutoringPage) {
   return page.page_type === "local-tutoring" && !page.slug.startsWith("online/") && page.지역 !== "온라인";
 }
 
+export function isOnlineGradeSubjectTutoringPage(page: TutoringPage) {
+  return page.page_type === "local-tutoring" && page.slug.startsWith("online/");
+}
+
+export function getOnlineTutoringGuideIntro(page: TutoringPage, serviceName: string) {
+  const gradeKey = getGradeKey(serviceName);
+  const subjectKey = getSubjectKey(serviceName);
+
+  if (!gradeKey || !subjectKey) {
+    return "온라인 과외는 화면 공유와 실시간 필기를 활용해 학생의 풀이 과정과 질문을 바로 확인하며 진행합니다.";
+  }
+
+  const introBySubject: Record<SubjectKey, Record<GradeKey, string>> = {
+    korean: {
+      elementary: "초등 국어 온라인 과외는 화면 공유를 활용해 지문 읽기, 어휘 이해, 쓰기 습관을 실시간으로 확인합니다.",
+      middle: "중등 국어 온라인 과외는 독해력, 문법, 서술형 답안과 학교 시험 범위를 실시간으로 확인하며 진행합니다.",
+      high: "고등 국어 온라인 과외는 작품과 지문 분석, 문법, 내신·모의고사 문제 접근 과정을 화면으로 함께 확인합니다.",
+    },
+    english: {
+      elementary: "초등 영어 온라인 과외는 어휘와 문장 읽기, 기초 문법, 듣기 반응을 실시간으로 살피며 진행합니다.",
+      middle: "중등 영어 온라인 과외는 어휘·문법·독해와 학교 시험 범위를 실시간으로 확인하며 진행합니다.",
+      high: "고등 영어 온라인 과외는 내신 본문 분석, 독해 유형, 어휘와 문법 적용 과정을 화면 공유로 점검합니다.",
+    },
+    math: {
+      elementary: "초등 수학 온라인 과외는 화면 공유를 활용해 연산 과정과 문장제 풀이 습관을 실시간으로 확인합니다.",
+      middle: "중등 수학 온라인 과외는 단원 간 개념 연결, 서술형 풀이, 오답 원인을 화면으로 함께 확인합니다.",
+      high: "고등 수학 온라인 과외는 핵심 개념, 고난도 접근, 시간 관리와 오답 풀이 과정을 실시간으로 점검합니다.",
+    },
+    social: {
+      elementary: "초등 사회 온라인 과외는 교과서 개념과 용어, 자료 읽기 습관을 화면 공유로 차근차근 확인합니다.",
+      middle: "중등 사회 온라인 과외는 핵심 개념, 용어 정리, 자료 해석과 서술형 대비를 실시간으로 진행합니다.",
+      high: "고등 사회 온라인 과외는 학교 시험 범위와 자료 해석, 개념 적용 문제를 화면으로 확인하며 정리합니다.",
+    },
+    science: {
+      elementary: "초등 과학 온라인 과외는 개념과 탐구 내용을 학생이 직접 설명하고 문제에 적용하는 과정을 확인합니다.",
+      middle: "중등 과학 온라인 과외는 실험·탐구 개념, 자료 해석, 계산 문제와 단원별 오답을 실시간으로 점검합니다.",
+      high: "고등 과학 온라인 과외는 개념 설명과 함께 자료·그래프·계산 문제 풀이 과정을 화면으로 공유합니다.",
+    },
+    koreanHistory: {
+      elementary: "초등 한국사 온라인 과외는 시대 흐름과 핵심 사건을 화면 자료로 정리하며 이해 과정을 확인합니다.",
+      middle: "중등 한국사 온라인 과외는 시대 흐름, 인물과 제도, 사료 분석과 시험 선지 판단을 함께 연습합니다.",
+      high: "고등 한국사 온라인 과외는 사료 분석, 시대별 쟁점, 내신 선지 판단 과정을 화면 공유로 점검합니다.",
+    },
+  };
+
+  return introBySubject[subjectKey][gradeKey];
+}
+
 export function getLocalTutoringDetailContent(
   page: TutoringPage,
   focusLabel: string,
