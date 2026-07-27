@@ -5001,6 +5001,119 @@ select {
   align-items: flex-start;
 }
 
+.teacherAssignmentGuide {
+  margin: 78px auto 0;
+  padding: clamp(28px, 4vw, 42px);
+  border: 1px solid #e3dfcf;
+  border-radius: 24px;
+  background: linear-gradient(180deg, #fffdf6 0%, #f6f8ee 100%);
+  box-shadow: 0 18px 44px rgba(88, 74, 35, 0.08);
+}
+
+.teacherAssignmentGuideHead {
+  max-width: 740px;
+}
+
+.teacherAssignmentGuideLabel {
+  margin: 0 0 10px;
+  color: #7c5d1e;
+  font-size: 13px;
+  font-weight: 900;
+  letter-spacing: 0.08em;
+}
+
+.teacherAssignmentGuide h2 {
+  margin: 0;
+  color: #2f3825;
+  font-size: clamp(28px, 3vw, 40px);
+  font-weight: 850;
+  line-height: 1.35;
+  word-break: keep-all;
+}
+
+.teacherAssignmentGuideHead > p:last-child {
+  margin: 16px 0 0;
+  color: #53624c;
+  font-size: 17px;
+  font-weight: 650;
+  line-height: 1.75;
+  word-break: keep-all;
+}
+
+.teacherAssignmentGuideGrid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 12px;
+  margin-top: 28px;
+}
+
+.teacherAssignmentGuideItem {
+  display: grid;
+  grid-template-columns: 48px 1fr;
+  gap: 14px;
+  align-items: start;
+  min-width: 0;
+  border: 1px solid #ebe5d1;
+  border-radius: 14px;
+  background: #fff;
+  padding: 18px;
+}
+
+.teacherAssignmentGuideItem span {
+  display: grid;
+  width: 38px;
+  height: 38px;
+  place-items: center;
+  border-radius: 50%;
+  background: #f3ead2;
+  color: #7c5d1e;
+  font-size: 13px;
+  font-weight: 900;
+}
+
+.teacherAssignmentGuideItem p {
+  margin: 0;
+  color: #344235;
+  font-size: 16px;
+  font-weight: 750;
+  line-height: 1.55;
+  word-break: keep-all;
+}
+
+.teacherAssignmentGuideFooter {
+  display: flex;
+  gap: 18px;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 24px;
+  border-top: 1px solid #e7dfc8;
+  padding-top: 22px;
+}
+
+.teacherAssignmentGuideFooter p {
+  margin: 0;
+  color: #5b6555;
+  font-size: 15px;
+  font-weight: 650;
+  line-height: 1.65;
+  word-break: keep-all;
+}
+
+.teacherAssignmentGuideFooter a {
+  display: inline-flex;
+  min-height: 48px;
+  flex: 0 0 auto;
+  align-items: center;
+  justify-content: center;
+  border-radius: 999px;
+  background: #176b52;
+  color: #fff;
+  font-size: 15px;
+  font-weight: 900;
+  padding: 0 22px;
+  box-shadow: 0 12px 24px rgba(23, 107, 82, 0.18);
+}
+
 @media (max-width: 980px) {
   .mainConsultGrid,
   .detailConsultSection {
@@ -5014,16 +5127,19 @@ select {
   }
 
   .onlineTutoringGuideGrid,
-  .onlineTutoringGuideCompact .onlineTutoringGuideGrid {
+  .onlineTutoringGuideCompact .onlineTutoringGuideGrid,
+  .teacherAssignmentGuideGrid {
     grid-template-columns: 1fr;
   }
 
-  .onlineTutoringGuideFooter {
+  .onlineTutoringGuideFooter,
+  .teacherAssignmentGuideFooter {
     align-items: stretch;
     flex-direction: column;
   }
 
-  .onlineTutoringGuideFooter a {
+  .onlineTutoringGuideFooter a,
+  .teacherAssignmentGuideFooter a {
     width: 100%;
   }
 }

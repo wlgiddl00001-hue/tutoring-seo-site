@@ -4,6 +4,7 @@ import { notFound } from "next/navigation";
 import { ConsultationFormCard, ConsultationProcessBox } from "@/app/components/consultation-box";
 import { OnlineTutoringGuide } from "@/app/components/online-tutoring-guide";
 import { SiteHeader } from "@/app/components/site-header";
+import { TeacherAssignmentGuide } from "@/app/components/teacher-assignment-guide";
 import {
   getPublicPageSlug,
   getRelatedPages,
@@ -18,7 +19,10 @@ import {
   toSentence,
   withJosa,
 } from "@/lib/korean-text";
-import { getLocalTutoringDetailContent } from "@/lib/tutoring-content";
+import {
+  getLocalTutoringDetailContent,
+  getTeacherAssignmentGuideIntro,
+} from "@/lib/tutoring-content";
 
 type PageProps = {
   params: Promise<{ region: string; service: string }>;
@@ -233,6 +237,7 @@ const relatedPages = getRelatedPages(page, 18).filter((related) =>
   const middleImage = getTutoringImage(page, 3);
   const subImage = getTutoringImage(page, 5);
   const detailContent = getLocalTutoringDetailContent(page, focusLabel, serviceName);
+  const teacherAssignmentIntro = getTeacherAssignmentGuideIntro(page, serviceName);
   const lessonSteps = detailContent?.steps || [
     {
       title: "현재 수준 확인",
@@ -462,6 +467,8 @@ const relatedPages = getRelatedPages(page, 18).filter((related) =>
                 ))}
               </div>
             </section>
+
+            <TeacherAssignmentGuide intro={teacherAssignmentIntro} />
 
             <OnlineTutoringGuide
               variant="compact"

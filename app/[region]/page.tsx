@@ -4,6 +4,7 @@ import { notFound } from "next/navigation";
 import { ConsultationFormCard, ConsultationProcessBox } from "@/app/components/consultation-box";
 import { OnlineTutoringGuide } from "@/app/components/online-tutoring-guide";
 import { SiteHeader } from "@/app/components/site-header";
+import { TeacherAssignmentGuide } from "@/app/components/teacher-assignment-guide";
 import {
   getPublicPageSlug,
   getRelatedPages,
@@ -20,6 +21,7 @@ import {
 } from "@/lib/korean-text";
 import {
   getOnlineTutoringGuideIntro,
+  getTeacherAssignmentGuideIntro,
   isOnlineGradeSubjectTutoringPage,
 } from "@/lib/tutoring-content";
 
@@ -299,6 +301,7 @@ export default async function TutoringDetailPage({ params }: PageProps) {
   const subImage = getTutoringImage(page, 5);
   const showOnlineGuide = isOnlineGradeSubjectTutoringPage(page);
   const onlineGuideIntro = getOnlineTutoringGuideIntro(page, serviceName);
+  const teacherAssignmentIntro = getTeacherAssignmentGuideIntro(page, serviceName);
 
   const faqs = [
     {
@@ -467,6 +470,8 @@ export default async function TutoringDetailPage({ params }: PageProps) {
             {showOnlineGuide ? (
               <OnlineTutoringGuide intro={onlineGuideIntro} />
             ) : null}
+
+            <TeacherAssignmentGuide intro={teacherAssignmentIntro} />
 
             <section className="article-section article-section-with-image" id="consult-check">
               <div>

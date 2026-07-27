@@ -5,6 +5,7 @@ import { LessonIllustration } from "@/app/components/lesson-illustration";
 import { OnlineTutoringGuide } from "@/app/components/online-tutoring-guide";
 import { RegionSelector } from "@/app/components/region-selector";
 import { SiteHeader } from "@/app/components/site-header";
+import { TeacherAssignmentGuide } from "@/app/components/teacher-assignment-guide";
 import { regions, services } from "@/lib/tutoring-pages";
 
 export const metadata: Metadata = {
@@ -381,6 +382,14 @@ export default function Home() {
           <div className="shell">
             <OnlineTutoringGuide
               intro="지역과 일정에 맞춰 방문 과외를 우선 안내하며, 방문 배정이 어렵거나 온라인 수업을 선호하는 경우 실시간 1:1 온라인 과외로 진행할 수 있습니다."
+            />
+          </div>
+        </section>
+
+        <section className="main-section">
+          <div className="shell">
+            <TeacherAssignmentGuide
+              intro="학생의 학년과 과목만으로 선생님을 정하지 않습니다. 현재 성적, 취약 단원, 수업 목표와 학습 성향을 함께 확인한 뒤 적합한 전문 선생님을 1:1로 배정합니다."
             />
           </div>
         </section>

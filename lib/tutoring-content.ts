@@ -421,6 +421,109 @@ export function getOnlineTutoringGuideIntro(page: TutoringPage, serviceName: str
   return introBySubject[subjectKey][gradeKey];
 }
 
+function getExamLevel(serviceName: string) {
+  if (serviceName.includes("중졸")) return "중졸";
+  if (serviceName.includes("고졸")) return "고졸";
+  return "검정고시";
+}
+
+const localAssignmentFocus: Record<GradeKey, Record<SubjectKey, string>> = {
+  elementary: {
+    korean: "읽기·쓰기·독해 지도 경험과 학생의 학습 습관",
+    english: "기초 어휘·문장 읽기 지도 경험과 학생의 학습 흥미",
+    math: "연산 과정과 문장제 풀이 지도 경험, 교과서 개념 이해도",
+    social: "교과서 핵심 개념과 용어 정리 지도 경험, 자료 읽기 습관",
+    science: "개념과 탐구 활동 지도 경험, 학생의 관찰·정리 습관",
+    koreanHistory: "시대 흐름과 핵심 사건 지도 경험, 학생의 이야기 이해 방식",
+  },
+  middle: {
+    korean: "독해·문법·서술형 지도 경험과 학교 시험 준비 상황",
+    english: "어휘·문법·독해 지도 경험과 학교 시험 범위",
+    math: "학생의 현재 개념 수준과 학교 시험 준비 상황",
+    social: "핵심 개념·자료 해석 지도 경험과 내신 대비 흐름",
+    science: "실험·탐구·계산 문제 지도 경험과 단원별 오답 원인",
+    koreanHistory: "시대 흐름·사료 분석 지도 경험과 시험 선지 판단 습관",
+  },
+  high: {
+    korean: "내신과 모의고사 지문 분석 경험, 학생의 취약 유형과 학습 목표",
+    english: "내신과 모의고사 지도 경험, 학생의 취약 유형과 학습 목표",
+    math: "핵심 개념·고난도 문제 지도 경험과 학생의 취약 단원",
+    social: "학교 시험 자료 해석과 서술형 지도 경험, 목표 등급",
+    science: "개념·자료·그래프·계산 문제 지도 경험과 취약 단원",
+    koreanHistory: "시대별 쟁점과 사료 분석 지도 경험, 내신 선지 판단력",
+  },
+};
+
+const onlineAssignmentFocus: Record<GradeKey, Record<SubjectKey, string>> = {
+  elementary: {
+    korean: "지문 읽기와 쓰기 습관 지도 방식, 화면 공유 수업 적응도",
+    english: "기초 어휘·문장 읽기 지도 방식, 듣기 반응 확인 능력",
+    math: "연산 과정과 문장제 풀이 확인 방식, 실시간 필기 활용 능력",
+    social: "교과서 개념과 자료 읽기 지도 방식, 화면 자료 활용 능력",
+    science: "개념·탐구 내용 설명 방식, 학생 반응 확인 능력",
+    koreanHistory: "시대 흐름 정리 방식과 화면 자료 활용 능력",
+  },
+  middle: {
+    korean: "독해·문법·서술형 지도 방식, 화면 공유 수업 적응도",
+    english: "어휘·문법·독해 지도 방식, 화면 공유 수업 적응도",
+    math: "개념 연결과 서술형 풀이 확인 방식, 실시간 필기 활용 능력",
+    social: "핵심 개념·자료 해석 지도 방식, 온라인 답안 확인 능력",
+    science: "실험·탐구·계산 문제 지도 방식, 풀이 과정 확인 능력",
+    koreanHistory: "사료 분석과 선지 판단 지도 방식, 화면 자료 활용 능력",
+  },
+  high: {
+    korean: "지문 분석과 내신·모의고사 지도 방식, 온라인 수업 운영 능력",
+    english: "내신 본문 분석과 독해 유형 지도 방식, 온라인 수업 운영 능력",
+    math: "고난도 풀이와 시간 관리 지도 방식, 실시간 온라인 수업 운영 능력",
+    social: "자료 해석과 서술형 지도 방식, 온라인 과제 관리 능력",
+    science: "개념·자료·그래프·계산 문제 지도 경험과 실시간 온라인 수업 운영 능력",
+    koreanHistory: "사료 분석과 시대별 쟁점 지도 방식, 온라인 수업 운영 능력",
+  },
+};
+
+const examAssignmentFocus: Record<SubjectKey, string> = {
+  korean: "출제 범위와 독해·어휘 학습 공백",
+  english: "출제 범위와 어휘·문법·독해 학습 공백",
+  math: "출제 범위와 학생의 학습 공백",
+  social: "출제 범위와 핵심 개념·용어 정리 상태",
+  science: "출제 범위와 개념·자료 해석 학습 공백",
+  koreanHistory: "출제 범위와 시대 흐름·사료 이해도",
+};
+
+export function getTeacherAssignmentGuideIntro(page: TutoringPage, serviceName: string) {
+  const gradeKey = getGradeKey(serviceName);
+  const subjectKey = getSubjectKey(serviceName);
+  const gradeLabel = gradeKey ? gradeLabels[gradeKey] : "";
+  const subjectLabel = subjectKey ? subjectLabels[subjectKey] : "";
+
+  if (
+    page.page_type === "exam-tutoring" ||
+    page.page_type === "online-exam-tutoring"
+  ) {
+    const examLevel = getExamLevel(serviceName);
+    const examName = examLevel === "검정고시" ? "검정고시" : `${examLevel} 검정고시`;
+    const examFocus = subjectKey
+      ? examAssignmentFocus[subjectKey]
+      : "과목별 출제 범위와 학생의 학습 공백";
+    const onlineContext =
+      page.page_type === "online-exam-tutoring"
+        ? "온라인 과제·복습·오답 관리와 실시간 수업 운영 경험"
+        : "시험 일정에 맞는 진도 관리 경험";
+
+    return `${examName} ${subjectLabel || "과목"} ${examFocus}, 학습 기간과 응시 목표를 고려해 선생님을 배정합니다. ${onlineContext}도 함께 확인합니다.`;
+  }
+
+  if (gradeKey && subjectKey && isOnlineGradeSubjectTutoringPage(page)) {
+    return `${gradeLabel} ${subjectLabel} 온라인 수업 경험, ${withJosa(onlineAssignmentFocus[gradeKey][subjectKey], "을를")} 고려해 선생님을 배정합니다. 학생 반응과 풀이 과정을 화면으로 확인하고 온라인 과제·복습·오답 관리가 이어지는지도 함께 봅니다.`;
+  }
+
+  if (gradeKey && subjectKey && isRegionalLocalTutoringPage(page)) {
+    return `${page.지역} ${gradeLabel} ${subjectLabel} 수업 경험, ${withJosa(localAssignmentFocus[gradeKey][subjectKey], "을를")} 고려해 선생님을 배정합니다. 현재 수준과 수업 목표, 학습 성향을 함께 확인해 1:1 수업 방향을 정합니다.`;
+  }
+
+  return "학생의 학년과 과목만으로 선생님을 정하지 않고, 현재 수준과 학습 성향, 수업 목표를 함께 확인해 1:1로 배정합니다.";
+}
+
 export function getLocalTutoringDetailContent(
   page: TutoringPage,
   focusLabel: string,
