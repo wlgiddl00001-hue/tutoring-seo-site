@@ -10,6 +10,13 @@ import {
   singleSlugPageParams,
   type TutoringPage,
 } from "@/lib/tutoring-pages";
+import {
+  formatServiceName,
+  formatTutoringKeyword,
+  normalizeGeneratedText,
+  toSentence,
+  withJosa,
+} from "@/lib/korean-text";
 
 type PageProps = {
   params: Promise<{ region: string }>;
@@ -68,50 +75,48 @@ const tutoringImages = [
   "009.png",
 ];
 
-const parentRegionNames = [
-  "서울", "경기", "인천", "부산", "대구", "대전", "광주", "울산", "세종",
-  "강원", "충북", "충남", "전북", "전남", "경북", "경남", "제주",
-] as const;
-
 export const dynamicParams = false;
 
 export function generateStaticParams() {
   return singleSlugPageParams.map(({ slug }) => ({ region: slug }));
 }
 
-function formatServiceName(serviceName: string) {
-  return serviceName.replace(/\s*과외$/, " 과외");
+function escapeRegExp(text: string) {
+  return text.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
 }
 
-function toSentence(text: string) {
-  return /[.!?]$/.test(text) ? text : `${text}.`;
+function getRegionAliases(regionName: string) {
+  return Array.from(
+    new Set([
+      regionName,
+      regionName.replace(/(구|시|군)$/u, ""),
+    ].filter(Boolean)),
+  );
 }
 
 function formatLessonDifference(page: TutoringPage) {
-  const text = page.차별문장.trim();
+  const text = normalizeGeneratedText(page.차별문장);
   const locationName = page.지역.trim();
 
   if (page.slug.startsWith("online/") || locationName === "온라인") {
     return toSentence(text);
   }
 
-  const serviceName = page.업종.trim();
-  const escapedServiceName = serviceName.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+  const serviceName = formatServiceName(page.업종);
+  const escapedServiceName = escapeRegExp(serviceName);
+  const regionPattern = getRegionAliases(locationName).map(escapeRegExp).join("|");
   const locationBeforeService = new RegExp(
-    `[가-힣]*(?:\\s*지역)?에서\\s*(?=${escapedServiceName}를 찾는 경우)`,
+    `(?:${regionPattern})(?:\\s*(?:지역|인근))?에서\\s*(?=${escapedServiceName})`,
+    "g",
+  );
+  const locationDetachedBeforeService = new RegExp(
+    `(?:${regionPattern})\\s+(?=${escapedServiceName}(?:은|는|이|가|을|를|과|와|으로|로)?)`,
     "g",
   );
 
-  let formattedText = text.replace(locationBeforeService, `${locationName}에서 `);
-  const parentRegion = parentRegionNames.find((name) => locationName.startsWith(name));
-
-  if (parentRegion) {
-    const duplicatedParent = new RegExp(
-      `${parentRegion}\\s+${locationName}에서\\s*(?=${escapedServiceName}를 찾는 경우)`,
-      "g",
-    );
-    formattedText = formattedText.replace(duplicatedParent, `${locationName}에서 `);
-  }
+  const formattedText = text
+    .replace(locationBeforeService, `${locationName}에서 `)
+    .replace(locationDetachedBeforeService, `${locationName} `);
 
   return toSentence(formattedText);
 }
@@ -156,7 +161,7 @@ function getTutoringImage(page: TutoringPage, offset = 0) {
 function getDetailTitle(page: TutoringPage) {
   const region = page["지역"]?.trim() || "지역";
   const service = formatServiceName(page["업종"]?.trim() || "맞춤 과외");
-  const keyword = page["메인키워드"]?.trim() || `${region} ${service}`;
+  const keyword = formatTutoringKeyword(page["메인키워드"]?.trim() || `${region} ${service}`);
   const focus = page["콘텐츠관점"]?.trim();
   const suffix =
     titleSuffixByFocus[focus] ||
@@ -181,9 +186,13 @@ export async function generateMetadata({
   }
 
   const title = getDetailTitle(page);
-  const description = `${page["지역"]}에서 ${formatServiceName(
+  const serviceName = formatServiceName(
     page["업종"],
-  )}를 찾는 학부모님을 위해 ${getFocusLabel(
+  );
+  const description = `${page["지역"]}에서 ${withJosa(
+    serviceName,
+    "을를",
+  )} 찾는 학부모님을 위해 ${getFocusLabel(
     page,
   )}, 현재 수준과 학교 진도에 맞춘 수업 방향을 정리했습니다.`;
 
@@ -333,7 +342,7 @@ export default async function TutoringDetailPage({ params }: PageProps) {
             <h1>{detailTitle}</h1>
 
             <p className="detail-summary">
-              {page.지역}에서 {serviceName}를 찾는 학부모님을 위해 학생의
+              {page.지역}에서 {withJosa(serviceName, "을를")} 찾는 학부모님을 위해 학생의
               현재 수준, 약한 단원과 학교 진도를 살펴보고 {focusLabel}에 맞춘
               수업 방향을 정리했습니다.
             </p>
@@ -350,7 +359,7 @@ export default async function TutoringDetailPage({ params }: PageProps) {
           <figure className="detail-photo-card detail-photo-card-main">
             <img
               src={coverImage}
-              alt={`${page.지역} ${serviceName} 학습 안내 이미지`}
+              alt={`${formatTutoringKeyword(`${page.지역} ${serviceName}`)} 학습 안내 이미지`}
             />
             <figcaption>
               학생의 현재 상황을 먼저 확인하고, 필요한 공부 방법부터 차근차근
@@ -392,7 +401,7 @@ export default async function TutoringDetailPage({ params }: PageProps) {
             <figure className="detail-photo-card detail-photo-card-wide">
               <img
                 src={middleImage}
-                alt={`${focusLabel}을 돕는 과외 학습 자료 이미지`}
+                alt={`${withJosa(focusLabel, "을를")} 돕는 과외 학습 자료 이미지`}
               />
               <figcaption>
                 단순 설명으로 끝나지 않도록 학습 기록, 복습, 문제 적용 과정을
@@ -404,7 +413,7 @@ export default async function TutoringDetailPage({ params }: PageProps) {
               <span className="article-section-number">02</span>
               <h2>수업은 이렇게 진행됩니다</h2>
               <p>
-                수업은 <strong>{page.수업방식}</strong>을 중심으로 진행합니다.
+                수업은 <strong>{withJosa(page.수업방식, "을를")}</strong> 중심으로 진행합니다.
                 아이가 설명을 듣는 데서 끝나지 않고, 이해한 내용을 직접 말하고
                 문제에 적용하는 과정까지 확인합니다.
               </p>
