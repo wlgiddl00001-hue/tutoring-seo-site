@@ -6,12 +6,25 @@ import { OnlineTutoringGuide } from "@/app/components/online-tutoring-guide";
 import { RegionSelector } from "@/app/components/region-selector";
 import { SiteHeader } from "@/app/components/site-header";
 import { TeacherAssignmentGuide } from "@/app/components/teacher-assignment-guide";
+import { SITE_URL } from "@/lib/site";
 import { regions, services } from "@/lib/tutoring-pages";
 
+const homeTitle = "호빈샘 과외 | 초등·중등·고등 맞춤 과외";
+const homeDescription =
+  "초등·중등·고등 학생을 위한 과목별 맞춤 과외 상담을 안내합니다. 현재 학년과 과목, 학습 고민에 맞춰 수업 방향을 확인해보세요.";
+
 export const metadata: Metadata = {
-  title: "호빈샘 과외 | 초등·중등·고등 맞춤 과외",
-  description:
-    "초등·중등·고등 학생을 위한 과목별 맞춤 과외 상담을 안내합니다. 현재 학년과 과목, 학습 고민에 맞춰 수업 방향을 확인해보세요.",
+  title: homeTitle,
+  description: homeDescription,
+  alternates: {
+    canonical: SITE_URL,
+  },
+  openGraph: {
+    title: homeTitle,
+    description: homeDescription,
+    url: SITE_URL,
+    type: "website",
+  },
 };
 
 const gradeGroups = [
@@ -43,6 +56,15 @@ function ArrowIcon() {
 }
 
 export default function Home() {
+  const websiteSchema = {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    name: "호빈샘 과외",
+    description: homeDescription,
+    url: SITE_URL,
+    inLanguage: "ko",
+  };
+
   return (
     <>
       <SiteHeader />
@@ -366,7 +388,7 @@ export default function Home() {
                     <p>{grade.description}</p>
                     <div className="subject-buttons">
                       {onlineSubjects.map((subject) => (
-                        <Link href={`/online/${grade.key}-${subject.key}`} key={subject.key}>
+                        <Link href={`/online-${grade.key}-${subject.key}`} key={subject.key}>
                           {subject.name}
                           <ArrowIcon />
                         </Link>
@@ -603,6 +625,12 @@ export default function Home() {
           </div>
         </section>
       </main>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(websiteSchema).replaceAll("<", "\\u003c"),
+        }}
+      />
     </>
   );
 }

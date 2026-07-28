@@ -39,6 +39,10 @@ function splitSlug(slug: string): RouteParts | null {
 const pageBySlug = new Map(tutoringPages.map((page) => [page.slug, page]));
 
 export const staticPageParams = tutoringPages.flatMap((page) => {
+  if (page.slug.startsWith("online/")) {
+    return [];
+  }
+
   const parts = splitSlug(page.slug);
   return parts ? [parts] : [];
 });

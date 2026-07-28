@@ -25,6 +25,7 @@ import {
   getTeacherAssignmentGuideIntro,
   isOnlineGradeSubjectTutoringPage,
 } from "@/lib/tutoring-content";
+import { SITE_URL, getAbsoluteUrl } from "@/lib/site";
 
 type PageProps = {
   params: Promise<{ region: string }>;
@@ -183,6 +184,28 @@ function getFocusLabel(page: TutoringPage) {
   return focusLabelByValue[focus] || "학생 맞춤 학습";
 }
 
+function getDetailDescription(page: TutoringPage, serviceName: string, focusLabel: string) {
+  return `${page["지역"]}에서 ${withJosa(
+    serviceName,
+    "을를",
+  )} 찾는 학부모님을 위해 ${focusLabel}, 현재 수준과 학교 진도에 맞춘 수업 방향을 정리했습니다.`;
+}
+
+function getBreadcrumbParent(page: TutoringPage) {
+  if (page.page_type.includes("exam")) {
+    return {
+      name: page.page_type === "online-exam-tutoring" ? "온라인 검정고시 과외" : "검정고시 과외",
+      item: `${SITE_URL}/#exam`,
+    };
+  }
+
+  if (page.slug.startsWith("online/")) {
+    return { name: "온라인 과외", item: `${SITE_URL}/#online` };
+  }
+
+  return { name: page.지역, item: `${SITE_URL}/#regions` };
+}
+
 export async function generateMetadata({
   params,
 }: PageProps): Promise<Metadata> {
@@ -194,21 +217,15 @@ export async function generateMetadata({
   }
 
   const title = getDetailTitle(page);
-  const serviceName = formatServiceName(
-    page["업종"],
-  );
-  const description = `${page["지역"]}에서 ${withJosa(
-    serviceName,
-    "을를",
-  )} 찾는 학부모님을 위해 ${getFocusLabel(
-    page,
-  )}, 현재 수준과 학교 진도에 맞춘 수업 방향을 정리했습니다.`;
+  const serviceName = formatServiceName(page["업종"]);
+  const canonicalUrl = getAbsoluteUrl(getPublicPageSlug(page));
+  const description = getDetailDescription(page, serviceName, getFocusLabel(page));
 
   return {
     title,
     description,
-    alternates: { canonical: `/${getPublicPageSlug(page)}` },
-    openGraph: { title, description, type: "article" },
+    alternates: { canonical: canonicalUrl },
+    openGraph: { title, description, url: canonicalUrl, type: "article" },
   };
 }
 
@@ -223,6 +240,8 @@ export default async function TutoringDetailPage({ params }: PageProps) {
   const serviceName = formatServiceName(page.업종);
   const detailTitle = getDetailTitle(page);
   const focusLabel = getFocusLabel(page);
+  const canonicalUrl = getAbsoluteUrl(getPublicPageSlug(page));
+  const detailDescription = getDetailDescription(page, serviceName, focusLabel);
   const relatedLinks = getRelatedTutoringLinks(page);
   const coverImage = getTutoringImage(page, 0);
   const middleImage = getTutoringImage(page, 3);
@@ -250,13 +269,34 @@ export default async function TutoringDetailPage({ params }: PageProps) {
   ];
 
   const faqSchema = {
-    "@context": "https://schema.org",
     "@type": "FAQPage",
     mainEntity: faqs.map((faq) => ({
       "@type": "Question",
       name: faq.question,
       acceptedAnswer: { "@type": "Answer", text: faq.answer },
     })),
+  };
+  const breadcrumbParent = getBreadcrumbParent(page);
+  const structuredData = {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "WebPage",
+        name: detailTitle,
+        description: detailDescription,
+        url: canonicalUrl,
+        inLanguage: "ko",
+      },
+      {
+        "@type": "BreadcrumbList",
+        itemListElement: [
+          { "@type": "ListItem", position: 1, name: "홈", item: SITE_URL },
+          { "@type": "ListItem", position: 2, name: breadcrumbParent.name, item: breadcrumbParent.item },
+          { "@type": "ListItem", position: 3, name: serviceName, item: canonicalUrl },
+        ],
+      },
+      faqSchema,
+    ],
   };
 
   return (
@@ -485,7 +525,7 @@ export default async function TutoringDetailPage({ params }: PageProps) {
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{
-          __html: JSON.stringify(faqSchema).replaceAll("<", "\\u003c"),
+          __html: JSON.stringify(structuredData).replaceAll("<", "\\u003c"),
         }}
       />
     </>
