@@ -5,13 +5,14 @@ import { ConsultationFormCard, ConsultationProcessBox } from "@/app/components/c
 import { OnlineTutoringGuide } from "@/app/components/online-tutoring-guide";
 import { SiteHeader } from "@/app/components/site-header";
 import { TeacherAssignmentGuide } from "@/app/components/teacher-assignment-guide";
+import { RelatedTutoringLinks } from "@/app/components/related-tutoring-links";
 import {
   getPublicPageSlug,
-  getRelatedPages,
   getSingleSlugTutoringPage,
   singleSlugPageParams,
   type TutoringPage,
 } from "@/lib/tutoring-pages";
+import { getRelatedTutoringLinks } from "@/lib/tutoring-related-links";
 import {
   formatServiceName,
   formatTutoringKeyword,
@@ -211,14 +212,6 @@ export async function generateMetadata({
   };
 }
 
-function ArrowIcon() {
-  return (
-    <svg viewBox="0 0 20 20" aria-hidden="true">
-      <path d="M4 10h12M11 5l5 5-5 5" />
-    </svg>
-  );
-}
-
 export default async function TutoringDetailPage({ params }: PageProps) {
   const { region } = await params;
   const page = getSingleSlugTutoringPage(region);
@@ -230,72 +223,7 @@ export default async function TutoringDetailPage({ params }: PageProps) {
   const serviceName = formatServiceName(page.업종);
   const detailTitle = getDetailTitle(page);
   const focusLabel = getFocusLabel(page);
-  const currentGrade = page.업종.split(" ")[0];
-    const isExamTutoringPage =
-    page.page_type === "exam-tutoring" ||
-    page.page_type === "online-exam-tutoring";
-
-  const isOnlineExamPage = page.page_type === "online-exam-tutoring";
-  const examOnlinePrefix = isOnlineExamPage ? "online-" : "";
-
-  const isMiddleExamPage = page.slug.includes(
-    `${examOnlinePrefix}middle-school-qualification-exam`
-  );
-
-  const isHighExamPage = page.slug.includes(
-    `${examOnlinePrefix}high-school-qualification-exam`
-  );
-
-  const examRelatedPrefix = isMiddleExamPage
-    ? `${examOnlinePrefix}middle-school-qualification-exam-`
-    : isHighExamPage
-    ? `${examOnlinePrefix}high-school-qualification-exam-`
-    : "";
-
-  const relatedPages = getRelatedPages(page, 18)
-    .filter((related) => {
-      if (related.slug === page.slug) return false;
-
-      if (isExamTutoringPage && examRelatedPrefix) {
-        const isSameExamGroup = related.slug.startsWith(examRelatedPrefix);
-        const isSubjectPage = related.slug.endsWith("-tutoring");
-        const isMiddleMainPage =
-          related.slug === `${examOnlinePrefix}middle-school-qualification-exam-tutoring`;
-        const isHighMainPage =
-          related.slug === `${examOnlinePrefix}high-school-qualification-exam-tutoring`;
-
-        return (
-          isSameExamGroup &&
-          isSubjectPage &&
-          !isMiddleMainPage &&
-          !isHighMainPage
-        );
-      }
-
-      return related.업종.startsWith(currentGrade);
-    })
-    .slice(0, 6);
-      let relatedSectionCopy = {
-    label: "같은 지역의 다른 수업",
-    title: `${page.지역} 과외 더 보기`,
-    description: "같은 지역에서 신청하는 다른 과외 수업도 확인해보세요.",
-  };
-
-  if (page.page_type === "exam-tutoring") {
-    relatedSectionCopy = {
-      label: "검정고시 준비 유형",
-      title: "과목별 수업 보기",
-      description: "중졸·고졸 검정고시 과목별 보완 수업을 확인해보세요.",
-    };
-  }
-
-  if (page.page_type === "online-exam-tutoring") {
-    relatedSectionCopy = {
-      label: "온라인 검정고시 수업",
-      title: "과목별 온라인 수업",
-      description: "온라인으로 검정고시 과목별 보완 수업을 확인해보세요.",
-    };
-  }
+  const relatedLinks = getRelatedTutoringLinks(page);
   const coverImage = getTutoringImage(page, 0);
   const middleImage = getTutoringImage(page, 3);
   const subImage = getTutoringImage(page, 5);
@@ -531,22 +459,7 @@ export default async function TutoringDetailPage({ params }: PageProps) {
               </div>
             </section>
 
-            <aside className="related-lesson-box">
-              <div>
-                <small>{relatedSectionCopy.label}</small>
-                <strong>{relatedSectionCopy.title}</strong>
-                <p className="related-lesson-description">
-                  {relatedSectionCopy.description}
-                </p>
-              </div>
-              <div>
-                {relatedPages.map((related) => (
-                  <Link href={`/${getPublicPageSlug(related)}`} key={related.slug}>
-                    {formatServiceName(related.업종).replace("검정고시 ", "").replace(" 과외", "")} <span>↗</span>
-                  </Link>
-                ))}
-              </div>
-            </aside>
+            <RelatedTutoringLinks links={relatedLinks} />
 
             <section className="detailConsultSection" id="consult">
               <div className="detailConsultText">

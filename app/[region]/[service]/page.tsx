@@ -5,13 +5,14 @@ import { ConsultationFormCard, ConsultationProcessBox } from "@/app/components/c
 import { OnlineTutoringGuide } from "@/app/components/online-tutoring-guide";
 import { SiteHeader } from "@/app/components/site-header";
 import { TeacherAssignmentGuide } from "@/app/components/teacher-assignment-guide";
+import { RelatedTutoringLinks } from "@/app/components/related-tutoring-links";
 import {
   getPublicPageSlug,
-  getRelatedPages,
   getTutoringPage,
   staticPageParams,
   type TutoringPage,
 } from "@/lib/tutoring-pages";
+import { getRelatedTutoringLinks } from "@/lib/tutoring-related-links";
 import {
   formatServiceName,
   formatTutoringKeyword,
@@ -210,14 +211,6 @@ export async function generateMetadata({
   };
 }
 
-function ArrowIcon() {
-  return (
-    <svg viewBox="0 0 20 20" aria-hidden="true">
-      <path d="M4 10h12M11 5l5 5-5 5" />
-    </svg>
-  );
-}
-
 export default async function TutoringDetailPage({ params }: PageProps) {
   const { region, service } = await params;
   const page = getTutoringPage(region, service);
@@ -229,10 +222,7 @@ export default async function TutoringDetailPage({ params }: PageProps) {
   const serviceName = formatServiceName(page.업종);
   const detailTitle = getDetailTitle(page);
   const focusLabel = getFocusLabel(page);
-  const currentGrade = page.업종.split(" ")[0];
-const relatedPages = getRelatedPages(page, 18).filter((related) =>
-  related.업종.startsWith(currentGrade),
-);
+  const relatedLinks = getRelatedTutoringLinks(page);
   const coverImage = getTutoringImage(page, 0);
   const middleImage = getTutoringImage(page, 3);
   const subImage = getTutoringImage(page, 5);
@@ -475,19 +465,7 @@ const relatedPages = getRelatedPages(page, 18).filter((related) =>
               intro={`방문 수업 배정이 어렵거나 일정 조율이 필요한 경우에는 동일한 학년과 과목의 온라인 전문 선생님을 연결할 수 있습니다. 온라인 수업도 실시간 1:1 방식으로 진행하며, 무료 모의수업을 통해 수업 환경을 먼저 확인할 수 있습니다.`}
             />
 
-            <aside className="related-lesson-box">
-              <div>
-                <small>같은 지역의 다른 수업</small>
-                <strong>{page.지역} 과외 더 보기</strong>
-              </div>
-              <div>
-                {relatedPages.map((related) => (
-                  <Link href={`/${getPublicPageSlug(related)}`} key={related.slug}>
-                    {formatServiceName(related.업종)} <span>→</span>
-                  </Link>
-                ))}
-              </div>
-            </aside>
+            <RelatedTutoringLinks links={relatedLinks} />
 
             <section className="detailConsultSection" id="consult">
               <div className="detailConsultText">
