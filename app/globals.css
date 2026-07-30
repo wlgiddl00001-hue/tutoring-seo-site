@@ -2915,7 +2915,7 @@ body {
 /* 관련 수업 */
 .related-lesson-box {
   display: grid !important;
-  grid-template-columns: 1.15fr 2.4fr !important;
+  grid-template-columns: minmax(0, 1.15fr) minmax(0, 2.4fr) !important;
   align-items: center !important;
   gap: 42px !important;
   margin-top: 90px !important;
@@ -2925,6 +2925,10 @@ body {
   border: 1px solid var(--hb-line) !important;
   border-radius: 36px !important;
   box-shadow: 0 18px 44px rgba(63, 115, 241, 0.12) !important;
+}
+
+.related-lesson-box > div:first-child {
+  min-width: 0 !important;
 }
 
 .related-lesson-box small {
@@ -2952,34 +2956,61 @@ body {
   font-size: 1rem !important;
   font-weight: 650 !important;
   line-height: 1.75 !important;
+  overflow-wrap: anywhere !important;
+  word-break: keep-all !important;
 }
 
 .related-lesson-box > div:last-child {
   display: grid !important;
   grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
-  gap: 16px !important;
+  min-width: 0 !important;
+  gap: 20px !important;
   align-items: stretch !important;
 }
 
 .related-lesson-box a {
   display: flex !important;
+  width: 100% !important;
+  min-width: 0 !important;
+  max-width: 100% !important;
   align-items: center !important;
   justify-content: center !important;
   min-height: 64px !important;
-  padding: 0 14px !important;
+  height: auto !important;
+  padding: 12px 14px !important;
   border-radius: 18px !important;
   background: #ffffff !important;
   border: 1px solid #dbe7ff !important;
   color: #1647c7 !important;
   font-size: 1.05rem !important;
   font-weight: 950 !important;
+  line-height: 1.35 !important;
   text-decoration: none !important;
-  white-space: nowrap !important;
+  white-space: normal !important;
+  overflow-wrap: anywhere !important;
+  word-break: keep-all !important;
   text-align: center !important;
 }
 
 .related-lesson-box a span {
   display: none !important;
+}
+
+@media (max-width: 980px) {
+  .related-lesson-box {
+    grid-template-columns: 1fr !important;
+    align-items: stretch !important;
+    gap: 28px !important;
+  }
+
+  .related-lesson-description {
+    max-width: 100% !important;
+  }
+
+  .related-lesson-box > div:last-child {
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    gap: 16px !important;
+  }
 }
 
 /* 하단 상담 CTA 색감 변경 + 글씨 중앙 이동 */
@@ -4512,7 +4543,7 @@ select {
   }
 
   .related-lesson-box > div:last-child {
-    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    grid-template-columns: 1fr !important;
     gap: 12px !important;
   }
 
