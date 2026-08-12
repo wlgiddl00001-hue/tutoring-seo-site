@@ -22,6 +22,8 @@ import {
 } from "@/lib/korean-text";
 import {
   getOnlineTutoringGuideIntro,
+  getSingleSlugTutoringDetailContent,
+  getSingleSlugTutoringSeoText,
   getTeacherAssignmentGuideIntro,
   isOnlineGradeSubjectTutoringPage,
 } from "@/lib/tutoring-content";
@@ -171,6 +173,11 @@ function getDetailTitle(page: TutoringPage) {
   const region = page["지역"]?.trim() || "지역";
   const service = formatServiceName(page["업종"]?.trim() || "맞춤 과외");
   const keyword = formatTutoringKeyword(page["메인키워드"]?.trim() || `${region} ${service}`);
+  const singleSeo = getSingleSlugTutoringSeoText(page, service);
+  if (singleSeo) {
+    return `${keyword}, ${singleSeo.titleSuffix}`;
+  }
+
   const focus = page["콘텐츠관점"]?.trim();
   const suffix =
     titleSuffixByFocus[focus] ||
@@ -180,15 +187,35 @@ function getDetailTitle(page: TutoringPage) {
 }
 
 function getFocusLabel(page: TutoringPage) {
+  const serviceName = formatServiceName(page["업종"]?.trim() || "맞춤 과외");
+  const singleSeo = getSingleSlugTutoringSeoText(page, serviceName);
+  if (singleSeo) {
+    return singleSeo.focusLabel;
+  }
+
   const focus = page["콘텐츠관점"]?.trim();
   return focusLabelByValue[focus] || "학생 맞춤 학습";
 }
 
 function getDetailDescription(page: TutoringPage, serviceName: string, focusLabel: string) {
+  const singleSeo = getSingleSlugTutoringSeoText(page, serviceName);
+  if (singleSeo) {
+    return singleSeo.description;
+  }
+
   return `${page["지역"]}에서 ${withJosa(
     serviceName,
     "을를",
   )} 찾는 학부모님을 위해 ${focusLabel}, 현재 수준과 학교 진도에 맞춘 수업 방향을 정리했습니다.`;
+}
+
+function getDetailSummary(page: TutoringPage, serviceName: string, focusLabel: string) {
+  const singleSeo = getSingleSlugTutoringSeoText(page, serviceName);
+  if (singleSeo) {
+    return singleSeo.summary;
+  }
+
+  return `${page.지역}에서 ${withJosa(serviceName, "을를")} 찾는 학부모님을 위해 학생의 현재 수준, 약한 단원과 학교 진도를 살펴보고 ${focusLabel}에 맞춘 수업 방향을 정리했습니다.`;
 }
 
 function getBreadcrumbParent(page: TutoringPage) {
@@ -242,15 +269,42 @@ export default async function TutoringDetailPage({ params }: PageProps) {
   const focusLabel = getFocusLabel(page);
   const canonicalUrl = getAbsoluteUrl(getPublicPageSlug(page));
   const detailDescription = getDetailDescription(page, serviceName, focusLabel);
+  const detailSummary = getDetailSummary(page, serviceName, focusLabel);
+  const singleSeo = getSingleSlugTutoringSeoText(page, serviceName);
+  const detailMetaLabel = singleSeo?.focusLabel || page.콘텐츠관점;
   const relatedLinks = getRelatedTutoringLinks(page);
   const coverImage = getTutoringImage(page, 0);
   const middleImage = getTutoringImage(page, 3);
   const subImage = getTutoringImage(page, 5);
-  const showOnlineGuide = isOnlineGradeSubjectTutoringPage(page);
+  const isOnlineSinglePage =
+    isOnlineGradeSubjectTutoringPage(page) ||
+    page.page_type === "online-exam-tutoring";
+  const showOnlineGuide = isOnlineSinglePage;
   const onlineGuideIntro = getOnlineTutoringGuideIntro(page, serviceName);
   const teacherAssignmentIntro = getTeacherAssignmentGuideIntro(page, serviceName);
+  const detailContent = getSingleSlugTutoringDetailContent(page, focusLabel, serviceName);
+  const lessonSteps = detailContent?.steps || [
+    {
+      title: "현재 수준 확인",
+      description: "최근에 배운 내용과 풀이 과정을 살펴 수업의 출발점을 정합니다.",
+    },
+    {
+      title: "개념 설명과 적용",
+      description: "아이의 이해 속도에 맞춰 설명하고 비슷한 문제를 직접 풀어봅니다.",
+    },
+    {
+      title: "복습과 다음 목표",
+      description: "배운 내용을 다시 확인하고 다음 수업까지 필요한 학습량을 정합니다.",
+    },
+  ];
+  const consultChecks = detailContent?.consultChecks || [
+    { title: "현재 수준", description: "최근 학습 내용과 성적" },
+    { title: "약한 단원", description: "자주 막히는 개념과 유형" },
+    { title: "학교 진도", description: "사용 교재와 시험 일정" },
+    { title: "희망 수업 요일", description: "가능한 요일과 시간대" },
+  ];
 
-  const faqs = [
+  const faqs = detailContent?.faqs || [
     {
       question: "수업을 시작하기 전에 학생 수준을 확인하나요?",
       answer:
@@ -319,16 +373,12 @@ export default async function TutoringDetailPage({ params }: PageProps) {
 
             <h1>{detailTitle}</h1>
 
-            <p className="detail-summary">
-              {page.지역}에서 {withJosa(serviceName, "을를")} 찾는 학부모님을 위해 학생의
-              현재 수준, 약한 단원과 학교 진도를 살펴보고 {focusLabel}에 맞춘
-              수업 방향을 정리했습니다.
-            </p>
+            <p className="detail-summary">{detailSummary}</p>
 
             <div className="detail-meta">
               <span>호빈샘 과외</span>
               <i />
-              <span>{page.콘텐츠관점}</span>
+              <span>{detailMetaLabel}</span>
               <i />
               <span>약 5분 읽기</span>
             </div>
@@ -340,98 +390,99 @@ export default async function TutoringDetailPage({ params }: PageProps) {
               alt={`${formatTutoringKeyword(`${page.지역} ${serviceName}`)} 학습 안내 이미지`}
             />
             <figcaption>
-              학생의 현재 상황을 먼저 확인하고, 필요한 공부 방법부터 차근차근
-              정리합니다.
+              {detailContent?.mainCaption ||
+                "학생의 현재 상황을 먼저 확인하고, 필요한 공부 방법부터 차근차근 정리합니다."}
             </figcaption>
           </figure>
 
           <div className="detail-article-body">
-            <p className="detail-opening">
-              과외 수업은 무조건 진도를 빠르게 나가기보다 아이가{" "}
-              <strong>어디까지 이해했고 어느 부분에서 막히는지</strong>{" "}
-              확인하는 것에서 시작해야 합니다. 출발점이 분명하면 필요한 설명과
-              문제 연습에 시간을 집중할 수 있습니다.
-            </p>
+            {detailContent ? (
+              <p className="detail-opening">{detailContent.opening}</p>
+            ) : (
+              <p className="detail-opening">
+                과외 수업은 무조건 진도를 빠르게 나가기보다 아이가{" "}
+                <strong>어디까지 이해했고 어느 부분에서 막히는지</strong>{" "}
+                확인하는 것에서 시작해야 합니다. 출발점이 분명하면 필요한 설명과
+                문제 연습에 시간을 집중할 수 있습니다.
+              </p>
+            )}
 
             <section className="article-section" id="student">
               <span className="article-section-number">01</span>
               <h2>이런 학생에게 필요합니다</h2>
-              <p>
-                최근 점수만으로는 아이가 겪는 어려움을 모두 알기 어렵습니다.
-                문제를 읽는 과정과 풀이 순서, 수업 후 복습 방법까지 함께
-                살펴야 정확한 원인을 찾을 수 있습니다. 이 페이지에서 중심으로
-                살펴볼 방향은 <strong>{focusLabel}</strong>입니다.
-              </p>
+              {detailContent ? (
+                <p>{detailContent.studentLead}</p>
+              ) : (
+                <p>
+                  최근 점수만으로는 아이가 겪는 어려움을 모두 알기 어렵습니다.
+                  문제를 읽는 과정과 풀이 순서, 수업 후 복습 방법까지 함께
+                  살펴야 정확한 원인을 찾을 수 있습니다. 이 페이지에서 중심으로
+                  살펴볼 방향은 <strong>{focusLabel}</strong>입니다.
+                </p>
+              )}
 
               <div className="learning-status-card">
                 <small>현재 학습상황</small>
-                <strong>{page.학습상황}</strong>
+                <strong>{detailContent?.learningStatus || page.학습상황}</strong>
               </div>
 
-              <p>
-                특히 <strong>{page.추천대상}</strong>이라면 부족한 부분을
-                한꺼번에 공부하기보다 우선순위를 정해 하나씩 보완하는 과정이
-                필요합니다. 이미 이해한 부분은 유지하고, 자주 막히는 지점에
-                설명과 연습 시간을 더 배분합니다.
-              </p>
+              {detailContent ? (
+                <p>
+                  특히 <strong>{detailContent.recommendedTarget || page.추천대상}</strong>
+                  이라면 {detailContent.priorityBody}
+                </p>
+              ) : (
+                <p>
+                  특히 <strong>{page.추천대상}</strong>이라면 부족한 부분을
+                  한꺼번에 공부하기보다 우선순위를 정해 하나씩 보완하는 과정이
+                  필요합니다. 이미 이해한 부분은 유지하고, 자주 막히는 지점에
+                  설명과 연습 시간을 더 배분합니다.
+                </p>
+              )}
             </section>
 
             <figure className="detail-photo-card detail-photo-card-wide">
               <img
                 src={middleImage}
-                alt={`${withJosa(focusLabel, "을를")} 돕는 과외 학습 자료 이미지`}
+                alt={
+                  detailContent?.middleImageAlt ||
+                  `${withJosa(focusLabel, "을를")} 돕는 과외 학습 자료 이미지`
+                }
               />
               <figcaption>
-                단순 설명으로 끝나지 않도록 학습 기록, 복습, 문제 적용 과정을
-                함께 확인합니다.
+                {detailContent?.middleCaption ||
+                  "단순 설명으로 끝나지 않도록 학습 기록, 복습, 문제 적용 과정을 함께 확인합니다."}
               </figcaption>
             </figure>
 
             <section className="article-section" id="lesson">
               <span className="article-section-number">02</span>
               <h2>수업은 이렇게 진행됩니다</h2>
-              <p>
-                수업은 <strong>{withJosa(page.수업방식, "을를")}</strong> 중심으로 진행합니다.
-                아이가 설명을 듣는 데서 끝나지 않고, 이해한 내용을 직접 말하고
-                문제에 적용하는 과정까지 확인합니다.
-              </p>
+              {detailContent ? (
+                <p>{detailContent.lessonIntro}</p>
+              ) : (
+                <p>
+                  수업은 <strong>{withJosa(page.수업방식, "을를")}</strong> 중심으로 진행합니다.
+                  아이가 설명을 듣는 데서 끝나지 않고, 이해한 내용을 직접 말하고
+                  문제에 적용하는 과정까지 확인합니다.
+                </p>
+              )}
 
               <ol className="article-step-cards">
-                <li>
-                  <span>1</span>
-                  <div>
-                    <strong>현재 수준 확인</strong>
-                    <p>
-                      최근에 배운 내용과 풀이 과정을 살펴 수업의 출발점을
-                      정합니다.
-                    </p>
-                  </div>
-                </li>
-                <li>
-                  <span>2</span>
-                  <div>
-                    <strong>개념 설명과 적용</strong>
-                    <p>
-                      아이의 이해 속도에 맞춰 설명하고 비슷한 문제를 직접
-                      풀어봅니다.
-                    </p>
-                  </div>
-                </li>
-                <li>
-                  <span>3</span>
-                  <div>
-                    <strong>복습과 다음 목표</strong>
-                    <p>
-                      배운 내용을 다시 확인하고 다음 수업까지 필요한 학습량을
-                      정합니다.
-                    </p>
-                  </div>
-                </li>
+                {lessonSteps.map((step, index) => (
+                  <li key={step.title}>
+                    <span>{index + 1}</span>
+                    <div>
+                      <strong>{step.title}</strong>
+                      <p>{step.description}</p>
+                    </div>
+                  </li>
+                ))}
               </ol>
 
               <div className="lesson-difference-card">
                 <small>호빈샘 과외의 수업 방향</small>
-                <p>{formatLessonDifference(page)}</p>
+                <p>{detailContent?.lessonDifference || formatLessonDifference(page)}</p>
               </div>
             </section>
 
@@ -439,15 +490,18 @@ export default async function TutoringDetailPage({ params }: PageProps) {
               <OnlineTutoringGuide intro={onlineGuideIntro} />
             ) : null}
 
-            <TeacherAssignmentGuide intro={teacherAssignmentIntro} />
+            <TeacherAssignmentGuide
+              intro={teacherAssignmentIntro}
+              variant={isOnlineSinglePage ? "online" : "default"}
+            />
 
             <section className="article-section article-section-with-image" id="consult-check">
               <div>
                 <span className="article-section-number">03</span>
                 <h2>{page.지역} 과외 상담 전 확인할 점</h2>
                 <p>
-                  아래 네 가지를 알고 있는 범위에서 정리하면 아이에게 필요한
-                  수업 방향을 더 구체적으로 상담할 수 있습니다.
+                  {detailContent?.consultIntro ||
+                    "아래 네 가지를 알고 있는 범위에서 정리하면 아이에게 필요한 수업 방향을 더 구체적으로 상담할 수 있습니다."}
                 </p>
               </div>
 
@@ -459,26 +513,13 @@ export default async function TutoringDetailPage({ params }: PageProps) {
               </figure>
 
               <div className="consult-check-grid">
-                <div>
-                  <span>✓</span>
-                  <strong>현재 수준</strong>
-                  <p>최근 학습 내용과 성적</p>
-                </div>
-                <div>
-                  <span>✓</span>
-                  <strong>약한 단원</strong>
-                  <p>자주 막히는 개념과 유형</p>
-                </div>
-                <div>
-                  <span>✓</span>
-                  <strong>학교 진도</strong>
-                  <p>사용 교재와 시험 일정</p>
-                </div>
-                <div>
-                  <span>✓</span>
-                  <strong>희망 수업 요일</strong>
-                  <p>가능한 요일과 시간대</p>
-                </div>
+                {consultChecks.map((check) => (
+                  <div key={check.title}>
+                    <span>✓</span>
+                    <strong>{check.title}</strong>
+                    <p>{check.description}</p>
+                  </div>
+                ))}
               </div>
             </section>
 
@@ -510,8 +551,8 @@ export default async function TutoringDetailPage({ params }: PageProps) {
                   수업 방향을 확인해보세요
                 </h2>
                 <span>
-                  현재 학년과 과목, 가장 어려워하는 부분부터 편하게 말씀해
-                  주세요.
+                  {detailContent?.closingSentence ||
+                    "현재 학년과 과목, 가장 어려워하는 부분부터 편하게 말씀해 주세요."}
                 </span>
                 <ConsultationProcessBox className="detailConsultSteps" />
               </div>

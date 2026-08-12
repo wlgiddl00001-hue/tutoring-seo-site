@@ -1,5 +1,6 @@
 type TeacherAssignmentGuideProps = {
   intro: string;
+  variant?: "default" | "online";
 };
 
 const assignmentItems = [
@@ -11,7 +12,21 @@ const assignmentItems = [
   "방문 배정이 어려운 지역은 온라인 전문 선생님 연결 가능",
 ];
 
-export function TeacherAssignmentGuide({ intro }: TeacherAssignmentGuideProps) {
+const onlineAssignmentItems = [
+  "4년제 대학교 졸업 선생님",
+  "5~20년 경력의 전문 과외 선생님",
+  "교육청에 정식 신고·등록된 선생님",
+  "학생의 학년·과목·현재 수준·온라인 수업 환경을 고려한 1:1 배정",
+  "무료 모의수업 후 정규수업 결정",
+  "화면 공유와 실시간 피드백 경험이 있는 온라인 전문 선생님 연결",
+];
+
+export function TeacherAssignmentGuide({
+  intro,
+  variant = "default",
+}: TeacherAssignmentGuideProps) {
+  const items = variant === "online" ? onlineAssignmentItems : assignmentItems;
+
   return (
     <section className="teacherAssignmentGuide">
       <div className="teacherAssignmentGuideHead">
@@ -21,7 +36,7 @@ export function TeacherAssignmentGuide({ intro }: TeacherAssignmentGuideProps) {
       </div>
 
       <div className="teacherAssignmentGuideGrid">
-        {assignmentItems.map((item, index) => (
+        {items.map((item, index) => (
           <div className="teacherAssignmentGuideItem" key={item}>
             <span>{String(index + 1).padStart(2, "0")}</span>
             <p>{item}</p>

@@ -22,6 +22,7 @@ import {
 } from "@/lib/korean-text";
 import {
   getElementaryLocalSeoText,
+  getHighLocalSeoText,
   getLocalTutoringDetailContent,
   getMiddleLocalSeoText,
   getTeacherAssignmentGuideIntro,
@@ -181,6 +182,10 @@ function getDetailTitle(page: TutoringPage) {
   if (middleSeo) {
     return `${keyword}, ${middleSeo.titleSuffix}`;
   }
+  const highSeo = getHighLocalSeoText(page, service);
+  if (highSeo) {
+    return `${keyword}, ${highSeo.titleSuffix}`;
+  }
 
   const focus = page["콘텐츠관점"]?.trim();
   const suffix =
@@ -203,6 +208,10 @@ function getFocusLabel(page: TutoringPage) {
   if (middleSeo) {
     return middleSeo.focusLabel;
   }
+  const highSeo = getHighLocalSeoText(page, serviceName, focusLabel);
+  if (highSeo) {
+    return highSeo.focusLabel;
+  }
 
   return focusLabel;
 }
@@ -215,6 +224,10 @@ function getDetailDescription(page: TutoringPage, serviceName: string, focusLabe
   const middleSeo = getMiddleLocalSeoText(page, serviceName, focusLabel);
   if (middleSeo) {
     return middleSeo.description;
+  }
+  const highSeo = getHighLocalSeoText(page, serviceName, focusLabel);
+  if (highSeo) {
+    return highSeo.description;
   }
 
   return `${page["지역"]}에서 ${withJosa(
@@ -231,6 +244,10 @@ function getDetailSummary(page: TutoringPage, serviceName: string, focusLabel: s
   const middleSeo = getMiddleLocalSeoText(page, serviceName, focusLabel);
   if (middleSeo) {
     return middleSeo.summary;
+  }
+  const highSeo = getHighLocalSeoText(page, serviceName, focusLabel);
+  if (highSeo) {
+    return highSeo.summary;
   }
 
   return `${page.지역}에서 ${withJosa(serviceName, "을를")} 찾는 학부모님을 위해 학생의 현재 수준, 약한 단원과 학교 진도를 살펴보고 ${focusLabel}에 맞춘 수업 방향을 정리했습니다.`;
@@ -303,7 +320,8 @@ export default async function TutoringDetailPage({ params }: PageProps) {
   const detailSummary = getDetailSummary(page, serviceName, focusLabel);
   const elementarySeo = getElementaryLocalSeoText(page, serviceName);
   const middleSeo = getMiddleLocalSeoText(page, serviceName, focusLabel);
-  const detailMetaLabel = elementarySeo?.focusLabel || middleSeo?.focusLabel || page.콘텐츠관점;
+  const highSeo = getHighLocalSeoText(page, serviceName, focusLabel);
+  const detailMetaLabel = elementarySeo?.focusLabel || middleSeo?.focusLabel || highSeo?.focusLabel || page.콘텐츠관점;
   const relatedLinks = getRelatedTutoringLinks(page);
   const coverImage = getTutoringImage(page, 0);
   const middleImage = getTutoringImage(page, 3);
