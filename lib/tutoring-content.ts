@@ -369,6 +369,638 @@ type ElementaryLocalSeoText = {
   focusLabel: string;
 };
 
+type MiddleSubjectDetail = {
+  focusLabel: string;
+  titleSuffixes: string[];
+  descriptions: string[];
+  summaries: string[];
+  openings: string[];
+  mainCaptions: string[];
+  learningStatuses: string[];
+  recommendedTargets: string[];
+  studentLeads: string[];
+  priorityBodies: string[];
+  middleImageAlt: string;
+  middleCaptions: string[];
+  lessonIntros: string[];
+  lessonDifferences: string[];
+  stepSets: LessonStep[][];
+  consultIntros: string[];
+  consultChecks: ConsultCheck[][];
+  faqs: DetailFaq[][];
+  closingSentences: string[];
+};
+
+type MiddleLocalSeoText = {
+  titleSuffix: string;
+  description: string;
+  summary: string;
+  focusLabel: string;
+};
+
+const middleSubjectDetails: Record<SubjectKey, MiddleSubjectDetail> = {
+  korean: {
+    focusLabel: "독해 근거와 서술형 답안",
+    titleSuffixes: [
+      "교과서 작품과 독해 근거를 함께 잡는 수업",
+      "어휘·문법·서술형 답안을 차근차근 정리하는 수업",
+      "문학과 비문학 읽기 흐름을 내신 범위에 맞추는 수업",
+    ],
+    descriptions: [
+      "{region} 중등 국어 과외는 교과서 작품 이해, 어휘와 문법, 문학·비문학 독해, 서술형 답안과 수행평가 글쓰기를 함께 점검합니다.",
+      "{region}에서 중등 국어 과외를 찾는 학부모님을 위해 중심 내용과 근거 찾기, 오답 근거 확인, 글쓰기 보완 방향을 정리했습니다.",
+    ],
+    summaries: [
+      "{region} 중등 국어 수업은 교과서 작품, 어휘와 문법, 문학·비문학 독해, 서술형 답안을 {focus} 관점에 맞춰 살핍니다.",
+      "{region}에서 중등 국어 과외를 고민하는 학생에게 필요한 중심 내용 찾기, 근거 표시, 수행평가 글쓰기 흐름을 정리했습니다.",
+    ],
+    openings: [
+      "중등 국어는 작품 줄거리만 외우거나 문제 정답만 확인해서는 안정되기 어렵습니다. 교과서 작품의 맥락, 낯선 어휘와 문법, 문학·비문학 지문에서 중심 내용과 근거를 찾는 과정을 함께 봐야 합니다.",
+      "중등 국어 내신은 지문을 읽는 힘과 답안으로 표현하는 힘이 같이 필요합니다. 수업에서는 작품 이해, 문법 확인, 독해 근거 표시, 서술형 답안 작성까지 한 흐름으로 연결합니다.",
+    ],
+    mainCaptions: [
+      "{region} 중등 국어 수업은 작품 이해와 독해 근거, 오답 근거, 서술형 답안을 학생 상황에 맞춰 확인합니다.",
+      "교과서 지문과 오답 근거, 수행평가 글쓰기까지 국어 학습 흐름을 차근차근 정리합니다.",
+    ],
+    learningStatuses: [
+      "교과서 작품은 읽었지만 중심 내용과 근거를 답안에 담기 어려운 학생",
+      "어휘와 문법이 헷갈려 문학·비문학 지문에서 오답 근거를 놓치는 학생",
+      "{focus}이 필요해 국어 지문 읽기와 서술형 표현을 함께 정리해야 하는 학생",
+    ],
+    recommendedTargets: [
+      "국어 지문을 읽고 근거를 표시하는 습관이 필요한 학생",
+      "문법 개념과 서술형 답안, 수행평가 글쓰기를 함께 보완하고 싶은 학생",
+    ],
+    studentLeads: [
+      "국어 성적은 정답을 맞혔는지보다 지문에서 어떤 근거를 잡았는지에 따라 달라집니다. 수업에서는 중심 문장, 문학 표현, 비문학 구조, 문법 개념을 나누어 확인합니다.",
+      "작품 해석을 외워도 낯선 지문이 나오면 흔들리는 학생이 많습니다. 교과서 작품 이해를 바탕으로 비문학 독해와 서술형 표현까지 연결해야 합니다.",
+    ],
+    priorityBodies: [
+      "현재 학교 범위의 작품과 지문을 먼저 확인하고, 어휘·문법에서 막히는 지점과 오답의 근거를 따로 표시합니다. 이후 서술형 답안과 수행평가 글쓰기로 표현을 다듬습니다.",
+      "문학은 작품의 상황과 표현을, 비문학은 중심 내용과 근거 문장을 잡는 방식으로 나누어 연습합니다. 틀린 문항은 답이 아니라 근거를 다시 찾으며 복습합니다.",
+    ],
+    middleImageAlt: "{region} 중등 국어 독해 근거와 서술형 답안 학습 안내",
+    middleCaptions: [
+      "중심 내용과 오답 근거 문장을 확인해 국어 오답 원인을 분명히 합니다.",
+      "작품 이해, 문법, 오답 근거 확인과 서술형 답안이 수업 안에서 자연스럽게 이어지도록 봅니다.",
+    ],
+    lessonIntros: [
+      "수업은 교과서 작품과 시험 범위를 확인한 뒤 어휘, 문법, 문학·비문학 독해를 나누어 진행합니다. 학생이 지문 속 근거를 직접 표시하고 서술형 답안으로 정리하는 과정까지 확인합니다.",
+      "{focus} 관점에 맞춰 지문 읽기, 중심 내용 정리, 근거 찾기, 답안 표현을 단계적으로 봅니다. 수행평가 글쓰기가 있으면 자료 정리와 문장 구성도 함께 다룹니다.",
+    ],
+    lessonDifferences: [
+      "{region} 중등 국어 과외에서는 정답 확인에서 끝내지 않고 교과서 작품 이해, 어휘와 문법, 독해 근거, 서술형 답안을 한 흐름으로 관리합니다.",
+      "{region} 중등 국어 수업은 학생의 {focus} 필요에 맞춰 문학·비문학 읽기와 수행평가 글쓰기를 분리하지 않고 연결합니다.",
+    ],
+    stepSets: [
+      [
+        { title: "교과서 작품 확인", description: "학교 범위의 작품과 지문을 읽고 배경, 인물, 표현, 중심 내용을 정리합니다." },
+        { title: "어휘·문법과 근거 찾기", description: "낯선 어휘와 문법 개념을 확인한 뒤 문학·비문학 지문에서 답의 근거를 표시합니다." },
+        { title: "서술형 답안 다듬기", description: "핵심어와 근거 문장을 넣어 답안을 쓰고, 오답은 왜 틀렸는지 근거를 다시 확인합니다." },
+      ],
+      [
+        { title: "지문 구조 정리", description: "문단별 중심 내용을 나누고 글의 흐름을 학생이 자기 말로 설명해봅니다." },
+        { title: "문법·표현 적용", description: "시험 범위의 문법과 작품 표현을 실제 문항에서 어떻게 확인하는지 연습합니다." },
+        { title: "수행평가 글쓰기", description: "주제, 근거, 문장 연결을 점검해 수행평가와 서술형 답안의 완성도를 높입니다." },
+      ],
+    ],
+    consultIntros: [
+      "상담 전에는 학교 시험 범위, 최근 어려웠던 작품이나 지문, 서술형 답안에서 감점된 부분을 알려주시면 좋습니다.",
+      "국어 상담에서는 교과서 단원, 수행평가 글쓰기 일정, 문법과 독해 중 더 막히는 부분을 함께 확인합니다.",
+    ],
+    consultChecks: [
+      [
+        { title: "시험 범위", description: "교과서 작품과 비문학 지문 범위" },
+        { title: "어휘·문법", description: "헷갈리는 개념과 표현" },
+        { title: "독해 근거", description: "중심 내용과 근거 표시 습관" },
+        { title: "서술형", description: "답안 구성과 감점 이유" },
+      ],
+      [
+        { title: "작품 이해", description: "인물, 사건, 표현 파악 정도" },
+        { title: "비문학", description: "문단 흐름과 핵심어 정리" },
+        { title: "수행평가", description: "글쓰기 과제와 평가 기준" },
+        { title: "오답 근거", description: "틀린 선지의 이유 확인" },
+      ],
+    ],
+    faqs: [
+      [
+        { question: "중등 국어는 어떤 부분부터 확인하나요?", answer: "교과서 작품과 시험 범위를 먼저 보고, 어휘·문법, 문학·비문학 독해, 중심 내용과 근거 찾기 중 어디에서 막히는지 나누어 확인합니다." },
+        { question: "서술형 답안도 같이 연습하나요?", answer: "네. 핵심어와 근거 문장을 넣어 답안을 쓰고, 감점될 수 있는 표현을 함께 다듬습니다." },
+        { question: "수행평가 글쓰기는 어떻게 준비하나요?", answer: "주제 파악, 자료 정리, 문장 연결, 근거 제시를 차례로 확인해 글쓰기 부담을 줄입니다." },
+      ],
+      [
+        { question: "문학과 비문학을 함께 볼 수 있나요?", answer: "가능합니다. 문학은 작품의 상황과 표현, 비문학은 중심 내용과 근거 구조를 나누어 지도합니다." },
+        { question: "문법을 어려워하면 어떻게 하나요?", answer: "문법 용어만 외우기보다 예문과 교과서 문장 안에서 개념이 어떻게 쓰이는지 확인합니다." },
+        { question: "오답 복습은 어떤 식으로 하나요?", answer: "틀린 문항의 정답만 보지 않고 지문 속 근거와 헷갈린 선택지의 이유를 다시 찾습니다." },
+      ],
+    ],
+    closingSentences: [
+      "최근 국어 시험 범위와 서술형에서 어려웠던 부분을 남겨주시면 독해 근거와 답안 표현부터 확인하겠습니다.",
+      "교과서 작품, 문법, 비문학, 수행평가 글쓰기 중 걱정되는 부분을 알려주시면 상담 때 차근차근 살펴보겠습니다.",
+    ],
+  },
+  english: {
+    focusLabel: "본문 해석과 내신 오답 복습",
+    titleSuffixes: [
+      "교과서 본문과 문법을 내신 범위에 맞추는 수업",
+      "어휘·표현·독해 근거를 함께 정리하는 수업",
+      "서술형과 영작, 듣기 취약 유형까지 점검하는 수업",
+    ],
+    descriptions: [
+      "{region} 중등 영어 과외는 교과서 본문, 시험 범위, 필수 어휘와 표현, 문법 개념, 문장 해석, 서술형·영작과 듣기 취약 유형을 함께 확인합니다.",
+      "{region}에서 중등 영어 과외를 찾는 학부모님을 위해 본문 해석, 독해 근거 찾기, 내신 오답 복습과 영작 보완 방향을 정리했습니다.",
+    ],
+    summaries: [
+      "{region} 중등 영어 수업은 교과서 본문과 시험 범위, 어휘·문법·문장 해석, 서술형과 듣기 취약 유형을 {focus} 관점에 맞춰 살핍니다.",
+      "{region}에서 중등 영어 과외를 고민하는 학생에게 필요한 필수 표현, 독해 근거, 내신 오답 복습 흐름을 정리했습니다.",
+    ],
+    openings: [
+      "중등 영어는 단어만 외우거나 문제만 많이 풀어서는 내신에서 안정되기 어렵습니다. 교과서 본문과 시험 범위 안에서 필수 어휘, 표현, 문법 개념, 문장 해석을 함께 연결해야 합니다.",
+      "중등 영어 내신은 본문 이해와 문법 적용, 독해 근거 찾기, 서술형·영작 표현이 같이 움직입니다. 수업에서는 학교 범위와 최근 오답을 기준으로 필요한 부분을 차근차근 나눕니다.",
+    ],
+    mainCaptions: [
+      "{region} 중등 영어 수업은 교과서 본문과 어휘·문법, 문장 해석, 서술형·영작을 내신 범위에 맞춰 확인합니다.",
+      "본문 해석과 문장 해석, 독해 근거 찾기, 듣기 취약 유형과 내신 오답 복습을 함께 봅니다.",
+    ],
+    learningStatuses: [
+      "교과서 본문은 외웠지만 문법과 문장 해석이 시험에서 흔들리는 학생",
+      "필수 어휘와 표현, 독해 근거, 서술형·영작 답안에서 자주 감점되는 학생",
+      "{focus}이 필요해 본문 분석과 내신 오답 복습을 함께 정리해야 하는 학생",
+    ],
+    recommendedTargets: [
+      "영어 교과서 본문과 시험 범위를 체계적으로 정리하고 싶은 학생",
+      "문법, 문장 해석, 독해 근거, 서술형·영작을 함께 보완해야 하는 학생",
+    ],
+    studentLeads: [
+      "영어는 단어 뜻을 알아도 문장 구조가 보이지 않으면 본문 해석과 독해 문항이 흔들릴 수 있습니다. 수업에서는 필수 어휘와 표현, 문법 개념, 문장 해석을 같이 확인합니다.",
+      "내신 오답은 어휘 부족, 문법 혼동, 본문 이해 부족, 듣기 취약 유형처럼 원인이 나뉩니다. 원인을 구분해야 복습 방향도 분명해집니다.",
+    ],
+    priorityBodies: [
+      "학교 시험 범위의 본문을 먼저 나누어 읽고, 필수 어휘와 표현을 문장 안에서 확인합니다. 문법 개념은 해석과 서술형·영작에 연결해 연습합니다.",
+      "독해 문항은 답의 근거가 되는 문장을 찾고, 듣기는 반복해서 놓치는 유형을 따로 확인합니다. 내신 오답은 본문, 어휘, 문법, 서술형으로 분류해 복습합니다.",
+    ],
+    middleImageAlt: "{region} 중등 영어 교과서 본문과 내신 오답 복습 안내",
+    middleCaptions: [
+      "교과서 본문과 문법 개념, 문장 해석을 연결해 영어 내신 오답 원인을 확인합니다.",
+      "필수 어휘, 문장 해석, 독해 근거, 서술형·영작을 시험 범위 안에서 정리합니다.",
+    ],
+    lessonIntros: [
+      "수업은 교과서 본문과 학교 시험 범위를 확인한 뒤 필수 어휘와 표현, 문법 개념, 문장 해석을 순서대로 연결합니다. 독해 문항은 근거를 찾고 서술형·영작은 문장 구조를 다듬습니다.",
+      "{focus} 관점에 맞춰 본문 분석, 어휘 복습, 문법 적용, 듣기 취약 유형, 내신 오답 복습을 나누어 봅니다. 시험 범위가 좁아도 원인별 복습은 빠뜨리지 않습니다.",
+    ],
+    lessonDifferences: [
+      "{region} 중등 영어 과외에서는 교과서 본문 암기에서 끝내지 않고 어휘와 표현, 문법, 문장 해석, 독해 근거를 내신 오답 복습으로 연결합니다.",
+      "{region} 중등 영어 수업은 학생의 {focus} 필요에 맞춰 서술형·영작과 듣기 취약 유형까지 함께 점검합니다.",
+    ],
+    stepSets: [
+      [
+        { title: "본문·시험 범위 확인", description: "학교 교과서 본문과 프린트 범위를 나누고 필수 어휘와 표현을 먼저 정리합니다." },
+        { title: "문법과 문장 해석", description: "문법 개념을 예문과 본문 문장에 적용해 해석이 막히는 지점을 확인합니다." },
+        { title: "서술형·영작 복습", description: "독해 근거를 찾고 서술형·영작 문장을 다듬으며 내신 오답을 유형별로 다시 봅니다." },
+      ],
+      [
+        { title: "필수 어휘 점검", description: "시험 범위의 단어와 표현을 문장 속 쓰임으로 확인하고 짧게 반복합니다." },
+        { title: "독해 근거 찾기", description: "질문이 요구하는 단서를 본문에서 표시하며 정답의 근거를 분명히 합니다." },
+        { title: "듣기 취약 유형", description: "대화 목적, 세부 정보, 숫자와 시각처럼 자주 놓치는 듣기 유형을 따로 확인합니다." },
+      ],
+    ],
+    consultIntros: [
+      "상담 전에는 학교 영어 시험 범위, 교과서 본문 단원, 최근 오답 유형과 듣기에서 자주 놓치는 부분을 알려주시면 좋습니다.",
+      "영어 상담에서는 어휘, 문법, 본문 해석, 서술형·영작 중 어느 부분이 가장 불안한지 먼저 확인합니다.",
+    ],
+    consultChecks: [
+      [
+        { title: "본문 범위", description: "교과서 단원과 학교 프린트" },
+        { title: "필수 어휘", description: "헷갈리는 단어와 표현" },
+        { title: "문법·해석", description: "문장 구조 이해 정도" },
+        { title: "서술형·영작", description: "답안 작성과 감점 이유" },
+      ],
+      [
+        { title: "독해 근거", description: "본문에서 단서 찾는 습관" },
+        { title: "듣기 유형", description: "자주 놓치는 대화와 정보" },
+        { title: "내신 오답", description: "어휘, 문법, 본문별 반복 실수" },
+        { title: "시험 일정", description: "남은 기간과 복습 가능 시간" },
+      ],
+    ],
+    faqs: [
+      [
+        { question: "중등 영어 내신 본문도 같이 보나요?", answer: "네. 교과서 본문과 학교 프린트 범위를 기준으로 어휘, 표현, 문법, 문장 해석을 함께 정리합니다." },
+        { question: "서술형이나 영작이 약해도 수업이 가능한가요?", answer: "가능합니다. 문장 구조와 핵심 표현을 확인한 뒤 짧은 문장부터 답안을 다듬습니다." },
+        { question: "듣기 취약 유형도 확인하나요?", answer: "네. 대화 목적, 세부 정보, 숫자와 시각처럼 자주 놓치는 유형을 따로 확인하고 복습합니다." },
+      ],
+      [
+        { question: "단어 암기는 어떻게 관리하나요?", answer: "단어 뜻만 외우지 않고 본문 문장 안에서 쓰임과 표현을 확인해 시험 문항과 연결합니다." },
+        { question: "문법이 어려운 학생은 어디부터 시작하나요?", answer: "시험 범위의 핵심 문법을 예문으로 확인하고 본문 해석과 서술형 문장에 적용합니다." },
+        { question: "내신 오답 복습은 어떻게 하나요?", answer: "오답을 어휘, 문법, 본문 이해, 독해 근거, 서술형으로 나누어 같은 원인이 반복되는지 봅니다." },
+      ],
+    ],
+    closingSentences: [
+      "학교 영어 시험 범위와 최근 오답, 서술형·영작에서 어려운 부분을 남겨주시면 본문 해석부터 차근차근 확인하겠습니다.",
+      "어휘, 문법, 독해 근거, 듣기 중 가장 불안한 부분을 알려주시면 중등 영어 수업 방향을 상담 때 정리하겠습니다.",
+    ],
+  },
+  math: {
+    focusLabel: "개념 연결과 오답 원인 분석",
+    titleSuffixes: [
+      "이전 단원과 현재 단원을 연결하는 수학 수업",
+      "공식의 원리와 풀이 과정을 함께 잡는 수업",
+      "계산 정확도와 서술형 풀이를 점검하는 수업",
+    ],
+    descriptions: [
+      "{region} 중등 수학 과외는 이전 단원과 현재 단원의 개념 연결, 공식의 원리 이해, 계산 정확도, 풀이 과정, 유형 적용과 오답 원인 분석을 함께 봅니다.",
+      "{region}에서 중등 수학 과외를 찾는 학부모님을 위해 서술형 풀이, 유형별 문제 적용, 계산 실수 보완과 내신 대비 흐름을 정리했습니다.",
+    ],
+    summaries: [
+      "{region} 중등 수학 수업은 개념 연결, 공식 원리, 계산 정확도, 풀이 과정, 서술형 풀이를 {focus} 관점에 맞춰 살핍니다.",
+      "{region}에서 중등 수학 과외를 고민하는 학생에게 필요한 유형 적용, 풀이 과정 정리, 오답 원인 분석 흐름을 정리했습니다.",
+    ],
+    openings: [
+      "중등 수학은 한 단원의 빈틈이 다음 단원까지 이어지기 쉽습니다. 공식만 외우기보다 왜 그런 공식이 나오는지 이해하고, 계산 정확도와 풀이 과정을 함께 점검해야 합니다.",
+      "중등 수학 내신은 개념 이해, 유형 적용, 서술형 풀이가 같이 필요합니다. 수업에서는 이전 단원과 현재 단원이 어떻게 연결되는지 확인하고 오답 원인을 나누어 봅니다.",
+    ],
+    mainCaptions: [
+      "{region} 중등 수학 수업은 개념 연결과 공식의 원리, 풀이 과정을 학생 상황에 맞춰 확인합니다.",
+      "계산 정확도, 유형별 문제 적용, 서술형 풀이와 오답 원인을 함께 점검합니다.",
+    ],
+    learningStatuses: [
+      "공식은 외웠지만 어떤 조건에서 적용해야 하는지 헷갈리는 학생",
+      "계산 실수와 풀이 과정 누락 때문에 서술형 감점이 반복되는 학생",
+      "{focus}이 필요해 개념 연결과 오답 원인 분석을 함께 정리해야 하는 학생",
+    ],
+    recommendedTargets: [
+      "이전 단원부터 현재 단원까지 수학 개념을 다시 연결해야 하는 학생",
+      "풀이 과정, 계산 정확도, 서술형 답안을 함께 보완하고 싶은 학생",
+    ],
+    studentLeads: [
+      "수학은 답이 맞아도 풀이 과정이 흔들리면 다음 유형에서 다시 막힐 수 있습니다. 수업에서는 개념 조건, 공식의 원리, 계산 과정, 서술형 표현을 함께 봅니다.",
+      "문제를 많이 풀어도 실수가 줄지 않는다면 오답 원인을 구분해야 합니다. 개념 부족인지, 계산 실수인지, 유형 적용이 어려운지 나누어 확인합니다.",
+    ],
+    priorityBodies: [
+      "현재 단원과 이전 단원의 연결을 먼저 확인하고, 공식의 원리와 조건을 대표 문제에 적용합니다. 이후 풀이 과정과 계산 실수를 함께 점검합니다.",
+      "유형별 문제를 풀 때 어떤 개념을 선택했는지 말로 설명하게 하고, 서술형 풀이에서는 식과 근거가 빠지지 않도록 답안을 정리합니다.",
+    ],
+    middleImageAlt: "{region} 중등 수학 개념 연결과 오답 원인 분석 안내",
+    middleCaptions: [
+      "개념 연결과 풀이 과정을 확인해 수학 오답 원인을 분명히 합니다.",
+      "공식의 원리, 계산 정확도, 서술형 풀이가 수업 안에서 이어지도록 봅니다.",
+    ],
+    lessonIntros: [
+      "수업은 이전 단원과 현재 단원의 개념 연결을 확인한 뒤 공식의 원리, 계산 정확도, 풀이 과정을 순서대로 봅니다. 학생이 풀이를 직접 설명하고 서술형 답안으로 정리하는 과정까지 확인합니다.",
+      "{focus} 관점에 맞춰 개념 설명, 대표 유형 적용, 서술형 풀이, 오답 원인 분석을 나누어 진행합니다. 단순 반복보다 왜 틀렸는지 확인하는 시간을 중요하게 봅니다.",
+    ],
+    lessonDifferences: [
+      "{region} 중등 수학 과외에서는 공식 암기에서 끝내지 않고 이전 단원과 현재 단원의 개념 연결, 계산 정확도, 풀이 과정을 함께 관리합니다.",
+      "{region} 중등 수학 수업은 학생의 {focus} 필요에 맞춰 유형별 문제 적용과 서술형 풀이, 오답 원인 분석을 연결합니다.",
+    ],
+    stepSets: [
+      [
+        { title: "단원 개념 연결", description: "이전 단원에서 이어지는 개념과 현재 단원의 조건을 확인해 빈틈을 찾습니다." },
+        { title: "공식 원리와 계산", description: "공식이 쓰이는 이유를 설명하고 계산 과정에서 실수가 나는 지점을 점검합니다." },
+        { title: "서술형 풀이 정리", description: "유형별 문제에 적용한 뒤 풀이 과정과 오답 원인을 서술형 답안으로 정리합니다." },
+      ],
+      [
+        { title: "개념 조건 확인", description: "문제에서 어떤 조건을 읽어야 하는지 표시하고 필요한 개념을 선택합니다." },
+        { title: "유형별 적용", description: "대표 유형에서 변형 유형까지 풀며 풀이 과정이 흔들리는 지점을 봅니다." },
+        { title: "오답 원인 분석", description: "계산 실수, 개념 혼동, 유형 선택 오류를 나누어 다음 복습 기준을 만듭니다." },
+      ],
+    ],
+    consultIntros: [
+      "상담 전에는 최근 수학 시험 범위, 어려운 단원, 계산 실수와 서술형 감점이 있었는지 알려주시면 좋습니다.",
+      "수학 상담에서는 이전 단원 공백, 공식 이해 정도, 풀이 과정 작성 습관, 오답 유형을 함께 확인합니다.",
+    ],
+    consultChecks: [
+      [
+        { title: "개념 연결", description: "이전 단원에서 이어지는 빈틈" },
+        { title: "공식 원리", description: "조건과 적용 이유 이해 정도" },
+        { title: "계산 정확도", description: "반복되는 계산 실수" },
+        { title: "서술형 풀이", description: "식과 풀이 과정 작성 습관" },
+      ],
+      [
+        { title: "시험 범위", description: "학교 진도와 평가 일정" },
+        { title: "유형 적용", description: "대표 유형과 변형 유형 반응" },
+        { title: "오답 원인", description: "개념, 계산, 조건 읽기 구분" },
+        { title: "복습 계획", description: "다음 수업 전 확인할 문제" },
+      ],
+    ],
+    faqs: [
+      [
+        { question: "중등 수학은 어떤 부분부터 확인하나요?", answer: "이전 단원과 현재 단원의 개념 연결을 먼저 보고, 공식의 원리, 계산 정확도, 풀이 과정 중 어디에서 막히는지 나누어 확인합니다." },
+        { question: "서술형 풀이도 연습하나요?", answer: "네. 식을 세운 이유와 풀이 과정을 답안에 남기는 습관을 함께 연습합니다." },
+        { question: "오답 원인 분석은 어떻게 하나요?", answer: "계산 실수, 개념 혼동, 조건 읽기, 유형 적용 오류를 나누어 비슷한 문제에서 반복되는지 봅니다." },
+      ],
+      [
+        { question: "공식 암기를 어려워하면 어떻게 하나요?", answer: "공식을 바로 외우기보다 원리와 조건을 확인한 뒤 대표 문제에 적용하며 기억하도록 돕습니다." },
+        { question: "문제를 많이 풀어도 실수가 줄지 않으면요?", answer: "문제 수를 늘리기 전에 어떤 단계에서 실수가 생기는지 풀이 과정을 함께 살펴봅니다." },
+        { question: "학교 진도와 맞춰 진행할 수 있나요?", answer: "가능합니다. 학교 범위를 먼저 확인하고 필요한 경우 이전 단원의 빈틈을 짧게 보완해 현재 진도와 연결합니다." },
+      ],
+    ],
+    closingSentences: [
+      "최근 수학 시험 범위와 어려운 단원, 풀이 과정에서 자주 막히는 부분을 남겨주시면 개념 연결부터 확인하겠습니다.",
+      "계산 실수, 공식 이해, 서술형 풀이 중 걱정되는 부분을 알려주시면 상담 때 필요한 수학 보완 순서를 정리하겠습니다.",
+    ],
+  },
+  social: {
+    focusLabel: "핵심 용어와 자료 해석",
+    titleSuffixes: [
+      "사회 핵심 용어와 자료 해석을 함께 잡는 수업",
+      "지도·도표·그래프 읽기를 내신 범위에 맞추는 수업",
+      "원인과 결과, 서술형 답안을 차근차근 정리하는 수업",
+    ],
+    descriptions: [
+      "{region} 중등 사회 과외는 핵심 용어와 교과 개념, 지도·도표·그래프 읽기, 원인과 결과, 자료 해석, 단원 흐름과 서술형 답안을 함께 확인합니다.",
+      "{region}에서 중등 사회 과외를 찾는 학부모님을 위해 자료 해석, 수행평가 준비, 단원별 흐름 정리와 내신 대비 방향을 정리했습니다.",
+    ],
+    summaries: [
+      "{region} 중등 사회 수업은 핵심 용어, 교과 개념, 지도·도표·그래프 읽기, 서술형 답안을 {focus} 관점에 맞춰 살핍니다.",
+      "{region}에서 중등 사회 과외를 고민하는 학생에게 필요한 원인과 결과 정리, 자료 해석, 수행평가 준비 흐름을 정리했습니다.",
+    ],
+    openings: [
+      "중등 사회는 넓은 범위를 외우는 과목처럼 보이지만 핵심 용어와 교과 개념의 흐름을 잡아야 자료 문항에서도 흔들리지 않습니다. 지도, 도표, 그래프를 읽고 원인과 결과를 설명하는 연습이 필요합니다.",
+      "중등 사회 내신은 단원 흐름 정리와 자료 해석, 서술형 답안이 함께 요구됩니다. 수업에서는 개념 용어를 먼저 정리하고 학교 범위의 자료와 수행평가까지 연결합니다.",
+    ],
+    mainCaptions: [
+      "{region} 중등 사회 수업은 핵심 용어와 자료 해석, 서술형 답안을 학생 상황에 맞춰 확인합니다.",
+      "지도·도표·그래프 읽기와 단원 흐름 정리가 함께 이어지도록 봅니다.",
+    ],
+    learningStatuses: [
+      "사회 용어를 외워도 자료 문항에서 원인과 결과를 연결하기 어려운 학생",
+      "지도, 도표, 그래프를 읽을 때 어떤 단서를 봐야 할지 헷갈리는 학생",
+      "{focus}이 필요해 단원 흐름과 서술형 답안을 함께 정리해야 하는 학생",
+    ],
+    recommendedTargets: [
+      "사회 핵심 용어와 교과 개념을 단원 흐름으로 정리하고 싶은 학생",
+      "자료 해석, 서술형 답안, 수행평가 준비를 함께 보완해야 하는 학생",
+    ],
+    studentLeads: [
+      "사회는 용어를 많이 외워도 자료가 바뀌면 틀리는 경우가 많습니다. 수업에서는 개념의 뜻, 원인과 결과, 지도·도표·그래프의 단서를 함께 확인합니다.",
+      "단원 흐름을 모르면 서술형 답안도 짧은 암기 문장에 머물기 쉽습니다. 사건과 현상의 배경, 변화, 결과를 나누어 정리해야 합니다.",
+    ],
+    priorityBodies: [
+      "학교 범위의 핵심 용어와 교과 개념을 먼저 정리하고, 지도·도표·그래프에서 읽어야 할 단서를 표시합니다. 이후 원인과 결과를 문장으로 설명하는 연습을 합니다.",
+      "단원별 흐름을 큰 틀로 잡은 뒤 자료 해석 문항과 서술형 답안을 연결합니다. 수행평가가 있으면 주제와 평가 기준에 맞춰 자료 정리도 함께 봅니다.",
+    ],
+    middleImageAlt: "{region} 중등 사회 핵심 용어와 자료 해석 학습 안내",
+    middleCaptions: [
+      "사회 핵심 용어와 자료 단서를 확인해 단원 흐름을 정리합니다.",
+      "원인과 결과, 지도·도표·그래프 읽기, 서술형 답안을 함께 봅니다.",
+    ],
+    lessonIntros: [
+      "수업은 핵심 용어와 교과 개념을 확인한 뒤 지도, 도표, 그래프 자료를 읽는 순서로 진행합니다. 학생이 원인과 결과를 직접 설명하고 서술형 답안으로 정리하는 과정까지 봅니다.",
+      "{focus} 관점에 맞춰 단원 흐름 정리, 자료 해석, 서술형 답안, 수행평가 준비를 나누어 진행합니다. 암기량보다 개념 사이의 관계를 이해하는 데 초점을 둡니다.",
+    ],
+    lessonDifferences: [
+      "{region} 중등 사회 과외에서는 용어 암기에서 끝내지 않고 핵심 개념, 자료 해석, 원인과 결과, 서술형 답안을 한 흐름으로 관리합니다.",
+      "{region} 중등 사회 수업은 학생의 {focus} 필요에 맞춰 지도·도표·그래프 읽기와 수행평가 준비를 함께 연결합니다.",
+    ],
+    stepSets: [
+      [
+        { title: "핵심 용어 정리", description: "학교 범위의 교과 개념과 용어를 단원 흐름에 맞춰 짧게 정리합니다." },
+        { title: "자료 해석 연습", description: "지도, 도표, 그래프에서 제목, 범례, 변화, 비교 기준을 확인합니다." },
+        { title: "서술형 답안 구성", description: "원인과 결과를 연결해 문장으로 설명하고 수행평가 자료도 함께 정리합니다." },
+      ],
+      [
+        { title: "단원 흐름 확인", description: "사회 현상과 제도의 배경, 변화, 결과를 큰 순서로 묶어 봅니다." },
+        { title: "지도·도표 읽기", description: "자료에서 먼저 볼 단서를 표시하고 문제의 요구와 연결합니다." },
+        { title: "수행평가 준비", description: "주제에 맞는 자료를 고르고 발표나 글쓰기 기준에 맞춰 내용을 정리합니다." },
+      ],
+    ],
+    consultIntros: [
+      "상담 전에는 학교 사회 시험 범위, 어려운 단원, 지도·도표·그래프 자료에서 헷갈렸던 부분을 알려주시면 좋습니다.",
+      "사회 상담에서는 핵심 용어, 자료 해석, 서술형 답안, 수행평가 일정 중 어디가 가장 부담인지 먼저 확인합니다.",
+    ],
+    consultChecks: [
+      [
+        { title: "핵심 용어", description: "헷갈리는 교과 개념" },
+        { title: "자료 해석", description: "지도, 도표, 그래프 읽기" },
+        { title: "원인·결과", description: "현상과 변화의 연결" },
+        { title: "서술형", description: "답안 구성과 표현" },
+      ],
+      [
+        { title: "시험 범위", description: "학교 진도와 평가 일정" },
+        { title: "단원 흐름", description: "큰 주제와 세부 개념 관계" },
+        { title: "수행평가", description: "과제 주제와 발표 일정" },
+        { title: "자료 준비", description: "프린트와 교과서 활용 정도" },
+      ],
+    ],
+    faqs: [
+      [
+        { question: "중등 사회는 암기 위주로 진행하나요?", answer: "핵심 용어는 정리하지만 암기만 하지 않습니다. 교과 개념의 원인과 결과, 지도·도표·그래프 자료 해석까지 함께 봅니다." },
+        { question: "자료 해석이 약한 학생도 괜찮을까요?", answer: "네. 제목, 범례, 변화, 비교 기준처럼 자료에서 먼저 봐야 할 단서를 차근차근 연습합니다." },
+        { question: "수행평가 준비도 가능한가요?", answer: "가능합니다. 주제와 평가 기준에 맞춰 자료 정리, 발표 흐름, 글쓰기 구성을 함께 확인합니다." },
+      ],
+      [
+        { question: "서술형 답안은 어떻게 연습하나요?", answer: "핵심 용어를 넣고 원인과 결과가 드러나도록 문장을 구성하는 방식으로 연습합니다." },
+        { question: "단원 흐름 정리는 어떻게 하나요?", answer: "개념을 낱개로 외우기보다 배경, 변화, 결과 순서로 묶어 큰 흐름을 먼저 잡습니다." },
+        { question: "상담 전에 어떤 자료가 도움이 되나요?", answer: "교과서 단원, 학교 프린트, 최근 틀린 자료 문항이나 수행평가 안내문이 있으면 수업 방향을 잡기 좋습니다." },
+      ],
+    ],
+    closingSentences: [
+      "최근 사회 시험 범위와 자료 문항에서 어려웠던 부분을 남겨주시면 핵심 용어와 단원 흐름부터 확인하겠습니다.",
+      "지도·도표·그래프 해석, 서술형 답안, 수행평가 중 걱정되는 부분을 알려주시면 상담 때 필요한 방향을 정리하겠습니다.",
+    ],
+  },
+  science: {
+    focusLabel: "과학 개념과 탐구 자료 해석",
+    titleSuffixes: [
+      "과학 개념과 실험 과정을 함께 이해하는 수업",
+      "그래프·표·그림 해석을 단원별로 정리하는 수업",
+      "탐구 문제와 서술형 답안을 차근차근 점검하는 수업",
+    ],
+    descriptions: [
+      "{region} 중등 과학 과외는 과학 개념과 원리, 실험 목적과 과정, 그래프·표·그림 해석, 단위 적용, 탐구 문제와 서술형 답안을 함께 확인합니다.",
+      "{region}에서 중등 과학 과외를 찾는 학부모님을 위해 오답 개념 보완, 자료 해석, 실험·탐구 흐름과 내신 대비 방향을 정리했습니다.",
+    ],
+    summaries: [
+      "{region} 중등 과학 수업은 개념과 원리, 실험 목적과 과정, 그래프·표·그림 해석, 탐구 문제를 {focus} 관점에 맞춰 살핍니다.",
+      "{region}에서 중등 과학 과외를 고민하는 학생에게 필요한 단위 적용, 서술형 답안, 오답 개념 보완 흐름을 정리했습니다.",
+    ],
+    openings: [
+      "중등 과학은 용어만 외워서는 실험·탐구 문항이나 자료 해석에서 흔들릴 수 있습니다. 개념과 원리를 이해하고 실험 목적, 과정, 결과를 연결해 보는 연습이 필요합니다.",
+      "중등 과학 내신은 그래프, 표, 그림을 읽고 탐구 조건을 설명하는 힘이 중요합니다. 수업에서는 단원별 개념과 오답을 확인하고 서술형 답안으로 표현하는 과정까지 봅니다.",
+    ],
+    mainCaptions: [
+      "{region} 중등 과학 수업은 개념과 원리, 실험·탐구 자료 해석, 그래프 읽기를 학생 상황에 맞춰 확인합니다.",
+      "그래프·표·그림 읽기와 서술형 답안, 오답 개념 보완을 함께 봅니다.",
+    ],
+    learningStatuses: [
+      "과학 용어는 외웠지만 실험 목적과 결과를 연결해 설명하기 어려운 학생",
+      "그래프, 표, 그림 자료에서 변화와 관계를 읽는 데 시간이 걸리는 학생",
+      "{focus}이 필요해 개념 원리와 탐구 자료 해석을 함께 정리해야 하는 학생",
+    ],
+    recommendedTargets: [
+      "과학 개념과 원리를 실험·탐구 과정과 연결하고 싶은 학생",
+      "자료 해석, 단위 적용, 서술형 답안, 오답 개념 보완이 필요한 학생",
+    ],
+    studentLeads: [
+      "과학은 개념을 안다고 생각해도 실험 조건이나 자료가 바뀌면 헷갈릴 수 있습니다. 수업에서는 원리, 실험 목적, 과정, 결과, 자료 해석을 함께 확인합니다.",
+      "오답이 반복된다면 용어 암기 부족인지, 자료 해석의 단서를 놓친 것인지, 단위 적용이 흔들린 것인지 나누어 봐야 합니다.",
+    ],
+    priorityBodies: [
+      "학교 범위의 과학 개념과 원리를 먼저 정리하고, 실험 목적과 과정을 학생이 말로 설명해봅니다. 그래프·표·그림 자료는 변화와 관계를 표시하며 확인합니다.",
+      "탐구 문제는 조건, 결과, 해석을 나누어 보고 서술형 답안에는 핵심 개념과 이유가 들어가도록 다듬습니다. 틀린 문항은 관련 개념으로 다시 연결합니다.",
+    ],
+    middleImageAlt: "{region} 중등 과학 개념과 탐구 자료 해석 학습 안내",
+    middleCaptions: [
+      "과학 개념과 실험 과정, 그래프 단서를 연결해 탐구 문항의 오답 원인을 확인합니다.",
+      "그래프·표·그림 해석과 서술형 답안이 수업 안에서 이어지도록 봅니다.",
+    ],
+    lessonIntros: [
+      "수업은 과학 개념과 원리를 확인한 뒤 실험 목적, 과정, 결과를 연결해 봅니다. 그래프·표·그림 자료를 해석하고 탐구 문제와 서술형 답안으로 정리하는 과정까지 확인합니다.",
+      "{focus} 관점에 맞춰 단원별 개념, 실험·탐구 자료, 단위 적용, 오답 개념 보완을 나누어 진행합니다. 학생이 이유를 설명할 수 있는지 계속 확인합니다.",
+    ],
+    lessonDifferences: [
+      "{region} 중등 과학 과외에서는 용어 암기에서 끝내지 않고 개념과 원리, 실험 과정, 자료 해석, 서술형 답안을 한 흐름으로 관리합니다.",
+      "{region} 중등 과학 수업은 학생의 {focus} 필요에 맞춰 탐구 문제와 오답 개념 보완을 단원별로 연결합니다.",
+    ],
+    stepSets: [
+      [
+        { title: "개념과 원리 확인", description: "단원별 핵심 개념을 정리하고 현상이나 예시와 연결해 설명합니다." },
+        { title: "실험·자료 해석", description: "실험 목적과 과정을 확인한 뒤 그래프, 표, 그림에서 변화와 관계를 읽습니다." },
+        { title: "탐구·서술형 정리", description: "탐구 문제의 조건과 결과를 나누고 서술형 답안에 이유를 담아 정리합니다." },
+      ],
+      [
+        { title: "오답 개념 보완", description: "틀린 문항과 관련된 개념을 다시 찾아 단원 흐름 안에서 연결합니다." },
+        { title: "단위 적용 확인", description: "문항에서 필요한 단위와 조건을 표시하고 자료 해석에 맞게 사용합니다." },
+        { title: "그림·표 설명", description: "그림과 표가 보여주는 변화를 학생이 자기 말로 설명하도록 연습합니다." },
+      ],
+    ],
+    consultIntros: [
+      "상담 전에는 학교 과학 시험 범위, 어려운 단원, 실험·탐구 자료나 서술형 답안에서 막혔던 부분을 알려주시면 좋습니다.",
+      "과학 상담에서는 개념 이해, 그래프·표·그림 해석, 단위 적용, 오답 개념 중 어디가 가장 불안한지 먼저 확인합니다.",
+    ],
+    consultChecks: [
+      [
+        { title: "개념·원리", description: "헷갈리는 과학 단원" },
+        { title: "실험 과정", description: "목적, 조건, 결과 이해" },
+        { title: "자료 해석", description: "그래프, 표, 그림 읽기" },
+        { title: "서술형", description: "탐구 이유와 답안 표현" },
+      ],
+      [
+        { title: "시험 범위", description: "학교 진도와 평가 일정" },
+        { title: "단위 적용", description: "문항 조건과 단위 확인" },
+        { title: "탐구 문제", description: "조건과 결과 연결" },
+        { title: "오답 개념", description: "반복해서 틀리는 개념" },
+      ],
+    ],
+    faqs: [
+      [
+        { question: "중등 과학은 어떤 부분부터 확인하나요?", answer: "단원별 개념과 원리를 먼저 보고, 실험 목적과 과정, 그래프·표·그림 해석, 탐구 문제 중 어디에서 막히는지 나누어 확인합니다." },
+        { question: "그래프나 표 해석도 같이 보나요?", answer: "네. 제목, 축, 단위, 변화, 비교 기준을 확인하며 자료가 말하는 관계를 읽는 연습을 합니다." },
+        { question: "서술형 답안은 어떻게 준비하나요?", answer: "핵심 개념과 이유가 들어가도록 문장을 구성하고, 실험 결과를 근거로 설명하는 연습을 합니다." },
+      ],
+      [
+        { question: "실험 내용을 어려워하면 어떻게 하나요?", answer: "실험 목적, 조건, 과정, 결과를 순서대로 정리하고 교과 개념과 연결해 이해하도록 돕습니다." },
+        { question: "오답 개념 보완은 어떻게 하나요?", answer: "틀린 문항과 연결된 개념을 다시 찾아 자료 해석이나 탐구 조건에서 놓친 부분을 확인합니다." },
+        { question: "단위 적용도 확인하나요?", answer: "필요한 경우 문항에서 요구하는 단위와 조건을 표시해 자료 해석과 답안 작성에 맞게 사용합니다." },
+      ],
+    ],
+    closingSentences: [
+      "최근 과학 시험 범위와 실험·탐구 자료에서 어려웠던 부분을 남겨주시면 개념과 원리부터 확인하겠습니다.",
+      "그래프·표·그림 해석, 단위 적용, 서술형 답안 중 걱정되는 부분을 알려주시면 상담 때 필요한 방향을 정리하겠습니다.",
+    ],
+  },
+  koreanHistory: {
+    focusLabel: "시대 흐름과 사료 해석",
+    titleSuffixes: [
+      "시대 흐름과 사건 연결을 함께 잡는 수업",
+      "연표 정리와 사료·지도 해석을 내신에 맞추는 수업",
+      "헷갈리는 시대 비교와 서술형 답안을 정리하는 수업",
+    ],
+    descriptions: [
+      "{region} 중등 한국사 과외는 시대 흐름과 순서, 인물·사건·제도 연결, 연표 정리, 사료와 지도 해석, 원인과 결과, 서술형 답안을 함께 확인합니다.",
+      "{region}에서 중등 한국사 과외를 찾는 학부모님을 위해 헷갈리는 시대 비교, 사건의 원인과 결과, 내신 오답 복습 방향을 정리했습니다.",
+    ],
+    summaries: [
+      "{region} 중등 한국사 수업은 시대 흐름, 인물·사건·제도 연결, 사료와 지도 해석, 서술형 답안을 {focus} 관점에 맞춰 살핍니다.",
+      "{region}에서 중등 한국사 과외를 고민하는 학생에게 필요한 연표 정리, 시대 비교, 사건의 원인과 결과 정리 흐름을 안내합니다.",
+    ],
+    openings: [
+      "중등 한국사는 사건 이름만 외우면 시대 순서와 원인·결과가 쉽게 헷갈립니다. 시대 흐름을 먼저 잡고 인물, 사건, 제도, 사료와 지도를 연결해 보는 연습이 필요합니다.",
+      "중등 한국사 내신은 연표 정리와 사료 해석, 헷갈리는 시대 비교가 함께 필요합니다. 수업에서는 사건의 배경과 결과를 문장으로 설명하는 과정까지 확인합니다.",
+    ],
+    mainCaptions: [
+      "{region} 중등 한국사 수업은 시대 흐름과 사료·지도 해석, 서술형 답안을 학생 상황에 맞춰 확인합니다.",
+      "연표 정리와 인물·사건·제도 연결이 수업 안에서 이어지도록 봅니다.",
+    ],
+    learningStatuses: [
+      "한국사 사건 이름은 알아도 시대 순서와 원인·결과가 헷갈리는 학생",
+      "사료와 지도 자료에서 어느 시대의 단서인지 찾기 어려운 학생",
+      "{focus}이 필요해 연표 정리와 헷갈리는 시대 비교를 함께 해야 하는 학생",
+    ],
+    recommendedTargets: [
+      "한국사 시대 흐름과 사건의 순서를 체계적으로 정리하고 싶은 학생",
+      "사료·지도 해석, 시대 비교, 서술형 답안을 함께 보완해야 하는 학생",
+    ],
+    studentLeads: [
+      "한국사는 인물과 사건을 따로 외우면 시험 선지에서 헷갈리기 쉽습니다. 수업에서는 시대 흐름, 제도 변화, 사건의 원인과 결과를 연결해 확인합니다.",
+      "사료 문항은 한두 단어만 보고 판단하기보다 시대의 배경과 지도 단서를 함께 읽어야 합니다. 연표와 자료 해석을 같이 연습합니다.",
+    ],
+    priorityBodies: [
+      "학교 범위의 시대 흐름과 큰 순서를 먼저 잡고, 인물·사건·제도를 연표 안에 배치합니다. 이후 사료와 지도에서 시대 단서를 찾고 원인과 결과를 문장으로 정리합니다.",
+      "헷갈리는 시대는 공통점과 차이점을 비교하며 정리합니다. 틀린 문항은 사건 이름보다 왜 그 시대인지 판단 근거를 다시 확인합니다.",
+    ],
+    middleImageAlt: "{region} 중등 한국사 시대 흐름과 사료 해석 학습 안내",
+    middleCaptions: [
+      "시대 흐름과 연표를 확인해 한국사 선지 판단의 기준을 만듭니다.",
+      "인물·사건·제도, 사료와 지도 해석, 서술형 답안을 함께 봅니다.",
+    ],
+    lessonIntros: [
+      "수업은 시대 흐름과 순서를 먼저 확인한 뒤 인물, 사건, 제도를 연표 안에서 연결합니다. 사료와 지도 자료를 읽고 사건의 원인과 결과를 서술형 답안으로 정리합니다.",
+      "{focus} 관점에 맞춰 연표 정리, 사료 해석, 지도 읽기, 헷갈리는 시대 비교를 나누어 진행합니다. 사건을 외우는 데서 끝나지 않고 판단 근거를 찾습니다.",
+    ],
+    lessonDifferences: [
+      "{region} 중등 한국사 과외에서는 사건 암기에서 끝내지 않고 시대 흐름과 순서, 인물·사건·제도 연결, 사료와 지도 해석을 함께 관리합니다.",
+      "{region} 중등 한국사 수업은 학생의 {focus} 필요에 맞춰 연표 정리와 헷갈리는 시대 비교, 서술형 답안을 연결합니다.",
+    ],
+    stepSets: [
+      [
+        { title: "시대 흐름 정리", description: "학교 범위의 시대 순서와 큰 사건을 연표로 묶어 전체 흐름을 잡습니다." },
+        { title: "사료·지도 해석", description: "인물, 사건, 제도 단서를 사료와 지도에서 찾아 어느 시대인지 판단합니다." },
+        { title: "원인·결과 답안", description: "사건의 배경과 결과를 연결해 서술형 답안으로 정리합니다." },
+      ],
+      [
+        { title: "인물·제도 연결", description: "주요 인물과 제도를 사건 흐름 안에 배치해 암기 부담을 줄입니다." },
+        { title: "헷갈리는 시대 비교", description: "비슷한 사건과 제도를 공통점과 차이점으로 나누어 구분합니다." },
+        { title: "오답 근거 확인", description: "틀린 선지가 어느 시대와 맞지 않는지 근거를 다시 찾습니다." },
+      ],
+    ],
+    consultIntros: [
+      "상담 전에는 학교 한국사 시험 범위, 헷갈리는 시대, 사료나 지도 문항에서 어려웠던 부분을 알려주시면 좋습니다.",
+      "한국사 상담에서는 연표 정리, 인물·사건·제도 연결, 서술형 답안, 수행평가 일정 중 어디가 가장 부담인지 먼저 확인합니다.",
+    ],
+    consultChecks: [
+      [
+        { title: "시대 흐름", description: "순서와 큰 사건 이해" },
+        { title: "인물·제도", description: "사건과 제도의 연결" },
+        { title: "사료·지도", description: "자료 속 시대 단서 찾기" },
+        { title: "서술형", description: "원인과 결과 답안 구성" },
+      ],
+      [
+        { title: "시험 범위", description: "학교 진도와 평가 일정" },
+        { title: "연표 정리", description: "시대별 사건 배치" },
+        { title: "시대 비교", description: "헷갈리는 사건과 제도" },
+        { title: "수행평가", description: "과제 주제와 자료 준비" },
+      ],
+    ],
+    faqs: [
+      [
+        { question: "중등 한국사는 연표 암기만 하면 되나요?", answer: "연표는 기준을 잡는 도구입니다. 시대 흐름과 함께 인물, 사건, 제도, 사료와 지도를 연결해 판단하는 연습이 필요합니다." },
+        { question: "사료 해석이 어려운 학생도 괜찮을까요?", answer: "네. 사료 속 핵심 단어와 시대 배경을 함께 확인해 어느 시대의 자료인지 찾는 방식으로 연습합니다." },
+        { question: "헷갈리는 시대 비교는 어떻게 하나요?", answer: "비슷한 사건과 제도를 공통점과 차이점으로 나누고, 지도나 사료 단서까지 연결해 정리합니다." },
+      ],
+      [
+        { question: "서술형 답안도 같이 준비하나요?", answer: "네. 사건의 원인과 결과, 제도의 변화가 드러나도록 핵심어를 넣어 답안을 구성합니다." },
+        { question: "인물과 사건을 자주 헷갈리면요?", answer: "인물을 따로 외우기보다 해당 시대의 사건과 제도 흐름 안에 배치해 기억하도록 돕습니다." },
+        { question: "상담 전에 어떤 자료가 도움이 되나요?", answer: "시험 범위, 학교 프린트, 최근 틀린 사료·지도 문항이나 수행평가 안내문이 있으면 좋습니다." },
+      ],
+    ],
+    closingSentences: [
+      "최근 한국사 시험 범위와 헷갈리는 시대, 사료·지도 문항에서 어려웠던 부분을 남겨주시면 시대 흐름부터 확인하겠습니다.",
+      "연표 정리, 시대 비교, 서술형 답안 중 걱정되는 부분을 알려주시면 상담 때 필요한 한국사 보완 순서를 정리하겠습니다.",
+    ],
+  },
+};
+
 const elementarySubjectDetails: Record<SubjectKey, ElementarySubjectDetail> = {
   korean: {
     focusLabel: "어휘와 문장 이해",
@@ -972,8 +1604,38 @@ function applyElementaryTemplate(text: string, page: TutoringPage, subjectLabel:
     .replaceAll("{subject}", subjectLabel);
 }
 
+function applyMiddleTemplate(
+  text: string,
+  page: TutoringPage,
+  subjectLabel: string,
+  focusLabel: string,
+) {
+  return text
+    .replaceAll("{region}", page.지역)
+    .replaceAll("{subject}", subjectLabel)
+    .replaceAll("{focus}", focusLabel);
+}
+
 function getElementarySubjectDetail(subjectKey: SubjectKey) {
   return elementarySubjectDetails[subjectKey];
+}
+
+function getMiddleSubjectDetail(subjectKey: SubjectKey) {
+  return middleSubjectDetails[subjectKey];
+}
+
+function getMiddleFocusLabel(detail: MiddleSubjectDetail, focusLabel?: string) {
+  const trimmedFocusLabel = focusLabel?.trim();
+
+  if (!trimmedFocusLabel || trimmedFocusLabel === detail.focusLabel) {
+    return detail.focusLabel;
+  }
+
+  if (trimmedFocusLabel.includes(detail.focusLabel)) {
+    return trimmedFocusLabel;
+  }
+
+  return `${withJosa(trimmedFocusLabel, "을를")} 위한 ${detail.focusLabel}`;
 }
 
 export function getElementaryLocalSeoText(
@@ -999,6 +1661,35 @@ export function getElementaryLocalSeoText(
     description: applyElementaryTemplate(pickStable(detail.descriptions, page.slug, "elementary-description"), page, subjectLabel),
     summary: applyElementaryTemplate(pickStable(detail.summaries, page.slug, "elementary-summary"), page, subjectLabel),
     focusLabel: detail.focusLabel,
+  };
+}
+
+export function getMiddleLocalSeoText(
+  page: TutoringPage,
+  serviceName: string,
+  focusLabel?: string,
+): MiddleLocalSeoText | null {
+  if (!isRegionalLocalTutoringPage(page)) {
+    return null;
+  }
+
+  const gradeKey = getGradeKey(serviceName);
+  const subjectKey = getSubjectKey(serviceName);
+
+  if (gradeKey !== "middle" || !subjectKey) {
+    return null;
+  }
+
+  const subjectLabel = subjectLabels[subjectKey];
+  const detail = getMiddleSubjectDetail(subjectKey);
+  const middleFocusLabel = getMiddleFocusLabel(detail, focusLabel);
+  const seed = `${page.slug}:${page.콘텐츠관점}:${page.학습상황}`;
+
+  return {
+    titleSuffix: applyMiddleTemplate(pickStable(detail.titleSuffixes, seed, "middle-title"), page, subjectLabel, middleFocusLabel),
+    description: applyMiddleTemplate(pickStable(detail.descriptions, seed, "middle-description"), page, subjectLabel, middleFocusLabel),
+    summary: applyMiddleTemplate(pickStable(detail.summaries, seed, "middle-summary"), page, subjectLabel, middleFocusLabel),
+    focusLabel: middleFocusLabel,
   };
 }
 
@@ -1105,7 +1796,7 @@ const localAssignmentFocus: Record<GradeKey, Record<SubjectKey, string>> = {
     english: "어휘·문법·독해 지도 경험과 학교 시험 범위",
     math: "학생의 현재 개념 수준과 학교 시험 준비 상황",
     social: "핵심 개념·자료 해석 지도 경험과 내신 대비 흐름",
-    science: "실험·탐구·계산 문제 지도 경험과 단원별 오답 원인",
+    science: "실험·탐구·자료 해석 지도 경험과 단원별 오답 원인",
     koreanHistory: "시대 흐름·사료 분석 지도 경험과 시험 선지 판단 습관",
   },
   high: {
@@ -1224,6 +1915,31 @@ export function getLocalTutoringDetailContent(
       consultChecks: pickStable(detail.consultChecks, page.slug, "elementary-checks"),
       faqs: pickStable(detail.faqs, page.slug, "elementary-faqs"),
       closingSentence: applyElementaryTemplate(pickStable(detail.closingSentences, page.slug, "elementary-closing"), page, subjectLabel),
+    };
+  }
+
+  if (gradeKey === "middle") {
+    const subjectLabel = subjectLabels[subjectKey];
+    const detail = getMiddleSubjectDetail(subjectKey);
+    const seed = `${page.slug}:${page.콘텐츠관점}:${page.학습상황}`;
+    const middleFocusLabel = getMiddleFocusLabel(detail, focusLabel);
+
+    return {
+      opening: applyMiddleTemplate(pickStable(detail.openings, seed, "middle-opening"), page, subjectLabel, middleFocusLabel),
+      mainCaption: applyMiddleTemplate(pickStable(detail.mainCaptions, seed, "middle-main-caption"), page, subjectLabel, middleFocusLabel),
+      studentLead: `${applyMiddleTemplate(pickStable(detail.studentLeads, seed, "middle-student"), page, subjectLabel, middleFocusLabel)} 이 페이지에서 중심으로 살펴볼 방향은 ${middleFocusLabel}입니다.`,
+      priorityBody: applyMiddleTemplate(pickStable(detail.priorityBodies, seed, "middle-priority"), page, subjectLabel, middleFocusLabel),
+      learningStatus: applyMiddleTemplate(pickStable(detail.learningStatuses, seed, "middle-learning-status"), page, subjectLabel, middleFocusLabel),
+      recommendedTarget: applyMiddleTemplate(pickStable(detail.recommendedTargets, seed, "middle-recommended-target"), page, subjectLabel, middleFocusLabel),
+      middleImageAlt: applyMiddleTemplate(detail.middleImageAlt, page, subjectLabel, middleFocusLabel),
+      middleCaption: applyMiddleTemplate(pickStable(detail.middleCaptions, seed, "middle-middle-caption"), page, subjectLabel, middleFocusLabel),
+      lessonIntro: applyMiddleTemplate(pickStable(detail.lessonIntros, seed, "middle-lesson-intro"), page, subjectLabel, middleFocusLabel),
+      lessonDifference: applyMiddleTemplate(pickStable(detail.lessonDifferences, seed, "middle-lesson-difference"), page, subjectLabel, middleFocusLabel),
+      steps: pickStable(detail.stepSets, seed, "middle-steps"),
+      consultIntro: applyMiddleTemplate(pickStable(detail.consultIntros, seed, "middle-consult"), page, subjectLabel, middleFocusLabel),
+      consultChecks: pickStable(detail.consultChecks, seed, "middle-checks"),
+      faqs: pickStable(detail.faqs, seed, "middle-faqs"),
+      closingSentence: applyMiddleTemplate(pickStable(detail.closingSentences, seed, "middle-closing"), page, subjectLabel, middleFocusLabel),
     };
   }
 
