@@ -5,9 +5,7 @@ export function SiteHeader() {
     <header className="site-header home-header">
       <div className="shell header-inner">
         <Link className="brand" href="/" aria-label="호빈샘 과외 홈">
-          <span className="brand-mark" aria-hidden="true">
-            호
-          </span>
+          <span className="brand-mark" aria-hidden="true" />
           <span>
             <strong>호빈샘 과외</strong>
             <small>학생 맞춤 1:1 과외</small>

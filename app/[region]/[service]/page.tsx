@@ -21,6 +21,7 @@ import {
   withJosa,
 } from "@/lib/korean-text";
 import {
+  getElementaryLocalSeoText,
   getLocalTutoringDetailContent,
   getTeacherAssignmentGuideIntro,
 } from "@/lib/tutoring-content";
@@ -141,13 +142,14 @@ function hashText(text: string) {
 
 function getTutoringImage(page: TutoringPage, offset = 0) {
   const configuredImage = page.이미지파일명?.trim();
-  const usesConfiguredExamImage =
+  const usesConfiguredCoverImage =
     page.page_type === "exam-tutoring" ||
-    page.page_type === "online-exam-tutoring";
+    page.page_type === "online-exam-tutoring" ||
+    page.slug === "ilsan/elementary-english";
 
   if (
     offset === 0 &&
-    usesConfiguredExamImage &&
+    usesConfiguredCoverImage &&
     configuredImage &&
     /^[a-zA-Z0-9._-]+\.(?:png|jpe?g|webp|avif)$/i.test(configuredImage)
   ) {
@@ -170,6 +172,11 @@ function getDetailTitle(page: TutoringPage) {
   const region = page["지역"]?.trim() || "지역";
   const service = formatServiceName(page["업종"]?.trim() || "맞춤 과외");
   const keyword = formatTutoringKeyword(page["메인키워드"]?.trim() || `${region} ${service}`);
+  const elementarySeo = getElementaryLocalSeoText(page, service);
+  if (elementarySeo) {
+    return `${keyword}, ${elementarySeo.titleSuffix}`;
+  }
+
   const focus = page["콘텐츠관점"]?.trim();
   const suffix =
     titleSuffixByFocus[focus] ||
@@ -179,15 +186,48 @@ function getDetailTitle(page: TutoringPage) {
 }
 
 function getFocusLabel(page: TutoringPage) {
+  const serviceName = formatServiceName(page["업종"]?.trim() || "맞춤 과외");
+  const elementarySeo = getElementaryLocalSeoText(page, serviceName);
+  if (elementarySeo) {
+    return elementarySeo.focusLabel;
+  }
+
   const focus = page["콘텐츠관점"]?.trim();
   return focusLabelByValue[focus] || "학생 맞춤 학습";
 }
 
 function getDetailDescription(page: TutoringPage, serviceName: string, focusLabel: string) {
+  const elementarySeo = getElementaryLocalSeoText(page, serviceName);
+  if (elementarySeo) {
+    return elementarySeo.description;
+  }
+
   return `${page["지역"]}에서 ${withJosa(
     serviceName,
     "을를",
   )} 찾는 학부모님을 위해 ${focusLabel}, 현재 수준과 학교 진도에 맞춘 수업 방향을 정리했습니다.`;
+}
+
+function getDetailSummary(page: TutoringPage, serviceName: string, focusLabel: string) {
+  const elementarySeo = getElementaryLocalSeoText(page, serviceName);
+  if (elementarySeo) {
+    return elementarySeo.summary;
+  }
+
+  return `${page.지역}에서 ${withJosa(serviceName, "을를")} 찾는 학부모님을 위해 학생의 현재 수준, 약한 단원과 학교 진도를 살펴보고 ${focusLabel}에 맞춘 수업 방향을 정리했습니다.`;
+}
+
+function getCoverImageAlt(page: TutoringPage, serviceName: string) {
+  if (page.slug === "ilsan/elementary-english") {
+    return "일산 초등 영어 과외 학습 안내";
+  }
+
+  const elementarySeo = getElementaryLocalSeoText(page, serviceName);
+  if (elementarySeo) {
+    return `${formatTutoringKeyword(`${page.지역} ${serviceName}`)} 학습 안내`;
+  }
+
+  return `${formatTutoringKeyword(`${page.지역} ${serviceName}`)} 학습 안내 이미지`;
 }
 
 function getBreadcrumbParent(page: TutoringPage) {
@@ -241,6 +281,9 @@ export default async function TutoringDetailPage({ params }: PageProps) {
   const focusLabel = getFocusLabel(page);
   const canonicalUrl = getAbsoluteUrl(getPublicPageSlug(page));
   const detailDescription = getDetailDescription(page, serviceName, focusLabel);
+  const detailSummary = getDetailSummary(page, serviceName, focusLabel);
+  const elementarySeo = getElementaryLocalSeoText(page, serviceName);
+  const detailMetaLabel = elementarySeo?.focusLabel || page.콘텐츠관점;
   const relatedLinks = getRelatedTutoringLinks(page);
   const coverImage = getTutoringImage(page, 0);
   const middleImage = getTutoringImage(page, 3);
@@ -337,16 +380,12 @@ export default async function TutoringDetailPage({ params }: PageProps) {
 
             <h1>{detailTitle}</h1>
 
-            <p className="detail-summary">
-              {page.지역}에서 {withJosa(serviceName, "을를")} 찾는 학부모님을 위해 학생의
-              현재 수준, 약한 단원과 학교 진도를 살펴보고 {focusLabel}에 맞춘
-              수업 방향을 정리했습니다.
-            </p>
+            <p className="detail-summary">{detailSummary}</p>
 
             <div className="detail-meta">
               <span>호빈샘 과외</span>
               <i />
-              <span>{page.콘텐츠관점}</span>
+              <span>{detailMetaLabel}</span>
               <i />
               <span>약 5분 읽기</span>
             </div>
@@ -355,7 +394,7 @@ export default async function TutoringDetailPage({ params }: PageProps) {
           <figure className="detail-photo-card detail-photo-card-main">
             <img
               src={coverImage}
-              alt={`${formatTutoringKeyword(`${page.지역} ${serviceName}`)} 학습 안내 이미지`}
+              alt={getCoverImageAlt(page, serviceName)}
             />
             <figcaption>
               {detailContent?.mainCaption ||
@@ -391,12 +430,13 @@ export default async function TutoringDetailPage({ params }: PageProps) {
 
               <div className="learning-status-card">
                 <small>현재 학습상황</small>
-                <strong>{page.학습상황}</strong>
+                <strong>{detailContent?.learningStatus || page.학습상황}</strong>
               </div>
 
               {detailContent ? (
                 <p>
-                  특히 <strong>{page.추천대상}</strong>이라면 {detailContent.priorityBody}
+                  특히 <strong>{detailContent.recommendedTarget || page.추천대상}</strong>
+                  이라면 {detailContent.priorityBody}
                 </p>
               ) : (
                 <p>

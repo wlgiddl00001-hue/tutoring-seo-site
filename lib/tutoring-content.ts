@@ -30,6 +30,8 @@ export type LocalTutoringDetailContent = {
   mainCaption: string;
   studentLead: string;
   priorityBody: string;
+  learningStatus?: string;
+  recommendedTarget?: string;
   middleImageAlt: string;
   middleCaption: string;
   lessonIntro: string;
@@ -338,6 +340,668 @@ const subjectContent: Record<
   },
 };
 
+type ElementarySubjectDetail = {
+  focusLabel: string;
+  titleSuffixes: string[];
+  descriptions: string[];
+  summaries: string[];
+  openings: string[];
+  mainCaptions: string[];
+  learningStatuses: string[];
+  recommendedTargets: string[];
+  studentLeads: string[];
+  priorityBodies: string[];
+  middleImageAlt: string;
+  middleCaptions: string[];
+  lessonIntros: string[];
+  lessonDifferences: string[];
+  stepSets: LessonStep[][];
+  consultIntros: string[];
+  consultChecks: ConsultCheck[][];
+  faqs: DetailFaq[][];
+  closingSentences: string[];
+};
+
+type ElementaryLocalSeoText = {
+  titleSuffix: string;
+  description: string;
+  summary: string;
+  focusLabel: string;
+};
+
+const elementarySubjectDetails: Record<SubjectKey, ElementarySubjectDetail> = {
+  korean: {
+    focusLabel: "어휘와 문장 이해",
+    titleSuffixes: [
+      "어휘와 읽기 습관을 차근차근 잡는 수업",
+      "문장 이해와 글쓰기 기초를 함께 다지는 수업",
+      "소리 내어 읽기부터 요약까지 연결하는 학습",
+    ],
+    descriptions: [
+      "{region}에서 초등 국어 과외를 찾는 학부모님을 위해 어휘, 소리 내어 읽기, 문장 이해, 중심 내용 찾기와 글쓰기까지 수업 방향을 정리했습니다.",
+      "{region} 초등 국어 과외는 글을 읽고 뜻을 말하는 과정부터 요약과 짧은 글쓰기까지 아이의 속도에 맞춰 확인합니다.",
+    ],
+    summaries: [
+      "{region} 초등 국어 수업은 어휘, 소리 내어 읽기, 문장 이해, 중심 내용 찾기, 요약과 글쓰기를 한 흐름으로 살핍니다.",
+      "{region}에서 초등 국어 과외를 고민하는 학부모님을 위해 읽기 자신감과 글쓰기 기초를 함께 잡는 방향을 정리했습니다.",
+    ],
+    openings: [
+      "초등 국어는 글을 많이 읽는 것만으로 충분하지 않습니다. 낯선 어휘를 이해하고, 문장을 소리 내어 읽으며, 중심 내용을 자기 말로 정리하는 과정이 함께 필요합니다.",
+      "초등 시기의 국어 수업은 긴 지문을 빠르게 푸는 방식보다 아이가 문장을 끝까지 읽고 뜻을 파악하는 힘을 기르는 데서 시작합니다.",
+    ],
+    mainCaptions: [
+      "{region} 초등 국어 수업은 어휘, 읽기, 요약, 글쓰기 흐름을 아이의 수준에 맞춰 확인합니다.",
+      "문장 이해와 중심 내용 찾기가 자연스럽게 이어지도록 읽기 습관을 살핍니다.",
+    ],
+    learningStatuses: [
+      "글을 읽어도 중심 내용을 말하기 어렵거나 낯선 어휘에서 자주 멈추는 학생",
+      "소리 내어 읽기와 짧은 글쓰기에서 자신감이 필요한 학생",
+    ],
+    recommendedTargets: [
+      "어휘와 문장 이해를 차근차근 보완하고 싶은 학생",
+      "읽기 습관과 요약, 글쓰기 기초를 함께 잡고 싶은 학생",
+    ],
+    studentLeads: [
+      "초등 국어에서 어려움은 글의 양보다 읽는 과정에서 드러나는 경우가 많습니다. 단어 뜻을 짐작하는지, 문장을 끊어 읽는지, 중심 내용을 짧게 말할 수 있는지를 함께 확인합니다.",
+      "문제를 맞혔는지만 보면 아이가 어디에서 막히는지 놓치기 쉽습니다. 수업에서는 어휘, 문장 이해, 중심 내용 찾기, 요약을 나누어 살핍니다.",
+    ],
+    priorityBodies: [
+      "낯선 어휘를 먼저 정리하고, 문장을 소리 내어 읽은 뒤 중심 내용을 한두 문장으로 말해보는 연습을 합니다. 이후 짧은 글쓰기로 생각을 정리합니다.",
+      "글을 끝까지 읽는 힘을 기르기 위해 문장 단위 이해, 문단별 핵심 찾기, 요약, 짧은 글쓰기 순서로 수업을 이어갑니다.",
+    ],
+    middleImageAlt: "{region} 초등 국어 읽기와 글쓰기 학습 안내",
+    middleCaptions: [
+      "어휘와 문장 이해를 확인한 뒤 요약과 글쓰기로 연결합니다.",
+      "소리 내어 읽기와 중심 내용 찾기가 수업 안에서 함께 이어지도록 봅니다.",
+    ],
+    lessonIntros: [
+      "수업은 어휘 확인, 소리 내어 읽기, 문장 이해, 중심 내용 찾기, 짧은 글쓰기 순서로 진행합니다. 아이가 글을 읽고 자기 말로 설명하는 시간을 충분히 둡니다.",
+      "초등 국어 수업은 읽기와 쓰기를 분리하지 않습니다. 읽은 내용을 말로 정리하고 짧은 문장으로 써보며 이해한 내용을 확인합니다.",
+    ],
+    lessonDifferences: [
+      "{region} 초등 국어 과외에서는 어휘, 문장 이해, 중심 내용 찾기, 요약과 글쓰기를 작은 단계로 나누어 아이가 글을 부담 없이 읽도록 돕습니다.",
+      "{region} 초등 국어 수업은 정답만 확인하기보다 아이가 어떤 단어와 문장에서 멈추는지 보고 읽기 습관을 함께 다룹니다.",
+    ],
+    stepSets: [
+      [
+        { title: "어휘와 문장 읽기", description: "낯선 단어를 확인하고 문장을 소리 내어 읽으며 뜻을 자연스럽게 연결합니다." },
+        { title: "중심 내용 찾기", description: "문단마다 중요한 내용을 표시하고 아이가 자기 말로 설명해봅니다." },
+        { title: "요약과 글쓰기", description: "읽은 내용을 짧게 요약하고 한두 문장으로 생각을 적어봅니다." },
+      ],
+      [
+        { title: "읽기 습관 확인", description: "글을 건너뛰지 않고 끝까지 읽는지, 어려운 단어에서 어떻게 멈추는지 봅니다." },
+        { title: "내용 정리 연습", description: "인물, 사건, 중심 문장을 나누어 글의 흐름을 정리합니다." },
+        { title: "짧은 표현 다듬기", description: "말로 설명한 내용을 문장으로 옮기며 글쓰기 부담을 줄입니다." },
+      ],
+    ],
+    consultIntros: [
+      "상담 전에는 아이가 어려워하는 글의 길이, 낯선 어휘, 소리 내어 읽기 반응을 알려주시면 시작점을 잡기 좋습니다.",
+      "최근 읽은 교재나 글쓰기 과제에서 막혔던 부분을 알려주시면 읽기와 쓰기 중 어디부터 볼지 정리할 수 있습니다.",
+    ],
+    consultChecks: [
+      [
+        { title: "어휘 이해", description: "낯선 단어에서 멈추는 정도" },
+        { title: "읽기 습관", description: "소리 내어 읽을 때의 속도와 부담" },
+        { title: "내용 파악", description: "중심 내용을 말로 설명하는지" },
+        { title: "글쓰기", description: "짧은 문장으로 생각을 적는 정도" },
+      ],
+      [
+        { title: "교재 범위", description: "최근 읽는 지문과 단원" },
+        { title: "문장 이해", description: "긴 문장을 끊어 읽는지" },
+        { title: "요약 습관", description: "읽은 뒤 핵심을 정리하는지" },
+        { title: "표현 자신감", description: "발표와 글쓰기에 대한 부담" },
+      ],
+    ],
+    faqs: [
+      [
+        { question: "초등 국어는 어떤 부분부터 확인하나요?", answer: "어휘 이해와 소리 내어 읽기부터 봅니다. 문장을 읽고 뜻을 말할 수 있는지 확인한 뒤 중심 내용 찾기와 요약, 글쓰기로 이어갑니다." },
+        { question: "글쓰기를 어려워해도 수업이 가능한가요?", answer: "네. 처음부터 긴 글을 쓰기보다 읽은 내용을 한두 문장으로 말하고 적는 방식으로 부담을 줄입니다." },
+        { question: "상담 전에 어떤 자료가 도움이 되나요?", answer: "최근 읽은 교재, 글쓰기 과제, 아이가 어려워한 단어나 문장을 알려주시면 수업 방향을 잡기 좋습니다." },
+      ],
+      [
+        { question: "소리 내어 읽기도 같이 보나요?", answer: "네. 초등 국어에서는 문장을 눈으로만 보는 것보다 소리 내어 읽으며 뜻을 확인하는 과정이 도움이 됩니다." },
+        { question: "요약은 어떻게 연습하나요?", answer: "문단별 중심 문장을 찾고, 아이가 자기 말로 짧게 바꾸어 말한 뒤 문장으로 적어봅니다." },
+        { question: "국어 자신감이 낮은 아이도 괜찮을까요?", answer: "가능합니다. 낯선 어휘와 긴 문장을 작은 단위로 나누어 성공 경험을 쌓는 방식으로 진행합니다." },
+      ],
+    ],
+    closingSentences: [
+      "아이의 읽기 속도, 어려워하는 어휘, 글쓰기 부담을 알려주시면 상담 때 차근차근 확인하겠습니다.",
+      "최근 읽기와 글쓰기에서 막힌 부분을 남겨주시면 아이에게 맞는 국어 수업 시작점을 살펴보겠습니다.",
+    ],
+  },
+  english: {
+    focusLabel: "파닉스와 기초 영어",
+    titleSuffixes: [
+      "파닉스와 기초 어휘를 차근차근 잡는 수업",
+      "영어 읽기 자신감을 키우는 기초 학습",
+      "단어 복습과 짧은 문장 이해를 연결하는 수업",
+    ],
+    descriptions: [
+      "{region}에서 초등 영어 과외를 찾는 학부모님을 위해 파닉스, 알파벳 소리와 철자 연결, 기초 어휘, 단어 복습과 짧은 문장 이해를 정리했습니다.",
+      "{region} 초등 영어 과외는 파닉스와 기초 어휘, 소리 내어 읽기, 짧은 문장 이해를 아이의 속도에 맞춰 확인합니다.",
+    ],
+    summaries: [
+      "{region} 초등 영어 수업은 파닉스, 기초 어휘, 단어 복습, 소리 내어 읽기와 짧은 문장 이해를 중심으로 진행합니다.",
+      "{region}에서 초등 영어 과외를 고민하는 학부모님을 위해 영어 소리와 단어, 짧은 문장 읽기 자신감을 함께 살펴봅니다.",
+    ],
+    openings: [
+      "초등 영어는 단어를 많이 외우는 것보다 영어 소리와 글자에 익숙해지는 경험이 먼저입니다. 파닉스, 기초 어휘, 단어 복습, 소리 내어 읽기를 차근차근 이어가며 짧은 문장을 이해하도록 돕습니다.",
+      "영어를 어렵게 느끼는 아이는 알파벳 소리와 철자 연결에서 부담을 느끼는 경우가 많습니다. 수업은 파닉스와 단어 읽기부터 시작해 짧은 문장 이해로 이어갑니다.",
+    ],
+    mainCaptions: [
+      "{region} 초등 영어 수업은 영어 소리, 단어, 짧은 문장 이해를 아이의 속도에 맞춰 확인합니다.",
+      "파닉스와 단어 복습, 소리 내어 읽기가 자연스럽게 이어지도록 살핍니다.",
+    ],
+    learningStatuses: [
+      "단어를 외워도 금방 잊고 영어 읽기에 자신감이 부족한 학생",
+      "알파벳 소리와 철자 연결, 짧은 문장 읽기에서 도움이 필요한 학생",
+    ],
+    recommendedTargets: [
+      "파닉스와 기초 어휘부터 차근차근 잡고 싶은 학생",
+      "소리 내어 읽기와 단어 복습으로 영어 자신감을 쌓고 싶은 학생",
+    ],
+    studentLeads: [
+      "초등 영어는 정답을 맞히는 것보다 아이가 단어를 보고 소리와 뜻을 연결하는지가 중요합니다. 알파벳 소리, 철자, 기초 어휘, 짧은 문장 읽기를 함께 봅니다.",
+      "영어를 싫어하기 전에 작은 읽기 성공 경험을 만드는 것이 중요합니다. 수업에서는 단어를 다시 읽고, 짧은 문장을 소리 내어 말하며 자신감을 확인합니다.",
+    ],
+    priorityBodies: [
+      "파닉스와 기초 어휘를 먼저 확인하고, 자주 헷갈리는 단어는 짧은 간격으로 다시 복습합니다. 소리 내어 읽기와 짧은 문장 이해를 연결해 영어 부담을 낮춥니다.",
+      "알파벳 소리와 철자를 연결한 뒤 쉬운 단어와 짧은 문장을 반복해 읽습니다. 아이가 뜻을 말해보는 과정까지 확인해 영어 자신감을 키웁니다.",
+    ],
+    middleImageAlt: "{region} 초등 영어 파닉스와 단어 복습 학습 안내",
+    middleCaptions: [
+      "파닉스, 단어 복습, 짧은 문장 읽기가 자연스럽게 이어지도록 살핍니다.",
+      "영어 소리와 철자 연결을 확인하며 읽기 자신감을 쌓아갑니다.",
+    ],
+    lessonIntros: [
+      "수업은 파닉스와 단어 복습을 중심으로 진행합니다. 처음부터 긴 글을 요구하기보다 소리와 철자, 단어 뜻, 짧은 문장 읽기를 작은 단계로 나누어 확인합니다.",
+      "초등 영어 수업은 아이가 직접 소리 내어 읽고 뜻을 말해보는 시간을 충분히 둡니다. 단어 복습과 짧은 문장 이해를 함께 연결합니다.",
+    ],
+    lessonDifferences: [
+      "{region} 초등 영어 과외에서는 파닉스, 기초 어휘, 소리 내어 읽기, 짧은 문장 이해를 한 흐름으로 연결합니다. 아이가 단어를 다시 보고 읽어보는 과정을 통해 영어 공부 습관과 자신감을 함께 기릅니다.",
+      "{region} 초등 영어 수업은 단어 암기만 늘리기보다 알파벳 소리와 철자 연결, 단어 복습, 짧은 문장 이해를 단계적으로 확인합니다.",
+    ],
+    stepSets: [
+      [
+        { title: "파닉스와 소리 확인", description: "알파벳 소리와 철자를 연결해보고, 아이가 헷갈리는 발음과 글자를 짧게 반복합니다." },
+        { title: "기초 어휘 복습", description: "이미 배운 단어를 다시 읽고 뜻을 떠올리며, 비슷하게 보이는 단어는 예문 속에서 구분합니다." },
+        { title: "짧은 문장 읽기", description: "단어를 문장 안에서 소리 내어 읽고 뜻을 말해보며 기초 독해와 영어 자신감을 연결합니다." },
+      ],
+      [
+        { title: "알파벳 연결", description: "글자와 소리가 어떻게 이어지는지 확인하고 자주 헷갈리는 부분을 표시합니다." },
+        { title: "단어 다시 읽기", description: "새 단어보다 이미 배운 단어를 정확히 읽고 뜻을 말하는 연습을 합니다." },
+        { title: "문장 이해 확인", description: "짧은 문장을 읽고 누가 무엇을 하는지 말해보며 영어 읽기 부담을 줄입니다." },
+      ],
+    ],
+    consultIntros: [
+      "상담 전에는 아이가 어려워하는 알파벳 소리, 자주 잊는 단어, 영어 읽기에 대한 부담감을 알려주시면 수업의 시작점을 더 정확히 잡을 수 있습니다.",
+      "사용 중인 영어 교재와 아이가 읽기 어려워하는 단어 유형을 알려주시면 파닉스와 단어 복습 비중을 정하기 좋습니다.",
+    ],
+    consultChecks: [
+      [
+        { title: "파닉스", description: "소리와 철자를 연결하는 정도" },
+        { title: "기초 어휘", description: "배운 단어를 다시 읽고 뜻을 말하는지" },
+        { title: "읽기 자신감", description: "짧은 문장을 소리 내어 읽을 때의 반응" },
+        { title: "복습 습관", description: "단어를 다시 보는 간격과 부담감" },
+      ],
+      [
+        { title: "알파벳 소리", description: "자주 헷갈리는 글자와 발음" },
+        { title: "단어 기억", description: "외운 단어를 며칠 뒤 다시 읽는지" },
+        { title: "문장 이해", description: "짧은 문장의 뜻을 말하는지" },
+        { title: "흥미", description: "영어 읽기에 대한 자신감" },
+      ],
+    ],
+    faqs: [
+      [
+        { question: "초등 영어는 파닉스부터 다시 봐야 하나요?", answer: "아이마다 다릅니다. 알파벳 소리와 철자 연결이 흔들리면 파닉스를 짧게 확인하고, 이미 가능한 부분은 단어 읽기와 짧은 문장 이해로 바로 연결합니다." },
+        { question: "단어 복습은 어떻게 진행하나요?", answer: "한 번에 많은 단어를 외우기보다 배운 단어를 다시 읽고 뜻을 떠올리는 방식으로 반복합니다. 헷갈리는 단어는 짧은 예문 안에서 확인합니다." },
+        { question: "상담 전에 어떤 내용을 알려주면 좋나요?", answer: "현재 학년, 사용 중인 영어 교재, 아이가 어려워하는 단어 읽기나 문장 읽기 상황을 알려주시면 수업 방향을 정하기 좋습니다." },
+      ],
+      [
+        { question: "영어를 싫어하는 아이도 시작할 수 있나요?", answer: "가능합니다. 긴 글보다 알파벳 소리, 쉬운 단어, 짧은 문장부터 시작해 읽을 수 있다는 경험을 만드는 데 초점을 둡니다." },
+        { question: "소리 내어 읽기를 꼭 하나요?", answer: "초등 영어에서는 소리와 철자를 연결하는 과정이 중요합니다. 아이가 부담스럽지 않은 길이부터 천천히 읽어봅니다." },
+        { question: "숙제는 많이 필요한가요?", answer: "많은 양보다 짧게 다시 보는 복습이 중요합니다. 단어와 짧은 문장을 아이가 해낼 수 있는 분량으로 정합니다." },
+      ],
+    ],
+    closingSentences: [
+      "아이의 현재 영어 읽기 수준, 자주 잊는 단어, 수업에서 느끼는 부담감을 남겨주시면 상담 때 차근차근 확인하겠습니다.",
+      "파닉스와 단어 복습 중 어디에서 도움이 필요한지 알려주시면 아이에게 맞는 시작점을 살펴보겠습니다.",
+    ],
+  },
+  math: {
+    focusLabel: "개념과 풀이 과정",
+    titleSuffixes: [
+      "수 감각과 기초 연산을 차근차근 잡는 수업",
+      "개념 이해와 문장제를 함께 다지는 학습",
+      "풀이 과정과 오답 확인을 습관으로 만드는 수업",
+    ],
+    descriptions: [
+      "{region}에서 초등 수학 과외를 찾는 학부모님을 위해 수 감각, 기초 연산, 개념 이해, 풀이 과정, 문장제와 오답 확인 방향을 정리했습니다.",
+      "{region} 초등 수학 과외는 계산만 반복하지 않고 개념 이해, 풀이 과정, 문장제 읽기와 오답 확인을 함께 봅니다.",
+    ],
+    summaries: [
+      "{region} 초등 수학 수업은 수 감각, 기초 연산, 개념 이해, 풀이 과정, 문장제, 오답 확인을 아이의 속도에 맞춰 살핍니다.",
+      "{region}에서 초등 수학 과외를 고민하는 학부모님을 위해 기초와 풀이 습관을 함께 잡는 방향을 정리했습니다.",
+    ],
+    openings: [
+      "초등 수학은 답을 빨리 내는 것보다 왜 그렇게 풀리는지 이해하는 과정이 중요합니다. 수 감각, 기초 연산, 개념 이해, 풀이 과정을 함께 확인해야 문장제와 오답도 안정됩니다.",
+      "수학을 어려워하는 아이는 계산보다 문제를 읽고 식으로 옮기는 과정에서 막히는 경우가 많습니다. 수업은 개념과 풀이 과정을 차근차근 나누어 봅니다.",
+    ],
+    mainCaptions: [
+      "{region} 초등 수학 수업은 개념 이해와 풀이 과정을 함께 확인합니다.",
+      "기초 연산과 문장제 풀이가 자연스럽게 이어지도록 살핍니다.",
+    ],
+    learningStatuses: [
+      "기초 연산은 해도 문장제에서 식을 세우기 어려워하는 학생",
+      "개념을 들으면 알지만 풀이 과정과 오답 확인이 필요한 학생",
+    ],
+    recommendedTargets: [
+      "수 감각과 기초 연산, 문장제 풀이를 함께 잡고 싶은 학생",
+      "개념 이해와 풀이 과정을 차근차근 정리하고 싶은 학생",
+    ],
+    studentLeads: [
+      "초등 수학은 같은 오답도 원인이 다를 수 있습니다. 수 감각이 부족한지, 기초 연산이 흔들리는지, 문제 상황을 식으로 바꾸는 과정에서 막히는지 나누어 확인합니다.",
+      "개념을 알고 있어도 풀이 과정을 적지 않으면 실수가 반복될 수 있습니다. 수업에서는 아이가 어떤 순서로 생각하는지 함께 봅니다.",
+    ],
+    priorityBodies: [
+      "수 감각과 기초 연산을 짧게 확인한 뒤, 개념을 말로 설명하고 대표 문제에 적용합니다. 문장제는 문제 상황을 그림이나 식으로 바꾸는 연습을 합니다.",
+      "풀이 과정을 차근차근 적고 오답을 다시 보며 같은 실수가 반복되는 지점을 찾습니다. 개념 이해와 문제 적용 사이의 빈틈을 줄입니다.",
+    ],
+    middleImageAlt: "{region} 초등 수학 개념과 문장제 풀이 학습 안내",
+    middleCaptions: [
+      "개념 이해, 기초 연산, 문장제 풀이 과정을 함께 확인합니다.",
+      "오답을 다시 보며 아이가 막히는 풀이 단계를 찾습니다.",
+    ],
+    lessonIntros: [
+      "수업은 수 감각 확인, 기초 연산, 개념 이해, 대표 문제 적용, 문장제 풀이 순서로 진행합니다. 답보다 풀이 과정을 말하고 적는 시간을 중요하게 봅니다.",
+      "초등 수학 수업은 계산 연습과 개념 설명을 분리하지 않습니다. 아이가 문제를 읽고 어떤 식으로 풀지 설명하는 과정까지 확인합니다.",
+    ],
+    lessonDifferences: [
+      "{region} 초등 수학 과외에서는 수 감각, 기초 연산, 개념 이해, 풀이 과정, 문장제, 오답 확인을 단계적으로 연결합니다.",
+      "{region} 초등 수학 수업은 문제 수를 늘리기보다 아이가 어떤 생각으로 식을 세우고 계산하는지 확인해 풀이 습관을 잡습니다.",
+    ],
+    stepSets: [
+      [
+        { title: "수 감각 확인", description: "수의 크기, 자리값, 기본 계산 흐름을 짧게 확인해 출발점을 잡습니다." },
+        { title: "개념과 풀이 과정", description: "개념을 말로 설명하고 풀이 순서를 적으며 왜 그렇게 푸는지 확인합니다." },
+        { title: "문장제와 오답 확인", description: "문제 상황을 식으로 바꾸고 틀린 이유를 다시 보며 같은 실수를 줄입니다." },
+      ],
+      [
+        { title: "기초 연산 점검", description: "자주 실수하는 계산 과정을 살피고 필요한 만큼 짧게 반복합니다." },
+        { title: "대표 문제 적용", description: "개념을 바로 문제에 적용해 아이가 이해한 내용을 직접 확인합니다." },
+        { title: "풀이 습관 정리", description: "풀이를 끝까지 적고 오답을 다시 보는 과정을 수업 안에서 연습합니다." },
+      ],
+    ],
+    consultIntros: [
+      "상담 전에는 아이가 어려워하는 단원, 계산 실수, 문장제에서 막히는 부분을 알려주시면 수업 방향을 잡기 좋습니다.",
+      "최근 푼 문제 중 틀린 유형이나 풀이 과정에서 자주 빠지는 단계를 알려주시면 개념과 연습 비중을 정할 수 있습니다.",
+    ],
+    consultChecks: [
+      [
+        { title: "수 감각", description: "자리값과 수의 크기 이해" },
+        { title: "기초 연산", description: "자주 나오는 계산 실수" },
+        { title: "개념 이해", description: "왜 그렇게 푸는지 설명하는지" },
+        { title: "문장제", description: "문제를 식으로 바꾸는 과정" },
+      ],
+      [
+        { title: "풀이 과정", description: "중간 식과 생각을 적는 습관" },
+        { title: "오답 확인", description: "틀린 이유를 다시 보는지" },
+        { title: "단원 흐름", description: "이전 단원과 연결되는 개념" },
+        { title: "복습 분량", description: "집에서 해낼 수 있는 학습량" },
+      ],
+    ],
+    faqs: [
+      [
+        { question: "초등 수학은 기초 연산부터 다시 해야 하나요?", answer: "필요한 경우에만 확인합니다. 계산 과정이 흔들리면 짧게 보완하고, 가능한 부분은 개념 이해와 문장제 풀이로 연결합니다." },
+        { question: "문장제를 어려워하면 어떻게 하나요?", answer: "문장을 짧게 나누어 읽고, 주어진 정보와 구해야 할 것을 표시한 뒤 그림이나 식으로 바꾸는 연습을 합니다." },
+        { question: "오답은 어떻게 확인하나요?", answer: "계산 실수, 개념 혼동, 문제 읽기 실수를 나누어 보고 비슷한 문제에서 같은 실수가 반복되는지 확인합니다." },
+      ],
+      [
+        { question: "수학 자신감이 낮아도 괜찮을까요?", answer: "괜찮습니다. 아이가 풀 수 있는 단계부터 시작해 개념을 말로 설명하고 직접 적용하는 경험을 쌓습니다." },
+        { question: "풀이 과정을 꼭 적어야 하나요?", answer: "초등 단계에서는 풀이 과정을 적는 습관이 중요합니다. 어디에서 생각이 끊기는지 확인할 수 있기 때문입니다." },
+        { question: "학교 진도와는 어떻게 맞추나요?", answer: "현재 단원을 기준으로 필요한 이전 개념을 짧게 보완하고, 학교 수업을 따라갈 수 있는 복습량을 정합니다." },
+      ],
+    ],
+    closingSentences: [
+      "아이의 어려운 단원, 계산 실수, 문장제 부담을 알려주시면 수업 시작점을 함께 확인하겠습니다.",
+      "현재 수학에서 막히는 풀이 과정과 오답 유형을 남겨주시면 상담 때 차근차근 살펴보겠습니다.",
+    ],
+  },
+  social: {
+    focusLabel: "용어와 자료 이해",
+    titleSuffixes: [
+      "핵심 용어와 자료 읽기를 차근차근 잡는 수업",
+      "교과 개념과 내용 정리를 함께 돕는 학습",
+      "지도·사진·표를 읽는 힘을 기르는 수업",
+    ],
+    descriptions: [
+      "{region}에서 초등 사회 과외를 찾는 학부모님을 위해 핵심 용어, 교과 개념, 지도·사진·표 읽기, 원인과 결과 정리 방향을 안내합니다.",
+      "{region} 초등 사회 과외는 용어 암기만이 아니라 자료를 보고 내용을 이해하고 원인과 결과를 정리하는 힘을 함께 봅니다.",
+    ],
+    summaries: [
+      "{region} 초등 사회 수업은 핵심 용어, 교과 개념, 지도·사진·표 읽기, 원인과 결과, 내용 정리를 중심으로 진행합니다.",
+      "{region}에서 초등 사회 과외를 고민하는 학부모님을 위해 교과 개념과 자료 이해를 함께 잡는 방향을 정리했습니다.",
+    ],
+    openings: [
+      "초등 사회는 용어를 외우는 데서 끝나지 않습니다. 지도, 사진, 표를 보며 어떤 정보를 읽어야 하는지 알고, 원인과 결과를 연결해 내용을 정리하는 과정이 필요합니다.",
+      "사회 과목은 낯선 말이 많아 아이가 어렵게 느끼기 쉽습니다. 수업은 핵심 용어를 쉬운 말로 풀고 교과 개념과 자료 읽기를 함께 연결합니다.",
+    ],
+    mainCaptions: [
+      "{region} 초등 사회 수업은 용어, 교과 개념, 자료 읽기를 함께 확인합니다.",
+      "지도·사진·표를 보며 내용을 정리하는 습관을 살핍니다.",
+    ],
+    learningStatuses: [
+      "사회 용어가 낯설고 지도·사진·표에서 무엇을 봐야 할지 어려워하는 학생",
+      "교과 내용을 읽어도 원인과 결과를 정리하는 데 도움이 필요한 학생",
+    ],
+    recommendedTargets: [
+      "핵심 용어와 교과 개념을 쉬운 말로 정리하고 싶은 학생",
+      "지도·사진·표 읽기와 내용 정리 습관을 잡고 싶은 학생",
+    ],
+    studentLeads: [
+      "초등 사회는 개념을 낱개로 외우면 금방 헷갈릴 수 있습니다. 용어의 뜻, 자료에서 봐야 할 단서, 사건이나 현상의 원인과 결과를 함께 확인합니다.",
+      "교과서를 읽어도 내용이 남지 않는다면 핵심 용어와 자료 읽기 순서를 나누어 봐야 합니다. 수업에서는 아이가 설명할 수 있는 표현으로 정리합니다.",
+    ],
+    priorityBodies: [
+      "핵심 용어를 쉬운 말로 바꾸어 정리하고, 지도·사진·표에서 먼저 볼 정보를 표시합니다. 이후 원인과 결과를 연결해 단원 내용을 짧게 정리합니다.",
+      "교과 개념을 생활 속 예시와 연결하고, 자료를 읽는 순서를 연습합니다. 넓은 내용을 한 번에 외우기보다 핵심을 작은 묶음으로 정리합니다.",
+    ],
+    middleImageAlt: "{region} 초등 사회 용어와 자료 읽기 학습 안내",
+    middleCaptions: [
+      "핵심 용어와 자료 읽기를 연결해 사회 내용을 이해합니다.",
+      "지도·사진·표에서 필요한 단서를 찾고 내용 정리로 이어갑니다.",
+    ],
+    lessonIntros: [
+      "수업은 핵심 용어 확인, 교과 개념 설명, 지도·사진·표 읽기, 원인과 결과 정리 순서로 진행합니다. 아이가 내용을 자기 말로 설명할 수 있는지 봅니다.",
+      "초등 사회 수업은 암기량을 늘리기보다 자료를 읽고 내용을 정리하는 방법을 익히는 데 초점을 둡니다.",
+    ],
+    lessonDifferences: [
+      "{region} 초등 사회 과외에서는 핵심 용어, 교과 개념, 지도·사진·표 읽기, 원인과 결과 정리를 한 흐름으로 연결합니다.",
+      "{region} 초등 사회 수업은 지역 특성을 새로 만들어 설명하기보다 교과서 자료와 개념을 아이가 이해할 수 있는 말로 정리합니다.",
+    ],
+    stepSets: [
+      [
+        { title: "핵심 용어 정리", description: "낯선 용어를 쉬운 말과 예시로 바꾸어 뜻을 확인합니다." },
+        { title: "자료 읽기", description: "지도, 사진, 표에서 먼저 봐야 할 제목과 단서를 찾습니다." },
+        { title: "원인과 결과 연결", description: "교과 내용을 왜 그런 일이 생겼는지와 어떤 변화가 있었는지로 정리합니다." },
+      ],
+      [
+        { title: "교과 개념 확인", description: "단원의 중요한 개념을 짧게 설명하고 생활 속 예시와 연결합니다." },
+        { title: "내용 묶기", description: "넓은 내용을 작은 주제로 나누어 아이가 기억하기 쉽게 정리합니다." },
+        { title: "설명 연습", description: "정리한 내용을 자기 말로 말해보며 이해한 부분을 확인합니다." },
+      ],
+    ],
+    consultIntros: [
+      "상담 전에는 아이가 어려워하는 사회 용어, 자료 유형, 내용을 정리할 때 막히는 부분을 알려주시면 좋습니다.",
+      "최근 단원에서 지도, 사진, 표 중 어떤 자료를 어려워했는지 알려주시면 수업 방향을 더 구체적으로 잡을 수 있습니다.",
+    ],
+    consultChecks: [
+      [
+        { title: "핵심 용어", description: "낯선 말을 이해하는 정도" },
+        { title: "교과 개념", description: "단원 내용을 설명하는지" },
+        { title: "자료 읽기", description: "지도·사진·표에서 단서를 찾는지" },
+        { title: "내용 정리", description: "원인과 결과를 연결하는지" },
+      ],
+      [
+        { title: "최근 단원", description: "현재 배우는 사회 범위" },
+        { title: "읽기 부담", description: "교과서 문장을 어려워하는지" },
+        { title: "자료 유형", description: "지도, 표, 사진 중 막히는 부분" },
+        { title: "설명 습관", description: "자기 말로 정리하는지" },
+      ],
+    ],
+    faqs: [
+      [
+        { question: "초등 사회는 암기 위주로만 하나요?", answer: "아니요. 핵심 용어를 정리한 뒤 지도, 사진, 표를 읽고 원인과 결과를 연결해 내용을 이해하도록 돕습니다." },
+        { question: "자료 읽기는 어떻게 연습하나요?", answer: "자료의 제목, 기준, 표시된 단서를 먼저 확인하고 교과 개념과 어떤 관련이 있는지 말해봅니다." },
+        { question: "상담 전에 어떤 내용을 알려주면 좋나요?", answer: "어려워하는 단원, 낯선 용어, 지도나 표를 볼 때 막히는 부분을 알려주시면 도움이 됩니다." },
+      ],
+      [
+        { question: "사회 용어를 잘 잊어버리면 어떻게 하나요?", answer: "용어를 뜻만 외우지 않고 쉬운 예시와 함께 정리합니다. 단원 내용 속에서 다시 쓰이도록 반복합니다." },
+        { question: "교과서 내용 정리도 같이 하나요?", answer: "네. 단원 내용을 작은 주제로 나누고 원인과 결과, 중요한 개념을 짧게 정리합니다." },
+        { question: "초등 사회를 어려워하는 이유는 무엇인가요?", answer: "낯선 용어와 자료가 함께 나오기 때문인 경우가 많습니다. 수업에서는 용어와 자료 읽기를 나누어 확인합니다." },
+      ],
+    ],
+    closingSentences: [
+      "아이의 어려운 사회 용어, 자료 읽기 부담, 최근 단원을 알려주시면 상담 때 수업 방향을 확인하겠습니다.",
+      "지도·사진·표 읽기와 내용 정리 중 어디에서 막히는지 남겨주시면 차근차근 살펴보겠습니다.",
+    ],
+  },
+  science: {
+    focusLabel: "개념과 탐구 이해",
+    titleSuffixes: [
+      "관찰과 실험 과정을 이해하는 수업",
+      "교과 개념과 생활 속 현상을 연결하는 학습",
+      "그림·자료 이해와 단원 연결을 돕는 수업",
+    ],
+    descriptions: [
+      "{region}에서 초등 과학 과외를 찾는 학부모님을 위해 교과 개념, 관찰, 실험 과정, 그림·자료 이해, 생활 속 현상과 단원 연결을 정리했습니다.",
+      "{region} 초등 과학 과외는 용어 암기보다 관찰과 실험 과정, 그림과 자료 이해를 통해 교과 개념을 차근차근 연결합니다.",
+    ],
+    summaries: [
+      "{region} 초등 과학 수업은 교과 개념, 관찰, 실험 과정, 그림·자료 이해, 생활 속 현상, 단원 연결을 중심으로 진행합니다.",
+      "{region}에서 초등 과학 과외를 고민하는 학부모님을 위해 개념과 탐구 과정을 함께 보는 수업 방향을 정리했습니다.",
+    ],
+    openings: [
+      "초등 과학은 용어를 외우기보다 관찰하고 비교하며 왜 그런 현상이 나타나는지 이해하는 과정이 중요합니다. 교과 개념, 실험 과정, 그림과 자료를 함께 봐야 단원 연결이 자연스러워집니다.",
+      "과학을 어려워하는 아이는 실험 결과나 그림 자료를 보고 무엇을 말하는지 놓치는 경우가 많습니다. 수업은 관찰, 자료 이해, 생활 속 예시를 연결해 진행합니다.",
+    ],
+    mainCaptions: [
+      "{region} 초등 과학 수업은 개념, 관찰, 실험 과정을 함께 확인합니다.",
+      "그림과 자료를 보며 생활 속 현상과 교과 개념을 연결합니다.",
+    ],
+    learningStatuses: [
+      "과학 용어는 외워도 실험 과정과 그림 자료를 이해하는 데 어려움이 있는 학생",
+      "생활 속 현상과 교과 개념을 연결하는 연습이 필요한 학생",
+    ],
+    recommendedTargets: [
+      "교과 개념과 관찰, 실험 과정을 차근차근 이해하고 싶은 학생",
+      "그림·자료 이해와 단원 연결을 함께 잡고 싶은 학생",
+    ],
+    studentLeads: [
+      "초등 과학은 결과만 외우면 다음 단원에서 다시 흔들릴 수 있습니다. 관찰한 내용, 실험 조건, 그림과 자료가 어떤 개념을 보여주는지 함께 확인합니다.",
+      "과학 개념은 생활 속 현상과 연결될 때 오래 남습니다. 수업에서는 아이가 직접 설명할 수 있는 예시로 개념을 풀어봅니다.",
+    ],
+    priorityBodies: [
+      "교과 개념을 쉬운 예시로 먼저 확인하고, 관찰과 실험 과정에서 어떤 조건을 봐야 하는지 정리합니다. 그림과 자료는 제목과 변화에 주목해 읽습니다.",
+      "생활 속 현상과 단원 개념을 연결해 아이가 왜 그런 결과가 나오는지 말해보게 합니다. 이전 단원과 이어지는 개념도 짧게 확인합니다.",
+    ],
+    middleImageAlt: "{region} 초등 과학 관찰과 실험 과정 학습 안내",
+    middleCaptions: [
+      "관찰, 실험 과정, 그림 자료를 교과 개념과 연결합니다.",
+      "생활 속 현상을 예시로 삼아 과학 개념을 이해합니다.",
+    ],
+    lessonIntros: [
+      "수업은 교과 개념 확인, 관찰 내용 정리, 실험 과정 이해, 그림·자료 읽기, 생활 속 예시 연결 순서로 진행합니다.",
+      "초등 과학 수업은 개념 설명으로 끝내지 않고 아이가 관찰한 내용과 자료를 자기 말로 설명하도록 돕습니다.",
+    ],
+    lessonDifferences: [
+      "{region} 초등 과학 과외에서는 교과 개념, 관찰, 실험 과정, 그림·자료 이해, 생활 속 현상, 단원 연결을 함께 봅니다.",
+      "{region} 초등 과학 수업은 용어를 따로 외우는 데서 멈추지 않고 실험 과정과 자료가 어떤 개념을 보여주는지 연결합니다.",
+    ],
+    stepSets: [
+      [
+        { title: "교과 개념 확인", description: "단원의 중요한 개념을 쉬운 예시와 함께 정리합니다." },
+        { title: "관찰과 실험 과정", description: "무엇을 관찰했는지, 어떤 조건이 달라졌는지 차근차근 확인합니다." },
+        { title: "그림·자료 이해", description: "그림과 표에서 변화와 관계를 찾아 생활 속 현상과 연결합니다." },
+      ],
+      [
+        { title: "생활 속 예시 연결", description: "아이에게 익숙한 현상으로 과학 개념을 설명해 이해를 돕습니다." },
+        { title: "탐구 흐름 정리", description: "관찰, 예상, 결과를 나누어 실험 과정을 말로 정리합니다." },
+        { title: "단원 연결", description: "이전 단원에서 배운 개념과 지금 배우는 내용을 짧게 이어봅니다." },
+      ],
+    ],
+    consultIntros: [
+      "상담 전에는 아이가 어려워하는 과학 용어, 실험 과정, 그림 자료 유형을 알려주시면 수업 방향을 잡기 좋습니다.",
+      "최근 단원에서 관찰, 실험, 자료 읽기 중 어디에서 막혔는지 알려주시면 필요한 보완 지점을 정리할 수 있습니다.",
+    ],
+    consultChecks: [
+      [
+        { title: "교과 개념", description: "용어와 뜻을 이해하는지" },
+        { title: "관찰", description: "무엇을 봐야 하는지 아는지" },
+        { title: "실험 과정", description: "조건과 결과를 연결하는지" },
+        { title: "자료 이해", description: "그림과 표의 변화를 읽는지" },
+      ],
+      [
+        { title: "생활 예시", description: "개념을 주변 현상과 연결하는지" },
+        { title: "최근 단원", description: "현재 배우는 과학 범위" },
+        { title: "탐구 정리", description: "관찰과 결과를 말로 설명하는지" },
+        { title: "단원 연결", description: "이전 개념과 이어지는 부분" },
+      ],
+    ],
+    faqs: [
+      [
+        { question: "초등 과학은 개념 암기부터 하나요?", answer: "개념을 외우기보다 관찰과 실험 과정, 그림 자료가 무엇을 보여주는지 이해하는 데서 시작합니다." },
+        { question: "실험 과정도 같이 정리하나요?", answer: "네. 관찰한 것, 달라진 조건, 결과를 나누어 정리하고 교과 개념과 어떻게 연결되는지 확인합니다." },
+        { question: "그림이나 자료를 어려워하면 어떻게 하나요?", answer: "자료의 제목과 변화, 비교할 부분을 먼저 찾고 생활 속 현상과 연결해 이해하도록 돕습니다." },
+      ],
+      [
+        { question: "과학 용어를 자주 잊으면 어떻게 하나요?", answer: "용어만 반복하지 않고 쉬운 예시, 그림, 실험 과정 안에서 다시 확인합니다." },
+        { question: "생활 속 예시도 활용하나요?", answer: "네. 아이가 알고 있는 현상과 교과 개념을 연결하면 개념 이해가 더 자연스러워집니다." },
+        { question: "상담 전 준비할 자료가 있나요?", answer: "최근 단원, 어려웠던 그림 자료, 실험 과정에서 헷갈린 부분을 알려주시면 도움이 됩니다." },
+      ],
+    ],
+    closingSentences: [
+      "아이의 어려운 과학 단원, 실험 과정, 그림 자료 이해도를 알려주시면 상담 때 차근차근 확인하겠습니다.",
+      "관찰과 자료 읽기 중 어디에서 도움이 필요한지 남겨주시면 아이에게 맞는 수업 방향을 살펴보겠습니다.",
+    ],
+  },
+  koreanHistory: {
+    focusLabel: "시대 흐름과 이야기 정리",
+    titleSuffixes: [
+      "시대 흐름과 인물·사건을 연결하는 수업",
+      "연표와 이야기식 정리로 이해하는 학습",
+      "그림·자료와 역사 흐름을 함께 보는 수업",
+    ],
+    descriptions: [
+      "{region}에서 초등 한국사 과외를 찾는 학부모님을 위해 시대 흐름, 인물과 사건 연결, 연표, 그림·자료 이해와 이야기식 정리를 안내합니다.",
+      "{region} 초등 한국사 과외는 사건 이름 암기보다 시대 흐름과 인물, 자료를 이야기처럼 연결해 이해하도록 돕습니다.",
+    ],
+    summaries: [
+      "{region} 초등 한국사 수업은 시대 흐름, 인물과 사건 연결, 연표, 그림·자료 이해, 이야기식 정리를 중심으로 진행합니다.",
+      "{region}에서 초등 한국사 과외를 고민하는 학부모님을 위해 역사 흐름과 자료 이해를 함께 잡는 방향을 정리했습니다.",
+    ],
+    openings: [
+      "초등 한국사는 사건 이름을 많이 외우는 것보다 시대 흐름을 이야기처럼 이해하는 과정이 중요합니다. 인물과 사건을 연결하고, 연표와 그림 자료를 보며 흐름을 잡습니다.",
+      "한국사를 처음 배우는 아이는 낯선 인물과 시대 이름에서 부담을 느끼기 쉽습니다. 수업은 큰 흐름을 먼저 잡고 사건을 이야기식으로 정리합니다.",
+    ],
+    mainCaptions: [
+      "{region} 초등 한국사 수업은 시대 흐름과 인물·사건 연결을 함께 확인합니다.",
+      "연표와 그림 자료를 보며 역사 이야기를 차근차근 정리합니다.",
+    ],
+    learningStatuses: [
+      "시대 이름과 사건이 헷갈리고 역사 흐름을 이야기로 정리하기 어려운 학생",
+      "인물과 사건, 연표와 그림 자료를 연결하는 연습이 필요한 학생",
+    ],
+    recommendedTargets: [
+      "시대 흐름과 인물·사건을 이야기처럼 이해하고 싶은 학생",
+      "연표와 그림·자료 이해를 통해 한국사 기초를 잡고 싶은 학생",
+    ],
+    studentLeads: [
+      "초등 한국사는 낱개 사건을 외우면 금방 잊기 쉽습니다. 어떤 시대에 어떤 인물이 있었고, 사건이 왜 이어졌는지 큰 흐름으로 정리해야 합니다.",
+      "아이에게 역사가 어렵게 느껴진다면 시대 순서, 인물, 사건, 그림 자료를 나누어 확인하는 것이 좋습니다. 수업에서는 이야기식 정리로 부담을 낮춥니다.",
+    ],
+    priorityBodies: [
+      "시대 흐름을 먼저 잡고 인물과 사건을 연결합니다. 연표는 순서를 외우는 도구가 아니라 이야기를 정리하는 기준으로 활용합니다.",
+      "그림과 자료에서 시대의 특징을 찾고, 사건의 원인과 결과를 짧게 말해봅니다. 낯선 이름은 이야기 속에서 반복해 익힙니다.",
+    ],
+    middleImageAlt: "{region} 초등 한국사 시대 흐름과 자료 이해 학습 안내",
+    middleCaptions: [
+      "시대 흐름과 인물·사건을 연결해 한국사를 이해합니다.",
+      "연표와 그림 자료를 활용해 역사 이야기를 정리합니다.",
+    ],
+    lessonIntros: [
+      "수업은 시대 흐름 확인, 인물과 사건 연결, 연표 정리, 그림·자료 이해, 이야기식 설명 순서로 진행합니다.",
+      "초등 한국사 수업은 사건을 따로 외우기보다 큰 흐름 안에서 인물과 사건이 어떻게 이어지는지 말해보는 방식으로 진행합니다.",
+    ],
+    lessonDifferences: [
+      "{region} 초등 한국사 과외에서는 시대 흐름, 인물과 사건 연결, 연표, 그림·자료 이해, 이야기식 정리를 함께 봅니다.",
+      "{region} 초등 한국사 수업은 암기량을 늘리기보다 아이가 역사 흐름을 자기 말로 설명할 수 있도록 돕습니다.",
+    ],
+    stepSets: [
+      [
+        { title: "시대 흐름 잡기", description: "큰 시대 순서를 먼저 보고 각 시대의 특징을 쉬운 말로 정리합니다." },
+        { title: "인물과 사건 연결", description: "인물이 한 일과 사건이 이어진 이유를 이야기처럼 연결합니다." },
+        { title: "연표와 자료 이해", description: "연표, 그림, 자료에서 시대의 단서를 찾아 흐름을 다시 확인합니다." },
+      ],
+      [
+        { title: "큰 이야기 정리", description: "단원의 내용을 시작, 변화, 결과로 나누어 부담 없이 이해합니다." },
+        { title: "그림·자료 읽기", description: "자료 속 인물, 장소, 물건이 어떤 시대를 보여주는지 살핍니다." },
+        { title: "자기 말로 설명", description: "배운 사건을 짧은 이야기로 말해보며 기억에 남도록 정리합니다." },
+      ],
+    ],
+    consultIntros: [
+      "상담 전에는 아이가 헷갈려하는 시대, 인물, 사건, 연표 정리 부담을 알려주시면 수업 방향을 잡기 좋습니다.",
+      "최근 배운 한국사 단원과 어려웠던 그림·자료 유형을 알려주시면 시대 흐름부터 볼지 사건 연결부터 볼지 정리할 수 있습니다.",
+    ],
+    consultChecks: [
+      [
+        { title: "시대 흐름", description: "큰 순서를 알고 있는지" },
+        { title: "인물과 사건", description: "누가 무엇을 했는지 연결하는지" },
+        { title: "연표", description: "사건 순서를 정리하는지" },
+        { title: "자료 이해", description: "그림과 자료의 단서를 찾는지" },
+      ],
+      [
+        { title: "최근 단원", description: "현재 배우는 시대와 범위" },
+        { title: "이야기 정리", description: "사건을 자기 말로 설명하는지" },
+        { title: "헷갈리는 이름", description: "인물과 사건 이름 구분" },
+        { title: "흥미", description: "역사 이야기에 대한 부담감" },
+      ],
+    ],
+    faqs: [
+      [
+        { question: "초등 한국사는 연표부터 외워야 하나요?", answer: "연표를 무작정 외우기보다 시대 흐름을 이해하는 기준으로 활용합니다. 인물과 사건을 이야기처럼 연결해 정리합니다." },
+        { question: "역사 인물을 자주 헷갈리면 어떻게 하나요?", answer: "인물 이름만 반복하지 않고 그 인물이 한 일과 관련 사건을 함께 묶어 기억하도록 돕습니다." },
+        { question: "그림이나 자료도 같이 보나요?", answer: "네. 그림과 자료에서 시대의 특징과 사건의 단서를 찾으며 한국사 흐름을 이해합니다." },
+      ],
+      [
+        { question: "한국사를 처음 배우는 아이도 괜찮나요?", answer: "괜찮습니다. 큰 시대 흐름부터 시작해 인물과 사건을 짧은 이야기로 연결하며 부담을 줄입니다." },
+        { question: "암기량이 많아지지는 않나요?", answer: "초등 단계에서는 많은 이름을 외우기보다 흐름을 이해하는 데 초점을 둡니다. 필요한 이름은 이야기 속에서 반복합니다." },
+        { question: "상담 전에 무엇을 알려주면 좋나요?", answer: "헷갈리는 시대, 어려운 인물이나 사건, 연표 정리에서 막히는 부분을 알려주시면 도움이 됩니다." },
+      ],
+    ],
+    closingSentences: [
+      "아이의 어려운 시대 흐름, 헷갈리는 인물과 사건, 자료 이해 부담을 알려주시면 상담 때 확인하겠습니다.",
+      "한국사를 이야기처럼 이해할 수 있도록 현재 단원과 고민을 남겨주시면 차근차근 살펴보겠습니다.",
+    ],
+  },
+};
+
+function applyElementaryTemplate(text: string, page: TutoringPage, subjectLabel: string) {
+  return text
+    .replaceAll("{region}", page.지역)
+    .replaceAll("{subject}", subjectLabel);
+}
+
+function getElementarySubjectDetail(subjectKey: SubjectKey) {
+  return elementarySubjectDetails[subjectKey];
+}
+
+export function getElementaryLocalSeoText(
+  page: TutoringPage,
+  serviceName: string,
+): ElementaryLocalSeoText | null {
+  if (!isRegionalLocalTutoringPage(page)) {
+    return null;
+  }
+
+  const gradeKey = getGradeKey(serviceName);
+  const subjectKey = getSubjectKey(serviceName);
+
+  if (gradeKey !== "elementary" || !subjectKey) {
+    return null;
+  }
+
+  const subjectLabel = subjectLabels[subjectKey];
+  const detail = getElementarySubjectDetail(subjectKey);
+
+  return {
+    titleSuffix: applyElementaryTemplate(pickStable(detail.titleSuffixes, page.slug, "elementary-title"), page, subjectLabel),
+    description: applyElementaryTemplate(pickStable(detail.descriptions, page.slug, "elementary-description"), page, subjectLabel),
+    summary: applyElementaryTemplate(pickStable(detail.summaries, page.slug, "elementary-summary"), page, subjectLabel),
+    focusLabel: detail.focusLabel,
+  };
+}
+
 function stableHash(text: string) {
   let hash = 0;
 
@@ -538,6 +1202,29 @@ export function getLocalTutoringDetailContent(
 
   if (!gradeKey || !subjectKey) {
     return null;
+  }
+
+  if (gradeKey === "elementary") {
+    const subjectLabel = subjectLabels[subjectKey];
+    const detail = getElementarySubjectDetail(subjectKey);
+
+    return {
+      opening: applyElementaryTemplate(pickStable(detail.openings, page.slug, "elementary-opening"), page, subjectLabel),
+      mainCaption: applyElementaryTemplate(pickStable(detail.mainCaptions, page.slug, "elementary-main-caption"), page, subjectLabel),
+      studentLead: applyElementaryTemplate(pickStable(detail.studentLeads, page.slug, "elementary-student"), page, subjectLabel),
+      priorityBody: applyElementaryTemplate(pickStable(detail.priorityBodies, page.slug, "elementary-priority"), page, subjectLabel),
+      learningStatus: pickStable(detail.learningStatuses, page.slug, "elementary-learning-status"),
+      recommendedTarget: pickStable(detail.recommendedTargets, page.slug, "elementary-recommended-target"),
+      middleImageAlt: applyElementaryTemplate(detail.middleImageAlt, page, subjectLabel),
+      middleCaption: applyElementaryTemplate(pickStable(detail.middleCaptions, page.slug, "elementary-middle-caption"), page, subjectLabel),
+      lessonIntro: applyElementaryTemplate(pickStable(detail.lessonIntros, page.slug, "elementary-lesson-intro"), page, subjectLabel),
+      lessonDifference: applyElementaryTemplate(pickStable(detail.lessonDifferences, page.slug, "elementary-lesson-difference"), page, subjectLabel),
+      steps: pickStable(detail.stepSets, page.slug, "elementary-steps"),
+      consultIntro: applyElementaryTemplate(pickStable(detail.consultIntros, page.slug, "elementary-consult"), page, subjectLabel),
+      consultChecks: pickStable(detail.consultChecks, page.slug, "elementary-checks"),
+      faqs: pickStable(detail.faqs, page.slug, "elementary-faqs"),
+      closingSentence: applyElementaryTemplate(pickStable(detail.closingSentences, page.slug, "elementary-closing"), page, subjectLabel),
+    };
   }
 
   const grade = gradeContent[gradeKey];
