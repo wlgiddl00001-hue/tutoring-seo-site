@@ -25,9 +25,13 @@ export function SiteHeader() {
             <span aria-hidden="true">☎</span><strong>010-8286-7620</strong>
           </a>
           <a className="headerConsultButton header-apply" href="#consult">
-            상담 신청
+            무료 상담
           </a>
         </div>
+      </div>
+      <div className="mobileConsultBar" aria-label="모바일 빠른 상담">
+        <a href="tel:01082867620">전화상담</a>
+        <a href="#consult">무료 상담 신청</a>
       </div>
     </header>
   );

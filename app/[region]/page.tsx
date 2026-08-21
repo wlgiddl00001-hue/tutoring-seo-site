@@ -5,6 +5,7 @@ import { ConsultationFormCard, ConsultationProcessBox } from "@/app/components/c
 import { OnlineTutoringGuide } from "@/app/components/online-tutoring-guide";
 import { SiteHeader } from "@/app/components/site-header";
 import { TeacherAssignmentGuide } from "@/app/components/teacher-assignment-guide";
+import { TutoringDecisionGuide } from "@/app/components/tutoring-decision-guide";
 import { RelatedTutoringLinks } from "@/app/components/related-tutoring-links";
 import {
   getPublicPageSlug,
@@ -495,6 +496,8 @@ export default async function TutoringDetailPage({ params }: PageProps) {
               variant={isOnlineSinglePage ? "online" : "default"}
             />
 
+            <TutoringDecisionGuide region={page.지역} serviceName={serviceName} />
+
             <section className="article-section article-section-with-image" id="consult-check">
               <div>
                 <span className="article-section-number">03</span>
@@ -557,7 +560,7 @@ export default async function TutoringDetailPage({ params }: PageProps) {
                 <ConsultationProcessBox className="detailConsultSteps" />
               </div>
               <div className="detailConsultFormArea">
-                <ConsultationFormCard className="detailConsultForm" />
+                <ConsultationFormCard className="detailConsultForm" sourceLabel={`${page.지역} ${serviceName}`} />
               </div>
             </section>
           </div>

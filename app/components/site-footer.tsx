@@ -8,11 +8,12 @@ export function SiteFooter() {
           <Link className="footer-brand" href="/">
             호빈샘 과외
           </Link>
-          <p>학생의 현재에서 시작하는 서울 1:1 맞춤 과외</p>
+          <p>학생의 현재에서 시작하는 전국 1:1 맞춤 과외</p>
         </div>
         <div className="footer-links">
           <Link href="/#regions">지역 찾기</Link>
           <Link href="/#subjects">과목 찾기</Link>
+          <Link href="/privacy">개인정보처리방침</Link>
           <a href="tel:01082867620">전화 상담 010-8286-7620</a>
         </div>
       </div>

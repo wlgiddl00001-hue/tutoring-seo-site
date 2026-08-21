@@ -2225,7 +2225,8 @@ function applyMiddleTemplate(
   return text
     .replaceAll("{region}", page.지역)
     .replaceAll("{subject}", subjectLabel)
-    .replaceAll("{focus}", focusLabel);
+    .replaceAll("{focus}", focusLabel)
+    .replaceAll("학생의 학생 ", "학생의 ");
 }
 
 function applyHighTemplate(
@@ -2237,7 +2238,8 @@ function applyHighTemplate(
   return text
     .replaceAll("{region}", page.지역)
     .replaceAll("{subject}", subjectLabel)
-    .replaceAll("{focus}", focusLabel);
+    .replaceAll("{focus}", focusLabel)
+    .replaceAll("학생의 학생 ", "학생의 ");
 }
 
 function getElementarySubjectDetail(subjectKey: SubjectKey) {
@@ -2574,7 +2576,7 @@ export function getSingleSlugTutoringDetailContent(
       recommendedTarget: `${recommendedTarget} / 실시간 질문과 피드백이 필요한 학생`,
       middleImageAlt: `${gradeLabel} ${subjectLabel} 온라인 과외 화면 공유 학습 자료 이미지`,
       middleCaption: "수업 중 확인한 질문, 필기, 오답 내용을 복습 자료로 남겨 다음 수업과 연결합니다.",
-      lessonIntro: `${serviceName}는 ${page.수업방식}을 바탕으로 진행하되, 접속 환경 확인, 화면 공유, 실시간 질문, 자료 전달 순서를 함께 점검합니다.`,
+      lessonIntro: `${serviceName}는 ${withJosa(page.수업방식, "을를")} 바탕으로 진행하되, 접속 환경 확인, 화면 공유, 실시간 질문, 자료 전달 순서를 함께 점검합니다.`,
       lessonDifference: `${gradeLabel} ${subjectLabel} 온라인 과외는 녹화 강의 시청이 아니라 학생 반응을 보며 설명과 피드백을 조정하는 1:1 수업입니다.`,
       steps: onlineSubjectSteps[subjectKey],
       consultIntro: "온라인 상담에서는 사용할 기기, 접속 가능 시간, 현재 교재나 시험 범위, 질문이 많은 단원을 함께 확인하면 수업 준비가 더 구체적입니다.",

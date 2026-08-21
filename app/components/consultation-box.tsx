@@ -1,5 +1,6 @@
 "use client";
-import type { FormEvent } from "react";
+import Link from "next/link";
+import { useState, type FormEvent } from "react";
 const CONSULTATION_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbz_qksThrgOh0ukEi1tQGmqnKk5laZ2-7QaqCA94zoHPxRPI-SqqtaFID1woM9RylxD/exec";
 const consultSteps = [
   "상담신청",
@@ -11,13 +12,17 @@ const consultSteps = [
 
 type ConsultationCardProps = {
   className?: string;
+  sourceLabel?: string;
 };
 
 function mergeClassName(baseClassName: string, className?: string) {
   return className ? `${baseClassName} ${className}` : baseClassName;
 }
 
-export function ConsultationFormCard({ className }: ConsultationCardProps) {
+export function ConsultationFormCard({ className, sourceLabel }: ConsultationCardProps) {
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [statusMessage, setStatusMessage] = useState("");
+
     async function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
 
@@ -31,6 +36,9 @@ export function ConsultationFormCard({ className }: ConsultationCardProps) {
       subject: String(formData.get("subject") || ""),
       phone: String(formData.get("phone") || ""),
       agree: formData.get("agree") === "on",
+      sourceLabel: sourceLabel || "과외 상담 페이지",
+      pageTitle: document.title,
+      pageUrl: window.location.href,
     };
 
     if (!payload.name || !payload.grade || !payload.subject || !payload.phone) {
@@ -44,6 +52,8 @@ export function ConsultationFormCard({ className }: ConsultationCardProps) {
     }
 
     try {
+      setIsSubmitting(true);
+      setStatusMessage("상담 신청을 접수하고 있습니다.");
       await fetch(CONSULTATION_SCRIPT_URL, {
         method: "POST",
         mode: "no-cors",
@@ -53,10 +63,12 @@ export function ConsultationFormCard({ className }: ConsultationCardProps) {
         body: JSON.stringify(payload),
       });
 
-      alert("상담 신청이 접수되었습니다. 빠르게 연락드리겠습니다.");
+      setStatusMessage("상담 신청이 접수되었습니다. 확인 후 순서대로 연락드리겠습니다.");
       form.reset();
-    } catch (error) {
-      alert("상담 신청 중 오류가 발생했습니다. 전화상담으로 문의해주세요.");
+    } catch {
+      setStatusMessage("접수가 원활하지 않습니다. 전화상담 010-8286-7620으로 문의해 주세요.");
+    } finally {
+      setIsSubmitting(false);
     }
   }
   return (
@@ -64,8 +76,8 @@ export function ConsultationFormCard({ className }: ConsultationCardProps) {
       <div className="consultFormHead">
         <strong>과외 상담 신청</strong>
         <p>
-          학생의 학년, 희망 과목, 현재 고민을 남겨주시면 아이에게 맞는 수업 방향을
-          확인한 뒤 상담을 도와드립니다.
+          학생의 학년과 희망 과목을 남겨주시면 방문 가능 여부와 선생님 배정 방향을
+          확인한 뒤 연락드립니다. 상담만 받아도 별도 비용은 없습니다.
         </p>
       </div>
 
@@ -76,6 +88,8 @@ export function ConsultationFormCard({ className }: ConsultationCardProps) {
           type="text"
           name="name"
           placeholder="예: 홍길동"
+          autoComplete="name"
+          required
         />
       </label>
 
@@ -86,6 +100,7 @@ export function ConsultationFormCard({ className }: ConsultationCardProps) {
           type="text"
           name="grade"
           placeholder="예: 초6, 중2, 고1"
+          required
         />
       </label>
 
@@ -96,6 +111,7 @@ export function ConsultationFormCard({ className }: ConsultationCardProps) {
           type="text"
           name="subject"
           placeholder="예: 수학, 영어, 국어"
+          required
         />
       </label>
 
@@ -103,24 +119,29 @@ export function ConsultationFormCard({ className }: ConsultationCardProps) {
         <span>상담 가능한 연락처</span>
         <input
           className="consultInput"
-          type="text"
+          type="tel"
+          inputMode="tel"
           name="phone"
           placeholder="예: 010-1234-5678"
+          autoComplete="tel"
+          required
         />
       </label>
 
       <label className="consultAgree">
-        <input type="checkbox" name="agree" />
-        <span>개인정보 수집 및 이용에 동의합니다.</span>
+        <input type="checkbox" name="agree" required />
+        <span><Link href="/privacy">개인정보 수집 및 이용 안내</Link>를 확인했으며 이에 동의합니다.</span>
       </label>
 
-      <button type="submit" className="consultSubmitBtn">
-        상담 신청하기
+      <button type="submit" className="consultSubmitBtn" disabled={isSubmitting}>
+        {isSubmitting ? "접수 중입니다" : "무료 상담 신청하기"}
       </button>
 
       <a href="tel:01082867620" className="consultPhoneBtn">
         전화상담 010-8286-7620
       </a>
+      <p className="consultFormNotice">무료 모의수업 후 정규수업 여부를 결정할 수 있으며, 상담 단계에서 수업료와 가능한 일정을 먼저 안내합니다.</p>
+      <p className="consultFormStatus" role="status" aria-live="polite">{statusMessage}</p>
     </form>
   );
 }

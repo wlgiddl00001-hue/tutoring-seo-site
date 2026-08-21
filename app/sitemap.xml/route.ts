@@ -67,6 +67,11 @@ export function GET() {
       changeFrequency: "weekly",
       priority: "1.0",
     },
+    {
+      loc: `${SITE_URL}/privacy`,
+      changeFrequency: "monthly",
+      priority: "0.7",
+    },
     ...uniquePageEntries,
   ];
 

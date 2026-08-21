@@ -5,6 +5,7 @@ import { ConsultationFormCard, ConsultationProcessBox } from "@/app/components/c
 import { OnlineTutoringGuide } from "@/app/components/online-tutoring-guide";
 import { SiteHeader } from "@/app/components/site-header";
 import { TeacherAssignmentGuide } from "@/app/components/teacher-assignment-guide";
+import { TutoringDecisionGuide } from "@/app/components/tutoring-decision-guide";
 import { RelatedTutoringLinks } from "@/app/components/related-tutoring-links";
 import {
   getPublicPageSlug,
@@ -578,6 +579,8 @@ export default async function TutoringDetailPage({ params }: PageProps) {
 
             <TeacherAssignmentGuide intro={teacherAssignmentIntro} />
 
+            <TutoringDecisionGuide region={page.지역} serviceName={serviceName} />
+
             <OnlineTutoringGuide
               variant="compact"
               intro={`방문 수업 배정이 어렵거나 일정 조율이 필요한 경우에는 동일한 학년과 과목의 온라인 전문 선생님을 연결할 수 있습니다. 온라인 수업도 실시간 1:1 방식으로 진행하며, 무료 모의수업을 통해 수업 환경을 먼저 확인할 수 있습니다.`}
@@ -600,7 +603,7 @@ export default async function TutoringDetailPage({ params }: PageProps) {
                 <ConsultationProcessBox className="detailConsultSteps" />
               </div>
               <div className="detailConsultFormArea">
-                <ConsultationFormCard className="detailConsultForm" />
+                <ConsultationFormCard className="detailConsultForm" sourceLabel={`${page.지역} ${serviceName}`} />
               </div>
             </section>
           </div>

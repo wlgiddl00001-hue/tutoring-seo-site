@@ -102,6 +102,233 @@ svg {
   font-weight: 700;
 }
 
+/* 상담 전환과 신뢰 안내 */
+.mobileConsultBar {
+  display: none;
+}
+
+.consultFormCard .consultAgree a {
+  color: #176b52;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.consultSubmitBtn:disabled {
+  cursor: wait;
+  opacity: 0.72;
+}
+
+.consultFormNotice,
+.consultFormStatus {
+  margin: 0;
+  color: #5b6d64;
+  font-size: 12px;
+  font-weight: 650;
+  line-height: 1.6;
+  word-break: keep-all;
+}
+
+.consultFormStatus:empty {
+  display: none;
+}
+
+.tutoringDecisionGuide {
+  margin: 78px auto 0;
+  padding: clamp(28px, 4vw, 42px);
+  border: 1px solid #d9e8e1;
+  border-radius: 24px;
+  background: #ffffff;
+  box-shadow: 0 18px 44px rgba(31, 74, 58, 0.08);
+}
+
+.tutoringDecisionGuideHead > p {
+  margin: 0 0 10px;
+  color: #176b52;
+  font-size: 13px;
+  font-weight: 900;
+}
+
+.tutoringDecisionGuideHead h2 {
+  margin: 0;
+  color: #173c30;
+  font-size: clamp(27px, 3vw, 38px);
+  line-height: 1.35;
+  letter-spacing: -0.045em;
+  word-break: keep-all;
+}
+
+.tutoringDecisionGuideHead > span {
+  display: block;
+  max-width: 760px;
+  margin-top: 14px;
+  color: #586b61;
+  font-size: 15px;
+  line-height: 1.75;
+  word-break: keep-all;
+}
+
+.tutoringDecisionGuideGrid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 14px;
+  margin-top: 28px;
+}
+
+.tutoringDecisionGuideGrid article {
+  padding: 22px;
+  border-radius: 18px;
+  background: #f2f8f5;
+}
+
+.tutoringDecisionGuideGrid b {
+  color: #17875d;
+  font-size: 13px;
+}
+
+.tutoringDecisionGuideGrid h3 {
+  margin: 15px 0 9px;
+  color: #173c30;
+  font-size: 18px;
+}
+
+.tutoringDecisionGuideGrid p {
+  margin: 0;
+  color: #5b6b63;
+  font-size: 14px;
+  line-height: 1.7;
+  word-break: keep-all;
+}
+
+.tutoringDecisionGuideActions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 24px;
+}
+
+.tutoringDecisionGuideActions a {
+  display: inline-flex;
+  min-height: 48px;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid #176b52;
+  border-radius: 999px;
+  color: #176b52;
+  font-size: 14px;
+  font-weight: 900;
+  padding: 0 20px;
+}
+
+.tutoringDecisionGuideActions a:first-child {
+  background: #176b52;
+  color: #ffffff;
+}
+
+.privacyPage {
+  max-width: 900px;
+  padding-top: 80px;
+  padding-bottom: 100px;
+}
+
+.privacyKicker {
+  color: #176b52;
+  font-weight: 900;
+}
+
+.privacyPage h1 {
+  margin: 10px 0 24px;
+  color: #173c30;
+  font-size: clamp(38px, 6vw, 62px);
+  letter-spacing: -0.055em;
+}
+
+.privacyPage > p,
+.privacyPage section p {
+  color: #56685f;
+  line-height: 1.8;
+}
+
+.privacyPage section {
+  margin-top: 34px;
+  padding-top: 28px;
+  border-top: 1px solid #dce8e2;
+}
+
+.privacyPage section h2 {
+  margin: 0 0 10px;
+  color: #213f33;
+  font-size: 22px;
+}
+
+.privacyActions {
+  display: flex;
+  gap: 10px;
+  margin-top: 40px;
+}
+
+.privacyActions a {
+  padding: 13px 18px;
+  border: 1px solid #176b52;
+  border-radius: 999px;
+  color: #176b52;
+  font-weight: 850;
+}
+
+@media (max-width: 760px) {
+  body {
+    padding-bottom: 72px;
+  }
+
+  .mobileConsultBar {
+    position: fixed;
+    z-index: 90;
+    right: 12px;
+    bottom: 12px;
+    left: 12px;
+    display: grid;
+    grid-template-columns: 0.8fr 1.2fr;
+    overflow: hidden;
+    border: 1px solid rgba(23, 107, 82, 0.2);
+    border-radius: 14px;
+    background: #ffffff;
+    box-shadow: 0 14px 34px rgba(17, 54, 41, 0.24);
+  }
+
+  .mobileConsultBar a {
+    display: flex;
+    min-height: 54px;
+    align-items: center;
+    justify-content: center;
+    color: #176b52;
+    font-size: 14px;
+    font-weight: 900;
+  }
+
+  .mobileConsultBar a:last-child {
+    background: #176b52;
+    color: #ffffff;
+  }
+
+  .tutoringDecisionGuideGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .tutoringDecisionGuideActions,
+  .privacyActions {
+    flex-direction: column;
+  }
+
+  .tutoringDecisionGuideActions a,
+  .privacyActions a {
+    width: 100%;
+  }
+
+  .privacyPage {
+    width: calc(100% - 36px);
+    padding-top: 58px;
+  }
+}
+
 .brand-mark::before {
   content: "호";
 }
