@@ -29,6 +29,7 @@ import {
   getTeacherAssignmentGuideIntro,
 } from "@/lib/tutoring-content";
 import { SITE_URL, getAbsoluteUrl } from "@/lib/site";
+import { getTutoringImage } from "@/lib/tutoring-images";
 
 type PageProps = {
   params: Promise<{ region: string; service: string }>;
@@ -76,17 +77,6 @@ const focusLabelByValue: Record<string, string> = {
   오답관리중심: "오답 관리",
 };
 
-const tutoringImages = [
-  "002.png",
-  "003.png",
-  "004.png",
-  "005.png",
-  "006.png",
-  "007.png",
-  "008.png",
-  "009.png",
-];
-
 export const dynamicParams = false;
 
 export function generateStaticParams() {
@@ -131,44 +121,6 @@ function formatLessonDifference(page: TutoringPage) {
     .replace(locationDetachedBeforeService, `${locationName} `);
 
   return toSentence(formattedText);
-}
-
-function hashText(text: string) {
-  let hash = 0;
-
-  for (let i = 0; i < text.length; i += 1) {
-    hash = (hash * 31 + text.charCodeAt(i)) % 100000;
-  }
-
-  return Math.abs(hash);
-}
-
-function getTutoringImage(page: TutoringPage, offset = 0) {
-  const configuredImage = page.이미지파일명?.trim();
-  const usesConfiguredCoverImage =
-    page.page_type === "exam-tutoring" ||
-    page.page_type === "online-exam-tutoring" ||
-    page.slug === "ilsan/elementary-english";
-
-  if (
-    offset === 0 &&
-    usesConfiguredCoverImage &&
-    configuredImage &&
-    /^[a-zA-Z0-9._-]+\.(?:png|jpe?g|webp|avif)$/i.test(configuredImage)
-  ) {
-    return `/images/tutoring/${configuredImage}`;
-  }
-
-  const seed = [
-    page.slug,
-    page["지역"],
-    page["업종"],
-    page["메인키워드"],
-    page["콘텐츠관점"],
-  ].join("-");
-
-  const index = (hashText(seed) + offset) % tutoringImages.length;
-  return `/images/tutoring/${tutoringImages[index]}`;
 }
 
 function getDetailTitle(page: TutoringPage) {
@@ -324,9 +276,9 @@ export default async function TutoringDetailPage({ params }: PageProps) {
   const highSeo = getHighLocalSeoText(page, serviceName, focusLabel);
   const detailMetaLabel = elementarySeo?.focusLabel || middleSeo?.focusLabel || highSeo?.focusLabel || page.콘텐츠관점;
   const relatedLinks = getRelatedTutoringLinks(page);
-  const coverImage = getTutoringImage(page, 0);
-  const middleImage = getTutoringImage(page, 3);
-  const subImage = getTutoringImage(page, 5);
+  const coverImage = getTutoringImage(page, "cover");
+  const middleImage = getTutoringImage(page, "middle");
+  const subImage = getTutoringImage(page, "sub");
   const detailContent = getLocalTutoringDetailContent(page, focusLabel, serviceName);
   const teacherAssignmentIntro = getTeacherAssignmentGuideIntro(page, serviceName);
   const lessonSteps = detailContent?.steps || [

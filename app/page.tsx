@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { ConsultationFormCard, ConsultationProcessBox } from "@/app/components/consultation-box";
-import { LessonIllustration } from "@/app/components/lesson-illustration";
 import { OnlineTutoringGuide } from "@/app/components/online-tutoring-guide";
 import { RegionSelector } from "@/app/components/region-selector";
 import { SiteHeader } from "@/app/components/site-header";
@@ -92,7 +91,12 @@ export default function Home() {
                 </ul>
               </div>
             </div>
-            <LessonIllustration className="main-hero-placeholder" />
+            <figure className="main-hero-photo">
+              <img
+                src="/images/tutoring/main-hero-01.webp"
+                alt="학생의 학습 수준을 확인하며 1대1로 지도하는 과외 수업"
+              />
+            </figure>
           </div>
         </section>
 
@@ -151,6 +155,24 @@ export default function Home() {
             min-height: 600px;
             gap: 19px;
             padding: 42px;
+          }
+
+          .main-hero-photo {
+            min-height: 600px;
+            overflow: hidden;
+            border: 1px solid #dbe5df;
+            border-radius: 28px;
+            background: #f5f2eb;
+            box-shadow: 0 24px 60px rgba(31, 55, 44, 0.12);
+          }
+
+          .main-hero-photo img {
+            display: block;
+            width: 100%;
+            height: 100%;
+            min-height: 600px;
+            object-fit: cover;
+            object-position: center;
           }
 
           .main-hero-placeholder .placeholder-heading span {
@@ -226,6 +248,11 @@ export default function Home() {
           }
 
           @media (max-width: 520px) {
+            .main-hero-photo,
+            .main-hero-photo img {
+              min-height: 320px;
+            }
+
             .main-hero-placeholder {
               min-height: 0;
               gap: 15px;
@@ -456,7 +483,7 @@ export default function Home() {
               </div>
 <div className="exam-hero-image-wrap">
   <img
-    src="/images/tutoring/010.png"
+    src="/images/tutoring/main-hero-02.webp"
     alt="검정고시 과외 수업 이미지"
     className="exam-hero-image"
   />
