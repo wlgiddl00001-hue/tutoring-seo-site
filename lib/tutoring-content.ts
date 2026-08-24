@@ -58,6 +58,92 @@ const subjectLabels: Record<SubjectKey, string> = {
   koreanHistory: "한국사",
 };
 
+const elementarySubjectKeywordPhrases: Record<SubjectKey, string> = {
+  korean: "어휘·문학 작품·설명문 독해·요약·짧은 서술형",
+  english: "파닉스·기초 어휘·문장 읽기·듣기·영어 쓰기",
+  math: "수 감각·기초 연산·개념 이해·문장제·오답 관리",
+  social: "핵심 용어·지도·사진·표·도표 자료 해석·서술형",
+  science: "교과 개념·관찰·실험 과정·탐구 자료·생활 속 현상",
+  koreanHistory: "시대 흐름·인물과 사건·연표·그림 자료·역사 이야기",
+};
+
+const elementaryFocusTitles: Record<string, string> = {
+  성적향상: "현재 수준 진단과 성취도 관리",
+  기초개념보완: "기초 개념부터 다시 연결하는 학습",
+  공부습관형성: "짧은 복습을 이어가는 공부 습관",
+  내신대비: "학교 진도와 평가 범위 점검",
+  약한단원보완: "취약 단원을 찾는 맞춤 보완",
+  학습공백회복: "놓친 단원부터 잇는 학습 회복",
+  시험대비: "남은 기간에 맞춘 시험 준비",
+  자기주도학습: "계획과 복습을 스스로 이어가는 연습",
+  개념이해중심: "말로 설명하는 개념 이해",
+  문제풀이훈련: "문제 읽기와 풀이 과정 훈련",
+  상위권관리: "응용 문제까지 연결하는 심화 관리",
+  중하위권보완: "막히는 지점부터 채우는 단계 학습",
+  학교진도맞춤: "교과서 진도에 맞춘 예습과 복습",
+  수행평가대비: "발표·글쓰기·탐구 과제 준비",
+  학부모상담중심: "학습 과정과 다음 목표 공유",
+  학생성향맞춤: "집중 방식과 이해 속도에 맞춘 수업",
+  반복학습관리: "배운 내용을 남기는 반복 복습",
+  오답관리중심: "틀린 이유를 찾는 오답 관리",
+};
+
+type ElementaryContextSlot = "opening" | "priority" | "lesson" | "consult" | "closing";
+
+function getElementaryFocusTitle(page: TutoringPage) {
+  return elementaryFocusTitles[page.콘텐츠관점] || "현재 수준에 맞춘 학습 관리";
+}
+
+function getElementaryContextSentence(
+  page: TutoringPage,
+  subjectKey: SubjectKey,
+  slot: ElementaryContextSlot,
+) {
+  const subjectLabel = subjectLabels[subjectKey];
+  const keywords = elementarySubjectKeywordPhrases[subjectKey];
+  const focusTitle = getElementaryFocusTitle(page);
+  const frames: Record<ElementaryContextSlot, string[]> = {
+    opening: [
+      `{region} 초등 {subject} 과외에서는 {keywords}를 모두 같은 비중으로 반복하기보다 {focus}부터 확인합니다.`,
+      `{situation}이라면 {region} 초등 {subject} 수업에서 {keywords} 가운데 막히는 순서를 먼저 찾아야 합니다.`,
+      `{region}에서 초등 {subject} 과외를 알아볼 때는 {keywords}와 함께 {focus} 필요 여부를 살펴보는 것이 좋습니다.`,
+      `{region}의 초등 {subject} 학습이 필요한 {target}에게는 {keywords}를 한꺼번에 늘리기보다 {focus} 방향을 기준으로 학습 순서를 정하는 방식이 맞습니다.`,
+    ],
+    priority: [
+      `{region} 초등 {subject}의 {focus} 목표를 위해 최근 교과서 단원과 풀이 흔적을 비교하고, {keywords} 중 수업에서 먼저 다룰 항목을 정합니다.`,
+      `{region} 초등 {subject} 학습에서는 {keywords}를 작은 단계로 나눈 뒤 {focus}에 필요한 연습량을 조절합니다.`,
+      `{region}의 초등 {subject} 학습에서 {situation}의 경우 정답 수보다 풀이 과정과 복습 반응을 보고 {focus}의 출발점을 잡습니다.`,
+      `{region} 초등 {subject} 수업에서 {keywords}를 점검할 때 아이가 이미 할 수 있는 부분은 줄이고, {focus}에 필요한 내용에 시간을 더 배분합니다.`,
+    ],
+    lesson: [
+      `{region} 초등 {subject} 수업 중에는 {keywords}를 설명·적용·복습 순서로 연결하고, 매시간 {focus} 목표가 실제 학습 행동으로 이어지는지 확인합니다.`,
+      `{region} 초등 {subject} 수업은 {keywords}를 교과서 진도와 연결해 연습하며 {focus}의 변화를 짧게 기록합니다.`,
+      `{region}의 초등 {subject} 학습에서는 아이가 직접 말하고 쓰고 풀어보는 과정에서 {keywords}의 이해도를 확인하고 {focus}에 맞춰 다음 과제를 정합니다.`,
+      `{region} 초등 {subject}에서 {keywords} 가운데 반복해서 막히는 부분은 예시를 바꾸어 다시 적용하고, {focus}에 필요한 복습 주기를 조절합니다.`,
+    ],
+    consult: [
+      `{region} 초등 {subject} 상담에서는 최근 단원, 집에서의 복습 반응과 함께 {keywords} 중 어려운 항목을 확인해 {focus} 계획을 세웁니다.`,
+      `{region}에서 초등 {subject} 수업이 필요한 {target}인지 판단하려면 최근 교재와 틀린 문제, {keywords}에 대한 아이의 반응을 함께 알려주시는 것이 좋습니다.`,
+      `{region} 초등 {subject} 상담에서는 현재 진도와 학습 시간을 먼저 확인하고 {focus}에 필요한 수업 순서를 안내합니다.`,
+      `{region} 초등 {subject} 상담에서는 {situation}에게 필요한 수업인지 확인하기 위해 {keywords}의 이해 정도와 {focus} 목표를 함께 살펴봅니다.`,
+    ],
+    closing: [
+      `{region} 초등 {subject} 과외의 시작점을 정할 때는 {keywords} 중 아이가 자신 있게 할 수 있는 부분과 {focus} 필요 여부를 나누어 확인합니다.`,
+      `{region}에서 {target}에게 필요한 초등 {subject} 수업을 찾을 수 있도록 최근 단원, 복습 습관과 {focus} 목표를 상담에서 구체적으로 살펴봅니다.`,
+      `{region} 초등 {subject} 수업은 {situation}의 현재 학습 흔적을 확인한 뒤 {keywords}의 우선순위와 다음 시간에 이어갈 {focus} 계획을 정합니다.`,
+      `{region}에서 초등 {subject} 수업을 시작하기 전 {keywords}의 이해도와 학습 부담을 확인해 {focus}에 맞는 분량을 안내합니다.`,
+    ],
+  };
+
+  return pickStable(frames[slot], `${page.slug}:${page.콘텐츠관점}`, `elementary-context-${slot}`)
+    .replaceAll("{region}", page.지역)
+    .replaceAll("{subject}", subjectLabel)
+    .replaceAll("{keywords}", keywords)
+    .replaceAll("{focus}", focusTitle)
+    .replaceAll("{situation}", page.학습상황)
+    .replaceAll("{target}", page.추천대상);
+}
+
 const gradeContent: Record<
   GradeKey,
   {
@@ -2299,11 +2385,22 @@ export function getElementaryLocalSeoText(
 
   const subjectLabel = subjectLabels[subjectKey];
   const detail = getElementarySubjectDetail(subjectKey);
+  const focusTitle = getElementaryFocusTitle(page);
+  const baseDescription = applyElementaryTemplate(
+    pickStable(detail.descriptions, page.slug, "elementary-description"),
+    page,
+    subjectLabel,
+  );
+  const baseSummary = applyElementaryTemplate(
+    pickStable(detail.summaries, page.slug, "elementary-summary"),
+    page,
+    subjectLabel,
+  );
 
   return {
-    titleSuffix: applyElementaryTemplate(pickStable(detail.titleSuffixes, page.slug, "elementary-title"), page, subjectLabel),
-    description: applyElementaryTemplate(pickStable(detail.descriptions, page.slug, "elementary-description"), page, subjectLabel),
-    summary: applyElementaryTemplate(pickStable(detail.summaries, page.slug, "elementary-summary"), page, subjectLabel),
+    titleSuffix: `${detail.focusLabel} · ${focusTitle}`,
+    description: `${baseDescription} ${focusTitle} 필요 여부와 현재 단원, 학습 습관도 함께 살펴봅니다.`,
+    summary: `${baseSummary} ${focusTitle} 방향에 맞춰 교과서 진도와 복습 순서를 안내합니다.`,
     focusLabel: detail.focusLabel,
   };
 }
@@ -2377,9 +2474,9 @@ const onlineSubjectFocus: Record<SubjectKey, string> = {
 
 const onlineSubjectBodies: Record<SubjectKey, string> = {
   korean:
-    "{grade} 국어 온라인 과외는 교재 지문을 함께 보면서 중심 내용, 어휘와 문법, 답안 근거를 바로 표시합니다. 학생이 말로 설명한 내용을 듣고 부족한 근거를 다시 짚어 글쓰기와 서술형 답안까지 이어갑니다.",
+    "{grade} 국어 온라인 과외는 문학 작품과 비문학·설명문 지문을 함께 보면서 중심 내용, 어휘와 문법, 독해 근거를 바로 표시합니다. 학생이 말로 설명한 내용을 듣고 부족한 근거를 다시 짚어 글쓰기와 서술형 답안까지 이어갑니다.",
   english:
-    "{grade} 영어 온라인 과외는 교과서 본문이나 학습 자료를 화면에 띄워 어휘, 표현, 문장 해석을 차례로 확인합니다. 듣기 반응과 독해 근거를 수업 중 바로 점검하고 필요한 자료를 수업 후 전달합니다.",
+    "{grade} 영어 온라인 과외는 교과서 본문이나 학습 자료를 화면에 띄워 어휘, 문법, 표현과 문장 해석을 차례로 확인합니다. 듣기 반응과 독해 근거, 내신 범위와 서술형 답안을 수업 중 바로 점검하고 필요한 자료를 수업 후 전달합니다.",
   math:
     "{grade} 수학 온라인 과외는 학생의 풀이 과정을 화면 공유와 필기로 확인하면서 개념 이해, 유형 적용, 오답 원인을 함께 봅니다. 계산 실수와 서술형 풀이에서 막히는 지점을 수업 기록으로 남겨 복습할 수 있게 합니다.",
   social:
@@ -2752,6 +2849,30 @@ export function getOnlineTutoringGuideIntro(page: TutoringPage, serviceName: str
   return introBySubject[subjectKey][gradeKey];
 }
 
+export function getRegionalOnlineTutoringGuideIntro(page: TutoringPage, serviceName: string) {
+  const gradeKey = getGradeKey(serviceName);
+  const subjectKey = getSubjectKey(serviceName);
+
+  if (!gradeKey || !subjectKey) {
+    return "방문 수업 일정이 맞지 않을 때는 실시간 온라인 과외 가능 여부를 함께 확인합니다. 화면 공유와 실시간 필기로 학생의 질문과 풀이 과정을 살피며 수업합니다.";
+  }
+
+  const gradeLabel = gradeLabels[gradeKey];
+  const subjectLabel = subjectLabels[subjectKey];
+  const subjectKeywords = localAssignmentFocus[gradeKey][subjectKey];
+  const focusTitle = elementaryFocusTitles[page.콘텐츠관점] || "현재 수준에 맞춘 학습 관리";
+  const frames = [
+    `${page.지역}에서 방문 일정 조율이 어렵다면 ${gradeLabel} ${subjectLabel} 온라인 과외도 함께 상담할 수 있습니다. 화면 공유로 ${subjectKeywords}를 확인하며 ${focusTitle} 방향을 이어갑니다.`,
+    `${page.지역} ${gradeLabel} ${subjectLabel} 방문 수업 배정이 어려운 경우에는 실시간 온라인 수업을 대안으로 안내합니다. 학생의 풀이와 질문을 화면에서 확인하고 ${focusTitle}에 필요한 복습을 관리합니다.`,
+    `${gradeLabel} ${subjectLabel} 수업은 이동 시간이나 지역 조건에 따라 온라인으로도 진행할 수 있습니다. ${subjectKeywords} 가운데 어려운 부분을 실시간으로 확인해 ${focusTitle} 계획을 세웁니다.`,
+    `${page.지역}에서 원하는 시간의 방문 선생님을 찾기 어렵다면 온라인 전문 선생님 배정도 가능합니다. ${gradeLabel} ${subjectLabel}의 ${subjectKeywords}를 화면 공유로 점검하고 무료 모의수업으로 적응도를 먼저 확인합니다.`,
+    `방문 수업과 온라인 수업 중 어떤 방식이 맞는지는 ${page.지역} 배정 가능 시간과 학생의 학습 반응을 함께 보고 결정합니다. 온라인에서도 ${subjectKeywords}와 ${focusTitle} 과정을 실시간으로 확인합니다.`,
+    `${page.지역} ${gradeLabel} ${subjectLabel} 과외 상담에서는 방문 가능 여부와 온라인 수업 선호도를 함께 확인합니다. 온라인 수업을 선택하면 ${subjectKeywords}의 이해 과정과 오답을 화면으로 관리합니다.`,
+  ];
+
+  return pickStable(frames, `${page.slug}:${page.콘텐츠관점}`, "regional-online-guide");
+}
+
 function getExamLevel(serviceName: string) {
   if (serviceName.includes("중졸")) return "중졸";
   if (serviceName.includes("고졸")) return "고졸";
@@ -2874,23 +2995,28 @@ export function getLocalTutoringDetailContent(
   if (gradeKey === "elementary") {
     const subjectLabel = subjectLabels[subjectKey];
     const detail = getElementarySubjectDetail(subjectKey);
+    const contextualOpening = getElementaryContextSentence(page, subjectKey, "opening");
+    const contextualPriority = getElementaryContextSentence(page, subjectKey, "priority");
+    const contextualLesson = getElementaryContextSentence(page, subjectKey, "lesson");
+    const contextualConsult = getElementaryContextSentence(page, subjectKey, "consult");
+    const contextualClosing = getElementaryContextSentence(page, subjectKey, "closing");
 
     return {
-      opening: applyElementaryTemplate(pickStable(detail.openings, page.slug, "elementary-opening"), page, subjectLabel),
+      opening: `${applyElementaryTemplate(pickStable(detail.openings, page.slug, "elementary-opening"), page, subjectLabel)} ${contextualOpening}`,
       mainCaption: applyElementaryTemplate(pickStable(detail.mainCaptions, page.slug, "elementary-main-caption"), page, subjectLabel),
       studentLead: applyElementaryTemplate(pickStable(detail.studentLeads, page.slug, "elementary-student"), page, subjectLabel),
-      priorityBody: applyElementaryTemplate(pickStable(detail.priorityBodies, page.slug, "elementary-priority"), page, subjectLabel),
+      priorityBody: `${applyElementaryTemplate(pickStable(detail.priorityBodies, page.slug, "elementary-priority"), page, subjectLabel)} ${contextualPriority}`,
       learningStatus: pickStable(detail.learningStatuses, page.slug, "elementary-learning-status"),
       recommendedTarget: pickStable(detail.recommendedTargets, page.slug, "elementary-recommended-target"),
       middleImageAlt: applyElementaryTemplate(detail.middleImageAlt, page, subjectLabel),
       middleCaption: applyElementaryTemplate(pickStable(detail.middleCaptions, page.slug, "elementary-middle-caption"), page, subjectLabel),
-      lessonIntro: applyElementaryTemplate(pickStable(detail.lessonIntros, page.slug, "elementary-lesson-intro"), page, subjectLabel),
+      lessonIntro: `${applyElementaryTemplate(pickStable(detail.lessonIntros, page.slug, "elementary-lesson-intro"), page, subjectLabel)} ${contextualLesson}`,
       lessonDifference: applyElementaryTemplate(pickStable(detail.lessonDifferences, page.slug, "elementary-lesson-difference"), page, subjectLabel),
       steps: pickStable(detail.stepSets, page.slug, "elementary-steps"),
-      consultIntro: applyElementaryTemplate(pickStable(detail.consultIntros, page.slug, "elementary-consult"), page, subjectLabel),
+      consultIntro: `${applyElementaryTemplate(pickStable(detail.consultIntros, page.slug, "elementary-consult"), page, subjectLabel)} ${contextualConsult}`,
       consultChecks: pickStable(detail.consultChecks, page.slug, "elementary-checks"),
       faqs: pickStable(detail.faqs, page.slug, "elementary-faqs"),
-      closingSentence: applyElementaryTemplate(pickStable(detail.closingSentences, page.slug, "elementary-closing"), page, subjectLabel),
+      closingSentence: `${applyElementaryTemplate(pickStable(detail.closingSentences, page.slug, "elementary-closing"), page, subjectLabel)} ${contextualClosing}`,
     };
   }
 

@@ -68,6 +68,26 @@ export function formatTutoringKeyword(text: string) {
     .trim();
 }
 
+export function buildSeoTitle(
+  keyword: string,
+  suffix: string,
+  compactSuffix = "학생 맞춤 1:1 수업",
+  maxLength = 58,
+) {
+  const fullTitle = `${keyword}, ${suffix}`;
+
+  if (fullTitle.length <= maxLength) {
+    return fullTitle;
+  }
+
+  const compactTitle = `${keyword}, ${compactSuffix}`;
+  if (compactTitle.length <= maxLength) {
+    return compactTitle;
+  }
+
+  return compactTitle.slice(0, maxLength).replace(/[·,\s]+$/u, "").trim();
+}
+
 export function formatServiceName(serviceName: string) {
   const formatted = formatTutoringKeyword(serviceName);
   if (!formatted) {

@@ -15,6 +15,7 @@ import {
 } from "@/lib/tutoring-pages";
 import { getRelatedTutoringLinks } from "@/lib/tutoring-related-links";
 import {
+  buildSeoTitle,
   formatServiceName,
   formatTutoringKeyword,
   normalizeGeneratedText,
@@ -26,6 +27,7 @@ import {
   getHighLocalSeoText,
   getLocalTutoringDetailContent,
   getMiddleLocalSeoText,
+  getRegionalOnlineTutoringGuideIntro,
   getTeacherAssignmentGuideIntro,
 } from "@/lib/tutoring-content";
 import { SITE_URL, getAbsoluteUrl } from "@/lib/site";
@@ -129,15 +131,15 @@ function getDetailTitle(page: TutoringPage) {
   const keyword = formatTutoringKeyword(page["메인키워드"]?.trim() || `${region} ${service}`);
   const elementarySeo = getElementaryLocalSeoText(page, service);
   if (elementarySeo) {
-    return `${keyword}, ${elementarySeo.titleSuffix}`;
+    return buildSeoTitle(keyword, elementarySeo.titleSuffix, `${elementarySeo.focusLabel} 맞춤 학습`);
   }
   const middleSeo = getMiddleLocalSeoText(page, service);
   if (middleSeo) {
-    return `${keyword}, ${middleSeo.titleSuffix}`;
+    return buildSeoTitle(keyword, middleSeo.titleSuffix, `${middleSeo.focusLabel} 맞춤 수업`);
   }
   const highSeo = getHighLocalSeoText(page, service);
   if (highSeo) {
-    return `${keyword}, ${highSeo.titleSuffix}`;
+    return buildSeoTitle(keyword, highSeo.titleSuffix, `${highSeo.focusLabel} 맞춤 수업`);
   }
 
   const focus = page["콘텐츠관점"]?.trim();
@@ -145,7 +147,7 @@ function getDetailTitle(page: TutoringPage) {
     titleSuffixByFocus[focus] ||
     "학생의 현재 수준부터 차근차근 시작하는 수업";
 
-  return `${keyword}, ${suffix}`;
+  return buildSeoTitle(keyword, suffix);
 }
 
 function getFocusLabel(page: TutoringPage) {
@@ -535,7 +537,7 @@ export default async function TutoringDetailPage({ params }: PageProps) {
 
             <OnlineTutoringGuide
               variant="compact"
-              intro={`방문 수업 배정이 어렵거나 일정 조율이 필요한 경우에는 동일한 학년과 과목의 온라인 전문 선생님을 연결할 수 있습니다. 온라인 수업도 실시간 1:1 방식으로 진행하며, 무료 모의수업을 통해 수업 환경을 먼저 확인할 수 있습니다.`}
+              intro={getRegionalOnlineTutoringGuideIntro(page, serviceName)}
             />
 
             <RelatedTutoringLinks links={relatedLinks} />

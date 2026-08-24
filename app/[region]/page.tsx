@@ -15,6 +15,7 @@ import {
 } from "@/lib/tutoring-pages";
 import { getRelatedTutoringLinks } from "@/lib/tutoring-related-links";
 import {
+  buildSeoTitle,
   formatServiceName,
   formatTutoringKeyword,
   normalizeGeneratedText,
@@ -129,7 +130,7 @@ function getDetailTitle(page: TutoringPage) {
   const keyword = formatTutoringKeyword(page["메인키워드"]?.trim() || `${region} ${service}`);
   const singleSeo = getSingleSlugTutoringSeoText(page, service);
   if (singleSeo) {
-    return `${keyword}, ${singleSeo.titleSuffix}`;
+    return buildSeoTitle(keyword, singleSeo.titleSuffix, `${singleSeo.focusLabel} 맞춤 수업`);
   }
 
   const focus = page["콘텐츠관점"]?.trim();
@@ -137,7 +138,7 @@ function getDetailTitle(page: TutoringPage) {
     titleSuffixByFocus[focus] ||
     "학생의 현재 수준부터 차근차근 시작하는 수업";
 
-  return `${keyword}, ${suffix}`;
+  return buildSeoTitle(keyword, suffix);
 }
 
 function getFocusLabel(page: TutoringPage) {
