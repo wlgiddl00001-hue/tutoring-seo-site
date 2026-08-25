@@ -101,23 +101,25 @@ function getElementaryContextSentence(
 ) {
   const subjectLabel = subjectLabels[subjectKey];
   const keywords = elementarySubjectKeywordPhrases[subjectKey];
+  const keywordsObject = withJosa(keywords, "을를");
+  const keywordsAnd = withJosa(keywords, "과와");
   const focusTitle = getElementaryFocusTitle(page);
   const frames: Record<ElementaryContextSlot, string[]> = {
     opening: [
-      `{region} 초등 {subject} 과외에서는 {keywords}를 모두 같은 비중으로 반복하기보다 {focus}부터 확인합니다.`,
+      `{region} 초등 {subject} 과외에서는 {keywordsObject} 모두 같은 비중으로 반복하기보다 {focus}부터 확인합니다.`,
       `{situation}이라면 {region} 초등 {subject} 수업에서 {keywords} 가운데 막히는 순서를 먼저 찾아야 합니다.`,
-      `{region}에서 초등 {subject} 과외를 알아볼 때는 {keywords}와 함께 {focus} 필요 여부를 살펴보는 것이 좋습니다.`,
-      `{region}의 초등 {subject} 학습이 필요한 {target}에게는 {keywords}를 한꺼번에 늘리기보다 {focus} 방향을 기준으로 학습 순서를 정하는 방식이 맞습니다.`,
+      `{region}에서 초등 {subject} 과외를 알아볼 때는 {keywordsAnd} 함께 {focus} 필요 여부를 살펴보는 것이 좋습니다.`,
+      `{region}의 초등 {subject} 학습이 필요한 {target}에게는 {keywordsObject} 한꺼번에 늘리기보다 {focus} 방향을 기준으로 학습 순서를 정하는 방식이 맞습니다.`,
     ],
     priority: [
       `{region} 초등 {subject}의 {focus} 목표를 위해 최근 교과서 단원과 풀이 흔적을 비교하고, {keywords} 중 수업에서 먼저 다룰 항목을 정합니다.`,
-      `{region} 초등 {subject} 학습에서는 {keywords}를 작은 단계로 나눈 뒤 {focus}에 필요한 연습량을 조절합니다.`,
+      `{region} 초등 {subject} 학습에서는 {keywordsObject} 작은 단계로 나눈 뒤 {focus}에 필요한 연습량을 조절합니다.`,
       `{region}의 초등 {subject} 학습에서 {situation}의 경우 정답 수보다 풀이 과정과 복습 반응을 보고 {focus}의 출발점을 잡습니다.`,
-      `{region} 초등 {subject} 수업에서 {keywords}를 점검할 때 아이가 이미 할 수 있는 부분은 줄이고, {focus}에 필요한 내용에 시간을 더 배분합니다.`,
+      `{region} 초등 {subject} 수업에서 {keywordsObject} 점검할 때 아이가 이미 할 수 있는 부분은 줄이고, {focus}에 필요한 내용에 시간을 더 배분합니다.`,
     ],
     lesson: [
-      `{region} 초등 {subject} 수업 중에는 {keywords}를 설명·적용·복습 순서로 연결하고, 매시간 {focus} 목표가 실제 학습 행동으로 이어지는지 확인합니다.`,
-      `{region} 초등 {subject} 수업은 {keywords}를 교과서 진도와 연결해 연습하며 {focus}의 변화를 짧게 기록합니다.`,
+      `{region} 초등 {subject} 수업 중에는 {keywordsObject} 설명·적용·복습 순서로 연결하고, 매시간 {focus} 목표가 실제 학습 행동으로 이어지는지 확인합니다.`,
+      `{region} 초등 {subject} 수업은 {keywordsObject} 교과서 진도와 연결해 연습하며 {focus}의 변화를 짧게 기록합니다.`,
       `{region}의 초등 {subject} 학습에서는 아이가 직접 말하고 쓰고 풀어보는 과정에서 {keywords}의 이해도를 확인하고 {focus}에 맞춰 다음 과제를 정합니다.`,
       `{region} 초등 {subject}에서 {keywords} 가운데 반복해서 막히는 부분은 예시를 바꾸어 다시 적용하고, {focus}에 필요한 복습 주기를 조절합니다.`,
     ],
@@ -138,6 +140,8 @@ function getElementaryContextSentence(
   return pickStable(frames[slot], `${page.slug}:${page.콘텐츠관점}`, `elementary-context-${slot}`)
     .replaceAll("{region}", page.지역)
     .replaceAll("{subject}", subjectLabel)
+    .replaceAll("{keywordsObject}", keywordsObject)
+    .replaceAll("{keywordsAnd}", keywordsAnd)
     .replaceAll("{keywords}", keywords)
     .replaceAll("{focus}", focusTitle)
     .replaceAll("{situation}", page.학습상황)
@@ -2368,6 +2372,79 @@ function getHighFocusLabel(detail: HighSubjectDetail, focusLabel?: string) {
   return `${withJosa(trimmedFocusLabel, "을를")} 위한 ${detail.focusLabel}`;
 }
 
+const middleMetaLearningPhrases: Record<SubjectKey, string[]> = {
+  korean: [
+    "교과서 작품 이해, 어휘·문법, 문학·비문학 독해, 서술형 답안",
+    "작품 맥락, 중심 내용, 어휘·문법, 독해 근거와 서술형 답안",
+    "문학·비문학 지문 읽기, 오답 근거, 문법 개념과 글쓰기 표현",
+  ],
+  english: [
+    "교과서 본문 해석, 필수 어휘·문법, 독해 근거, 서술형·영작",
+    "본문 분석, 문장 해석, 어휘·문법 적용, 듣기와 내신 오답",
+    "시험 범위 본문, 독해 단서, 문법 개념, 서술형·영작 표현",
+  ],
+  math: [
+    "단원 개념 연결, 공식 원리, 계산 정확도, 유형 적용, 서술형 풀이",
+    "이전 단원 빈틈, 조건 해석, 풀이 과정, 오답 원인과 내신 유형",
+    "개념 이해, 계산 실수 보완, 대표 유형 적용, 서술형 답안 정리",
+  ],
+  social: [
+    "핵심 용어, 단원 흐름, 지도·도표 자료 해석, 서술형 답안",
+    "교과 개념, 원인·결과 연결, 자료 읽기, 수행평가 준비",
+    "사회 현상 이해, 용어 정리, 지도·그래프 해석, 내신 서술형",
+  ],
+  science: [
+    "개념·원리, 실험 과정, 그래프·표 자료 해석, 탐구 서술형",
+    "단원 개념, 실험 조건, 자료 읽기, 오답 개념과 탐구 문제",
+    "과학 원리 이해, 변수 관계, 그림·표 해석, 서술형 답안",
+  ],
+  koreanHistory: [
+    "시대 흐름, 인물·사건 연결, 사료·지도 해석, 원인·결과 서술형",
+    "연표 정리, 사건 배경, 제도 비교, 사료 속 시대 단서",
+    "시대별 흐름, 주요 인물과 사건, 자료 해석, 내신 오답 근거",
+  ],
+};
+
+const middleMetaFocusLabels: Record<string, string> = {
+  성적향상: "성적 향상",
+  기초개념보완: "기초 개념 보완",
+  공부습관형성: "공부 습관 형성",
+  내신대비: "내신 대비",
+  약한단원보완: "약한 단원 보완",
+  학습공백회복: "학습 공백 회복",
+  시험대비: "시험 대비",
+  자기주도학습: "자기주도학습",
+  개념이해중심: "개념 이해",
+  문제풀이훈련: "문제풀이 훈련",
+  상위권관리: "상위권 관리",
+  중하위권보완: "중하위권 보완",
+  학교진도맞춤: "학교 진도 맞춤",
+  수행평가대비: "수행평가 대비",
+  학부모상담중심: "학부모 상담",
+  학생성향맞춤: "학생 성향 맞춤",
+  반복학습관리: "반복 학습 관리",
+  오답관리중심: "오답 관리",
+};
+
+function buildMiddleMetaDescription(
+  page: TutoringPage,
+  serviceName: string,
+  subjectKey: SubjectKey,
+  seed: string,
+) {
+  const keyword = formatTutoringKeyword(page.메인키워드?.trim() || `${page.지역} ${serviceName}`);
+  const learning = pickStable(middleMetaLearningPhrases[subjectKey], seed, "middle-meta-learning");
+  const learningObject = withJosa(learning, "을를");
+  const focus = middleMetaFocusLabels[page.콘텐츠관점] || "학생 상황";
+  const descriptions = [
+    `${keyword}는 ${learningObject} 중심으로 현재 이해도와 학습 습관을 함께 보며 ${focus}에 맞춘 학교 진도 복습과 내신 대비 흐름을 차근차근 정리합니다.`,
+    `${keyword}는 ${learningObject} 함께 살피고 현재 이해도와 학습 습관을 함께 보며 ${focus}에 맞춰 현재 단원, 오답 원인, 내신 준비 순서를 구체적으로 잡습니다.`,
+    `${keyword}는 ${learningObject} 수업에서 확인하며 현재 이해도와 학습 습관을 함께 보고 ${focus}에 필요한 복습, 수행평가 대비, 시험 준비 방향을 정리합니다.`,
+  ];
+
+  return pickStable(descriptions, seed, "middle-meta-description");
+}
+
 export function getElementaryLocalSeoText(
   page: TutoringPage,
   serviceName: string,
@@ -2428,7 +2505,7 @@ export function getMiddleLocalSeoText(
 
   return {
     titleSuffix: applyMiddleTemplate(pickStable(detail.titleSuffixes, seed, "middle-title"), page, subjectLabel, middleFocusLabel),
-    description: applyMiddleTemplate(pickStable(detail.descriptions, seed, "middle-description"), page, subjectLabel, middleFocusLabel),
+    description: buildMiddleMetaDescription(page, serviceName, subjectKey, seed),
     summary: applyMiddleTemplate(pickStable(detail.summaries, seed, "middle-summary"), page, subjectLabel, middleFocusLabel),
     focusLabel: middleFocusLabel,
   };

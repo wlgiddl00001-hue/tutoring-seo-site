@@ -503,7 +503,7 @@ export default async function TutoringDetailPage({ params }: PageProps) {
               <div className="detailConsultText">
                 <p className="detailConsultLabel">{page.지역} 과외 상담 문의</p>
                 <h2>
-                  상담으로 아이에게 맞는
+                  상담으로 아이에게 맞는{" "}
                   <br />
                   수업 방향을 확인해보세요
                 </h2>
