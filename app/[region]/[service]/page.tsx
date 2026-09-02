@@ -355,7 +355,7 @@ export default async function TutoringDetailPage({ params }: PageProps) {
 
   return (
     <>
-      <SiteHeader />
+      <SiteHeader consultHref="#consult" />
       <main className="detail-background">
         <article className="shell detail-article-card">
           <header className="detail-article-header">

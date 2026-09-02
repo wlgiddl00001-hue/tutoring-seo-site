@@ -310,7 +310,7 @@ export default async function TutoringDetailPage({ params }: PageProps) {
 
   return (
     <>
-      <SiteHeader />
+      <SiteHeader consultHref="#consult" />
       <main className="detail-background">
         <article className="shell detail-article-card">
           <header className="detail-article-header">
@@ -361,6 +361,20 @@ export default async function TutoringDetailPage({ params }: PageProps) {
                 문제 연습에 시간을 집중할 수 있습니다.
               </p>
             )}
+
+            {isOnlineSinglePage ? (
+              <section className="onlineTopCta" aria-label="온라인 과외 무료 모의수업 상담">
+                <div>
+                  <small>무료 모의수업 전 상담</small>
+                  <h2>우리 아이에게 맞는 온라인 선생님을 확인해보세요</h2>
+                  <p>학년과 과목, 현재 어려운 부분을 알려주시면 가능한 선생님과 무료 모의수업 과정을 안내해드립니다.</p>
+                </div>
+                <div className="onlineTopCtaActions">
+                  <a href="#consult">{serviceName} 무료 모의수업 신청</a>
+                  <a href="tel:01082867620">전화 상담</a>
+                </div>
+              </section>
+            ) : null}
 
             <section className="article-section" id="student">
               <span className="article-section-number">01</span>
@@ -442,7 +456,10 @@ export default async function TutoringDetailPage({ params }: PageProps) {
             </section>
 
             {showOnlineGuide ? (
-              <OnlineTutoringGuide intro={onlineGuideIntro} />
+              <OnlineTutoringGuide
+                intro={onlineGuideIntro}
+                ctaLabel={`${serviceName} 무료 모의수업 신청`}
+              />
             ) : null}
 
             <TeacherAssignmentGuide

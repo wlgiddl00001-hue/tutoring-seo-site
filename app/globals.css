@@ -5871,3 +5871,73 @@ select {
     white-space: nowrap !important;
   }
 }
+
+/* 온라인 과외 전환 개선 */
+.mobileHeaderActions {
+  display: none;
+}
+
+.onlineTopCta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 28px;
+  margin: 28px 0 44px;
+  padding: 26px 28px;
+  border: 1px solid #cce4d8;
+  border-radius: 22px;
+  background: linear-gradient(135deg, #f1fbf6, #fff);
+}
+.onlineTopCta small { color: #16704f; font-weight: 900; }
+.onlineTopCta h2 { margin: 7px 0; color: #193b2f; font-size: 24px; }
+.onlineTopCta p { margin: 0; color: #52665d; line-height: 1.65; }
+.onlineTopCtaActions { display: flex; flex: 0 0 auto; flex-direction: column; gap: 8px; }
+.onlineTopCtaActions a { min-width: 220px; padding: 13px 16px; border-radius: 12px; background: #157a55; color: #fff; font-weight: 900; text-align: center; text-decoration: none; }
+.onlineTopCtaActions a:last-child { border: 1px solid #bedbce; background: #fff; color: #176448; }
+
+.onlineLessonFlow { margin-top: 28px; padding-top: 26px; border-top: 1px solid #d7e7df; }
+.onlineLessonFlow h3 { margin: 0 0 16px; color: #1b3d31; font-size: 21px; }
+.onlineLessonFlow ol { display: grid; grid-template-columns: repeat(5, 1fr); gap: 10px; margin: 0; padding: 0; list-style: none; }
+.onlineLessonFlow li { min-width: 0; padding: 16px 13px; border-radius: 15px; background: #f4faf7; }
+.onlineLessonFlow li > span { display: block; color: #17875d; font-size: 13px; font-weight: 900; }
+.onlineLessonFlow strong { display: block; margin: 7px 0; color: #203d32; font-size: 15px; }
+.onlineLessonFlow p { margin: 0; color: #617169; font-size: 13px; line-height: 1.55; }
+
+@media (max-width: 900px) {
+  .onlineLessonFlow ol { grid-template-columns: repeat(2, 1fr); }
+  .onlineTopCta { align-items: stretch; flex-direction: column; }
+  .onlineTopCtaActions { flex-direction: row; }
+  .onlineTopCtaActions a { flex: 1; min-width: 0; }
+}
+
+@media (max-width: 760px) {
+  .site-header .header-inner,
+  .site-header.home-header .header-inner {
+    min-height: 72px !important;
+    flex-wrap: nowrap !important;
+    gap: 8px !important;
+    padding: 8px 14px !important;
+  }
+  .site-header .brand { min-width: 0; }
+  .site-header .brand strong { font-size: 16px; white-space: nowrap; }
+  .site-header .brand small { display: none; }
+  .site-header .main-nav,
+  .site-header.home-header .main-nav,
+  .siteHeaderActions { display: none !important; }
+  .mobileHeaderActions { display: flex; margin-left: auto; gap: 6px; }
+  .mobileHeaderActions a { display: inline-flex; min-height: 38px; align-items: center; justify-content: center; border-radius: 10px; padding: 0 11px; font-size: 13px; font-weight: 900; text-decoration: none; white-space: nowrap; }
+  .mobileOnlineLink { background: #176448; color: #fff; }
+  .mobileConsultLink { border: 1px solid #bad9ca; background: #fff; color: #176448; }
+  .onlineTopCta { margin: 22px 0 34px; padding: 21px 18px; }
+  .onlineTopCta h2 { font-size: 21px; }
+  .onlineTopCtaActions { flex-direction: column; }
+  .onlineLessonFlow ol { grid-template-columns: 1fr; }
+}
+
+@media (max-width: 374px) {
+  .site-header .header-inner,
+  .site-header.home-header .header-inner { padding-inline: 9px !important; }
+  .site-header .brand strong { font-size: 14px; }
+  .mobileHeaderActions { gap: 4px; }
+  .mobileHeaderActions a { padding-inline: 8px; font-size: 12px; }
+}

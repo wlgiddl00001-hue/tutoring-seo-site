@@ -1,6 +1,10 @@
 import Link from "next/link";
 
-export function SiteHeader() {
+type SiteHeaderProps = {
+  consultHref?: string;
+};
+
+export function SiteHeader({ consultHref = "/#consult" }: SiteHeaderProps) {
   return (
     <header className="site-header home-header">
       <div className="shell header-inner">
@@ -11,6 +15,11 @@ export function SiteHeader() {
             <small>학생 맞춤 1:1 과외</small>
           </span>
         </Link>
+
+        <div className="mobileHeaderActions" aria-label="모바일 빠른 메뉴">
+          <Link className="mobileOnlineLink" href="/#online">온라인 과외</Link>
+          <a className="mobileConsultLink" href={consultHref}>상담신청</a>
+        </div>
 
         <nav className="main-nav" aria-label="주요 메뉴">
           <Link href="/#regions">지역별 과외</Link>
@@ -24,14 +33,14 @@ export function SiteHeader() {
           <a className="header-phone" href="tel:01082867620" aria-label="010-8286-7620으로 전화 상담">
             <span aria-hidden="true">☎</span><strong>010-8286-7620</strong>
           </a>
-          <a className="headerConsultButton header-apply" href="#consult">
+          <a className="headerConsultButton header-apply" href={consultHref}>
             무료 상담
           </a>
         </div>
       </div>
       <div className="mobileConsultBar" aria-label="모바일 빠른 상담">
         <a href="tel:01082867620">전화상담</a>
-        <a href="#consult">무료 상담 신청</a>
+        <a href={consultHref}>무료 상담 신청</a>
       </div>
     </header>
   );
