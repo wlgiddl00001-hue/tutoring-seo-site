@@ -5924,8 +5924,17 @@ select {
   .site-header .main-nav,
   .site-header.home-header .main-nav,
   .siteHeaderActions { display: none !important; }
-  .mobileHeaderActions { display: flex; margin-left: auto; gap: 6px; }
-  .mobileHeaderActions a { display: inline-flex; min-height: 38px; align-items: center; justify-content: center; border-radius: 10px; padding: 0 11px; font-size: 13px; font-weight: 900; text-decoration: none; white-space: nowrap; }
+  .mobileHeaderActions {
+    display: grid;
+    grid-template-columns: 1.35fr 1fr;
+    gap: 8px;
+    width: 100%;
+    padding: 8px 14px 10px;
+    border-top: 1px solid #e2ece7;
+    background: #fff;
+    box-sizing: border-box;
+  }
+  .mobileHeaderActions a { display: inline-flex; min-height: 42px; align-items: center; justify-content: center; border-radius: 10px; padding: 0 12px; font-size: 14px; font-weight: 900; text-decoration: none; white-space: nowrap; }
   .mobileOnlineLink { background: #176448; color: #fff; }
   .mobileConsultLink { border: 1px solid #bad9ca; background: #fff; color: #176448; }
   .onlineTopCta { margin: 22px 0 34px; padding: 21px 18px; }
@@ -5938,6 +5947,6 @@ select {
   .site-header .header-inner,
   .site-header.home-header .header-inner { padding-inline: 9px !important; }
   .site-header .brand strong { font-size: 14px; }
-  .mobileHeaderActions { gap: 4px; }
-  .mobileHeaderActions a { padding-inline: 8px; font-size: 12px; }
+  .mobileHeaderActions { gap: 6px; padding-inline: 9px; }
+  .mobileHeaderActions a { padding-inline: 8px; font-size: 13px; }
 }
