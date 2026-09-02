@@ -5925,18 +5925,39 @@ select {
   .site-header.home-header .main-nav,
   .siteHeaderActions { display: none !important; }
   .mobileHeaderActions {
-    display: grid;
-    grid-template-columns: 1.35fr 1fr;
-    gap: 8px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
     width: 100%;
-    padding: 8px 14px 10px;
+    padding: 7px 10px 9px;
     border-top: 1px solid #e2ece7;
     background: #fff;
     box-sizing: border-box;
+    overflow-x: auto;
+    overflow-y: hidden;
+    white-space: nowrap;
+    scrollbar-width: none;
+    -webkit-overflow-scrolling: touch;
   }
-  .mobileHeaderActions a { display: inline-flex; min-height: 42px; align-items: center; justify-content: center; border-radius: 10px; padding: 0 12px; font-size: 14px; font-weight: 900; text-decoration: none; white-space: nowrap; }
-  .mobileOnlineLink { background: #176448; color: #fff; }
-  .mobileConsultLink { border: 1px solid #bad9ca; background: #fff; color: #176448; }
+  .mobileHeaderActions::-webkit-scrollbar { display: none; }
+  .mobileHeaderActions a {
+    display: inline-flex;
+    flex: 0 0 auto;
+    min-height: 36px;
+    align-items: center;
+    justify-content: center;
+    border-radius: 9px;
+    padding: 0 10px;
+    color: #344b42;
+    font-size: 12px;
+    font-weight: 850;
+    text-decoration: none;
+    white-space: nowrap;
+  }
+  .mobileHeaderActions .mobileOnlineLink { background: #edf8f3; color: #126346; }
+  .mobileHeaderActions .mobilePhoneLink { background: #176448; color: #fff; }
+  .mobileHeaderActions .mobileConsultLink { border: 1px solid #bad9ca; background: #fff; color: #176448; }
+  .mobileConsultBar { display: none !important; }
   .onlineTopCta { margin: 22px 0 34px; padding: 21px 18px; }
   .onlineTopCta h2 { font-size: 21px; }
   .onlineTopCtaActions { flex-direction: column; }
@@ -5947,6 +5968,6 @@ select {
   .site-header .header-inner,
   .site-header.home-header .header-inner { padding-inline: 9px !important; }
   .site-header .brand strong { font-size: 14px; }
-  .mobileHeaderActions { gap: 6px; padding-inline: 9px; }
-  .mobileHeaderActions a { padding-inline: 8px; font-size: 13px; }
+  .mobileHeaderActions { gap: 4px; padding-inline: 7px; }
+  .mobileHeaderActions a { padding-inline: 8px; font-size: 11px; }
 }

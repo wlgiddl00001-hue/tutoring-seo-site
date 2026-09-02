@@ -33,9 +33,14 @@ export function SiteHeader({ consultHref = "/#consult" }: SiteHeaderProps) {
           </a>
         </div>
       </div>
-      <div className="mobileHeaderActions" aria-label="모바일 빠른 메뉴">
+      <div className="mobileHeaderActions" aria-label="모바일 주요 메뉴">
+        <Link href="/#regions">지역별 과외</Link>
         <Link className="mobileOnlineLink" href="/#online">온라인 과외</Link>
-        <a className="mobileConsultLink" href={consultHref}>상담신청</a>
+        <Link href="/#exam">검정고시 과외</Link>
+        <Link href="/#subjects">학년·과목</Link>
+        <Link href="/#concerns">학습 고민</Link>
+        <a className="mobilePhoneLink" href="tel:01082867620">☎ 010-8286-7620</a>
+        <a className="mobileConsultLink" href={consultHref}>무료 상담</a>
       </div>
       <div className="mobileConsultBar" aria-label="모바일 빠른 상담">
         <a href="tel:01082867620">전화상담</a>
