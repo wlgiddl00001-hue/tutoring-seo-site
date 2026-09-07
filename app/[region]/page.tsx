@@ -188,6 +188,14 @@ function getBreadcrumbParent(page: TutoringPage) {
   return { name: page.지역, item: `${SITE_URL}/#regions` };
 }
 
+function getDisplayServiceLabel(page: TutoringPage, serviceName: string) {
+  if (page.지역 === "온라인" && serviceName.startsWith("온라인 ")) {
+    return serviceName;
+  }
+
+  return formatTutoringKeyword(`${page.지역} ${serviceName}`);
+}
+
 export async function generateMetadata({
   params,
 }: PageProps): Promise<Metadata> {
@@ -220,6 +228,7 @@ export default async function TutoringDetailPage({ params }: PageProps) {
   }
 
   const serviceName = formatServiceName(page.업종);
+  const displayServiceLabel = getDisplayServiceLabel(page, serviceName);
   const detailTitle = getDetailTitle(page);
   const focusLabel = getFocusLabel(page);
   const canonicalUrl = getAbsoluteUrl(getPublicPageSlug(page));
@@ -342,7 +351,7 @@ export default async function TutoringDetailPage({ params }: PageProps) {
           <figure className="detail-photo-card detail-photo-card-main">
             <img
               src={coverImage}
-              alt={`${formatTutoringKeyword(`${page.지역} ${serviceName}`)} 학습 안내 이미지`}
+              alt={`${displayServiceLabel} 학습 안내 이미지`}
             />
             <figcaption>
               {detailContent?.mainCaption ||
@@ -531,7 +540,7 @@ export default async function TutoringDetailPage({ params }: PageProps) {
                 <ConsultationProcessBox className="detailConsultSteps" />
               </div>
               <div className="detailConsultFormArea">
-                <ConsultationFormCard className="detailConsultForm" sourceLabel={`${page.지역} ${serviceName}`} />
+                <ConsultationFormCard className="detailConsultForm" sourceLabel={displayServiceLabel} />
               </div>
             </section>
           </div>
