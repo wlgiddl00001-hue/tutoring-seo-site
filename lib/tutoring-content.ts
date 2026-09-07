@@ -267,6 +267,107 @@ function getRegionalContextSentence(
   );
 }
 
+const subjectIntentFrames: Record<SubjectKey, Record<GradeKey, string[]>> = {
+  korean: {
+    elementary: [
+      "초등 국어는 긴 글을 많이 읽히기보다 낱말 뜻, 문장 이해, 짧은 글쓰기 반응을 나누어 봅니다.",
+      "읽기 자신감이 약한 아이는 교과서 지문과 생활 글을 번갈아 보며 중심 내용을 말로 정리하는 연습이 필요합니다.",
+    ],
+    middle: [
+      "중등 국어는 작품 내용 암기만으로는 부족해 문학 표현, 비문학 구조, 문법 개념, 서술형 답안 근거를 구분해야 합니다.",
+      "학교 시험을 앞두고는 교과서 작품과 낯선 지문을 나누어 보고, 선택지 판단 이유를 문장 안에서 찾는 연습을 합니다.",
+    ],
+    high: [
+      "고등 국어는 내신 작품 분석과 모의고사 독해가 분리되기 쉬워 문학·독서·문법별 약점을 따로 확인합니다.",
+      "시간 안에 지문을 읽고 선택지를 판단해야 하므로 풀이 순서, 근거 표시, 오답 선지 비교를 함께 다룹니다.",
+    ],
+  },
+  english: {
+    elementary: [
+      "초등 영어는 단어 암기량보다 소리, 뜻, 문장 읽기가 자연스럽게 이어지는지 먼저 확인합니다.",
+      "파닉스나 기초 문장 읽기에서 막히면 듣기 반응, 짧은 말하기, 쓰기 부담을 함께 살펴야 합니다.",
+    ],
+    middle: [
+      "중등 영어는 교과서 본문, 필수 어휘, 문법 적용, 서술형·영작이 내신 점수와 바로 연결됩니다.",
+      "본문을 외웠는데도 틀린다면 문장 구조, 변형 표현, 독해 근거, 듣기 취약 유형을 따로 확인합니다.",
+    ],
+    high: [
+      "고등 영어는 내신 본문과 부교재, 모의고사 지문, 어휘와 구문 분석을 같은 방식으로 처리하기 어렵습니다.",
+      "학교 범위가 넓을수록 문장 해석, 빈칸·순서·삽입 유형, 서술형 표현을 목표 시험에 맞춰 나누어 봅니다.",
+    ],
+  },
+  math: {
+    elementary: [
+      "초등 수학은 빠른 선행보다 수 감각, 연산 정확도, 문장제 읽기, 풀이를 적는 습관이 먼저입니다.",
+      "계산은 되지만 문장제에서 멈추는 아이는 문제 조건을 읽고 식으로 옮기는 과정을 따로 연습합니다.",
+    ],
+    middle: [
+      "중등 수학은 이전 단원의 빈틈이 함수, 방정식, 도형 단원으로 이어질 수 있어 연결 관계를 확인합니다.",
+      "공식을 알고 있어도 서술형에서 감점된다면 조건 표시, 식의 근거, 계산 검토를 분리해 봅니다.",
+    ],
+    high: [
+      "고등 수학은 고1 공통수학, 수학Ⅰ·수학Ⅱ, 선택과목 여부에 따라 내신과 모의고사 대비 순서가 달라집니다.",
+      "문항 난도가 올라갈수록 개념 선택, 조건 해석, 풀이 전개, 시간 배분을 각각 점검해야 합니다.",
+    ],
+  },
+  social: {
+    elementary: [
+      "초등 사회는 용어를 외우기보다 지도, 사진, 표를 보며 생활 속 사례와 연결하는 과정이 중요합니다.",
+      "낯선 사회 용어가 많을 때는 단원 흐름과 자료 읽기 순서를 짧게 나누어 이해 부담을 줄입니다.",
+    ],
+    middle: [
+      "중등 사회는 핵심 용어, 단원 흐름, 지도·도표·그래프 자료 해석, 서술형 표현이 함께 필요합니다.",
+      "암기한 내용이 자료 문항에서 흔들리면 제목, 기준, 변화, 비교 대상을 표시하며 다시 봅니다.",
+    ],
+    high: [
+      "고등 사회는 선택한 세부 과목과 학교 범위에 따라 개념 비교, 자료 해석, 사례 적용 비중이 달라집니다.",
+      "내신과 모의고사에서는 용어 암기보다 선택지 판단 근거와 도표·통계 자료의 비교 기준을 분명히 해야 합니다.",
+    ],
+  },
+  science: {
+    elementary: [
+      "초등 과학은 현상을 관찰하고 자기 말로 설명하는 힘이 중요해 개념과 탐구 활동을 함께 봅니다.",
+      "실험 내용을 외우기보다 무엇을 관찰했고 왜 그런 결과가 나왔는지 말로 정리하는 연습이 필요합니다.",
+    ],
+    middle: [
+      "중등 과학은 개념·원리, 실험 조건, 그래프와 표 해석, 계산 문항이 단원마다 다르게 나타납니다.",
+      "탐구 문제가 약하면 변수, 조건, 결과, 자료 근거를 나누어 표시하며 오답을 정리합니다.",
+    ],
+    high: [
+      "고등 과학은 배우는 과목과 단원에 따라 공식 적용, 탐구 자료 해석, 서술형 답안의 비중이 달라집니다.",
+      "그래프와 표, 실험 설계 문항은 조건과 변수 관계를 먼저 잡고 내신·모의고사 오답으로 연결합니다.",
+    ],
+  },
+  koreanHistory: {
+    elementary: [
+      "초등 한국사는 이름을 많이 외우기보다 시대 흐름과 인물·사건을 이야기처럼 연결하는 편이 좋습니다.",
+      "연표가 낯선 아이는 큰 시대 순서와 대표 사건을 먼저 잡고 그림 자료로 다시 확인합니다.",
+    ],
+    middle: [
+      "중등 한국사는 시대 흐름, 인물과 제도, 사료 단서, 선지 판단을 시험 범위 안에서 함께 봅니다.",
+      "사건 이름만 외우면 헷갈리기 쉬워 원인, 전개, 결과를 묶어 비교하는 연습이 필요합니다.",
+    ],
+    high: [
+      "고등 한국사는 사료 해석, 시대별 쟁점, 연표 정리, 내신·모의고사 선택지 판단을 함께 관리해야 합니다.",
+      "시대 비교가 약하면 정치·경제·사회·문화 흐름을 나누고 선지의 근거 표현을 따로 표시합니다.",
+    ],
+  },
+};
+
+function getSubjectIntentSentence(
+  page: TutoringPage,
+  gradeKey: GradeKey,
+  subjectKey: SubjectKey,
+) {
+  return cleanGeneratedText(
+    pickStable(
+      subjectIntentFrames[subjectKey][gradeKey],
+      `${page.slug}:${page.콘텐츠관점}:${page.추천대상}`,
+      "subject-intent",
+    ),
+  );
+}
+
 function getRegionalFaq(
   page: TutoringPage,
   gradeKey: GradeKey,
@@ -282,7 +383,7 @@ function getRegionalFaq(
         answer: assignmentAnswer,
       },
       {
-        question: `초등 ${subjectLabel} 수업은 학교 진도와 어떻게 맞추나요?`,
+        question: `${page.지역} 초등 ${subjectLabel} 수업은 학교 진도와 어떻게 맞추나요?`,
         answer: `최근 교과서 단원과 숙제 습관을 먼저 보고 ${focusLabel}에 맞춰 예습보다 복습, 기본기, 공부 습관 중 필요한 비중을 정합니다.`,
       },
     ],
@@ -292,7 +393,7 @@ function getRegionalFaq(
         answer: assignmentAnswer,
       },
       {
-        question: `중등 ${subjectLabel} 수업에서 수행평가도 같이 보나요?`,
+        question: `${page.지역} 중등 ${subjectLabel} 수업에서 수행평가도 같이 보나요?`,
         answer: `학교 일정과 과제 성격을 확인한 뒤 ${focusLabel}와 연결되는 자료 정리, 답안 표현, 시험 범위 복습을 함께 조정합니다.`,
       },
     ],
@@ -302,13 +403,39 @@ function getRegionalFaq(
         answer: assignmentAnswer,
       },
       {
-        question: `고등 ${subjectLabel} 수업에서 내신과 모의고사를 같이 준비하나요?`,
-        answer: `학생 학년과 시험 일정을 보고 내신 범위, 모의고사 약점, 수능 대비 필요도를 나누어 ${focusLabel} 중심으로 비중을 정합니다.`,
+        question: `${page.지역} 고등 ${subjectLabel} 수업에서 내신과 모의고사를 같이 준비하나요?`,
+        answer: `학생의 학년과 시험 일정을 보고 내신 범위, 모의고사 약점, 수능 대비 필요도를 나누어 ${focusLabel} 중심으로 비중을 정합니다.`,
       },
     ],
   };
 
   return pickStable(frames[gradeKey], `${page.slug}:${page.콘텐츠관점}`, "regional-faq");
+}
+
+function getGradeSubjectFaq(
+  page: TutoringPage,
+  gradeKey: GradeKey,
+  subjectKey: SubjectKey,
+  focusLabel: string,
+) {
+  const gradeLabel = gradeLabels[gradeKey];
+  const subjectLabel = subjectLabels[subjectKey];
+  const subjectIntent = getSubjectIntentSentence(page, gradeKey, subjectKey);
+  const questionFrames = {
+    elementary: `${gradeLabel} ${subjectLabel} 수업은 무엇을 먼저 확인하나요?`,
+    middle: `${gradeLabel} ${subjectLabel} 내신 대비는 어떻게 시작하나요?`,
+    high: `${gradeLabel} ${subjectLabel} 과외에서 학년별 진도도 나누어 보나요?`,
+  };
+  const answerFrames = {
+    elementary: `${subjectIntent} 최근 학교 단원과 집에서 혼자 풀 때의 반응을 보고 ${focusLabel}에 맞는 수업 순서를 정합니다.`,
+    middle: `${subjectIntent} 학교 시험 범위, 오답 유형, 수행평가 일정을 함께 확인한 뒤 ${focusLabel}에 맞춰 복습 비중을 조절합니다.`,
+    high: `${subjectIntent} 학생의 현재 학년, 내신 범위, 모의고사 약점과 남은 기간을 보고 ${focusLabel} 중심으로 우선순위를 정합니다.`,
+  };
+
+  return {
+    question: questionFrames[gradeKey],
+    answer: cleanGeneratedText(answerFrames[gradeKey]),
+  };
 }
 
 const gradeContent: Record<
@@ -2503,10 +2630,17 @@ function applyHighTemplate(
 
 function cleanGeneratedText(text: string) {
   return normalizeGeneratedText(text)
-    .replace(/(온라인|과외|초등|중등|고등|국어|영어|수학|사회|과학|한국사|검정고시)\s+\1/gu, "$1")
+    .replace(/(온라인|과외|초등|중등|고등|국어|영어|수학|사회|과학|한국사|검정고시)\s*\1/gu, "$1")
     .replace(/([가-힣]+(?:구|시|군))\s+\1/gu, "$1")
+    .replace(/([가-힣]+(?:구|시|군))에서\s+\1/gu, "$1에서")
     .replace(/(중졸|고졸)\s*검정고시/gu, "$1 검정고시")
+    .replace(/(초등|중등|고등)\s+(초등|중등|고등)\s+/gu, "$2 ")
+    .replace(/(국어|영어|수학|사회|과학|한국사)\s+(국어|영어|수학|사회|과학|한국사)\s+/gu, "$2 ")
     .replace(/검정고시\s+검정고시/gu, "검정고시")
+    .replace(/온라인\s+온라인/gu, "온라인")
+    .replace(/과외\s+과외/gu, "과외")
+    .replace(/수업\s+수업/gu, "수업")
+    .replace(/상담\s+상담/gu, "상담")
     .replace(/\s+(은|는|이|가|을|를|과|와|에서|에게|으로|로)(?=$|[\s,.!?])/gu, "$1")
     .replace(/\s+/g, " ")
     .trim();
@@ -3260,9 +3394,11 @@ export function getLocalTutoringDetailContent(
     const regionalOpening = getRegionalContextSentence(page, gradeKey, subjectKey, focusLabel, "opening");
     const regionalConsult = getRegionalContextSentence(page, gradeKey, subjectKey, focusLabel, "consult");
     const regionalFaq = getRegionalFaq(page, gradeKey, subjectKey, focusLabel);
+    const subjectIntent = getSubjectIntentSentence(page, gradeKey, subjectKey);
+    const gradeSubjectFaq = getGradeSubjectFaq(page, gradeKey, subjectKey, focusLabel);
 
     return {
-      opening: cleanGeneratedText(`${applyElementaryTemplate(pickStable(detail.openings, page.slug, "elementary-opening"), page, subjectLabel)} ${contextualOpening} ${regionalOpening}`),
+      opening: cleanGeneratedText(`${applyElementaryTemplate(pickStable(detail.openings, page.slug, "elementary-opening"), page, subjectLabel)} ${subjectIntent} ${contextualOpening} ${regionalOpening}`),
       mainCaption: applyElementaryTemplate(pickStable(detail.mainCaptions, page.slug, "elementary-main-caption"), page, subjectLabel),
       studentLead: applyElementaryTemplate(pickStable(detail.studentLeads, page.slug, "elementary-student"), page, subjectLabel),
       priorityBody: cleanGeneratedText(`${applyElementaryTemplate(pickStable(detail.priorityBodies, page.slug, "elementary-priority"), page, subjectLabel)} ${contextualPriority}`),
@@ -3275,7 +3411,7 @@ export function getLocalTutoringDetailContent(
       steps: pickStable(detail.stepSets, page.slug, "elementary-steps"),
       consultIntro: cleanGeneratedText(`${applyElementaryTemplate(pickStable(detail.consultIntros, page.slug, "elementary-consult"), page, subjectLabel)} ${contextualConsult} ${regionalConsult}`),
       consultChecks: pickStable(detail.consultChecks, page.slug, "elementary-checks"),
-      faqs: [regionalFaq, ...pickStable(detail.faqs, page.slug, "elementary-faqs")],
+      faqs: [regionalFaq, gradeSubjectFaq, ...pickStable(detail.faqs, page.slug, "elementary-faqs")],
       closingSentence: cleanGeneratedText(`${applyElementaryTemplate(pickStable(detail.closingSentences, page.slug, "elementary-closing"), page, subjectLabel)} ${contextualClosing}`),
     };
   }
@@ -3292,9 +3428,11 @@ export function getLocalTutoringDetailContent(
     const regionalConsult = getRegionalContextSentence(page, gradeKey, subjectKey, middleFocusLabel, "consult");
     const regionalClosing = getRegionalContextSentence(page, gradeKey, subjectKey, middleFocusLabel, "closing");
     const regionalFaq = getRegionalFaq(page, gradeKey, subjectKey, middleFocusLabel);
+    const subjectIntent = getSubjectIntentSentence(page, gradeKey, subjectKey);
+    const gradeSubjectFaq = getGradeSubjectFaq(page, gradeKey, subjectKey, middleFocusLabel);
 
     return {
-      opening: cleanGeneratedText(`${applyMiddleTemplate(pickStable(detail.openings, seed, "middle-opening"), page, subjectLabel, middleFocusLabel)} ${regionalOpening}`),
+      opening: cleanGeneratedText(`${applyMiddleTemplate(pickStable(detail.openings, seed, "middle-opening"), page, subjectLabel, middleFocusLabel)} ${subjectIntent} ${regionalOpening}`),
       mainCaption: applyMiddleTemplate(pickStable(detail.mainCaptions, seed, "middle-main-caption"), page, subjectLabel, middleFocusLabel),
       studentLead: cleanGeneratedText(`${applyMiddleTemplate(pickStable(detail.studentLeads, seed, "middle-student"), page, subjectLabel, middleFocusLabel)} ${regionalStudent} 이 페이지에서 중심으로 살펴볼 방향은 ${middleFocusLabel}입니다.`),
       priorityBody: cleanGeneratedText(`${applyMiddleTemplate(pickStable(detail.priorityBodies, seed, "middle-priority"), page, subjectLabel, middleFocusLabel)} ${regionalPriority}`),
@@ -3307,7 +3445,7 @@ export function getLocalTutoringDetailContent(
       steps: pickStable(detail.stepSets, seed, "middle-steps"),
       consultIntro: cleanGeneratedText(`${applyMiddleTemplate(pickStable(detail.consultIntros, seed, "middle-consult"), page, subjectLabel, middleFocusLabel)} ${regionalConsult}`),
       consultChecks: pickStable(detail.consultChecks, seed, "middle-checks"),
-      faqs: [regionalFaq, ...pickStable(detail.faqs, seed, "middle-faqs")],
+      faqs: [regionalFaq, gradeSubjectFaq, ...pickStable(detail.faqs, seed, "middle-faqs")],
       closingSentence: cleanGeneratedText(`${applyMiddleTemplate(pickStable(detail.closingSentences, seed, "middle-closing"), page, subjectLabel, middleFocusLabel)} ${regionalClosing}`),
     };
   }
@@ -3324,9 +3462,11 @@ export function getLocalTutoringDetailContent(
     const regionalConsult = getRegionalContextSentence(page, gradeKey, subjectKey, highFocusLabel, "consult");
     const regionalClosing = getRegionalContextSentence(page, gradeKey, subjectKey, highFocusLabel, "closing");
     const regionalFaq = getRegionalFaq(page, gradeKey, subjectKey, highFocusLabel);
+    const subjectIntent = getSubjectIntentSentence(page, gradeKey, subjectKey);
+    const gradeSubjectFaq = getGradeSubjectFaq(page, gradeKey, subjectKey, highFocusLabel);
 
     return {
-      opening: cleanGeneratedText(`${applyHighTemplate(pickStable(detail.openings, seed, "high-opening"), page, subjectLabel, highFocusLabel)} ${regionalOpening}`),
+      opening: cleanGeneratedText(`${applyHighTemplate(pickStable(detail.openings, seed, "high-opening"), page, subjectLabel, highFocusLabel)} ${subjectIntent} ${regionalOpening}`),
       mainCaption: applyHighTemplate(pickStable(detail.mainCaptions, seed, "high-main-caption"), page, subjectLabel, highFocusLabel),
       studentLead: cleanGeneratedText(`${applyHighTemplate(pickStable(detail.studentLeads, seed, "high-student"), page, subjectLabel, highFocusLabel)} ${regionalStudent} 이 페이지에서 중심으로 살펴볼 방향은 ${highFocusLabel}입니다.`),
       priorityBody: cleanGeneratedText(`${applyHighTemplate(pickStable(detail.priorityBodies, seed, "high-priority"), page, subjectLabel, highFocusLabel)} ${regionalPriority}`),
@@ -3339,7 +3479,7 @@ export function getLocalTutoringDetailContent(
       steps: pickStable(detail.stepSets, seed, "high-steps"),
       consultIntro: cleanGeneratedText(`${applyHighTemplate(pickStable(detail.consultIntros, seed, "high-consult"), page, subjectLabel, highFocusLabel)} ${regionalConsult}`),
       consultChecks: pickStable(detail.consultChecks, seed, "high-checks"),
-      faqs: [regionalFaq, ...pickStable(detail.faqs, seed, "high-faqs")],
+      faqs: [regionalFaq, gradeSubjectFaq, ...pickStable(detail.faqs, seed, "high-faqs")],
       closingSentence: cleanGeneratedText(`${applyHighTemplate(pickStable(detail.closingSentences, seed, "high-closing"), page, subjectLabel, highFocusLabel)} ${regionalClosing}`),
     };
   }
