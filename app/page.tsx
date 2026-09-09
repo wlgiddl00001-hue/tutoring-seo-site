@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Image from "next/image";
 import Link from "next/link";
 import { ConsultationFormCard, ConsultationProcessBox } from "@/app/components/consultation-box";
 import { OnlineTutoringGuide } from "@/app/components/online-tutoring-guide";
@@ -92,9 +93,14 @@ export default function Home() {
               </div>
             </div>
             <figure className="main-hero-photo">
-              <img
+              <Image
                 src="/images/tutoring/main-hero-01.webp"
                 alt="학생의 학습 수준을 확인하며 1대1로 지도하는 과외 수업"
+                width={1672}
+                height={941}
+                sizes="(max-width: 760px) calc(100vw - 28px), (max-width: 1020px) calc(100vw - 34px), 665px"
+                quality={82}
+                preload
               />
             </figure>
           </div>
@@ -158,6 +164,8 @@ export default function Home() {
           }
 
           .main-hero-photo {
+            aspect-ratio: 1672 / 941;
+            contain: layout paint;
             min-height: 600px;
             overflow: hidden;
             border: 1px solid #dbe5df;
@@ -482,10 +490,14 @@ export default function Home() {
                 <h3>검정고시 과외 안내</h3>
               </div>
 <div className="exam-hero-image-wrap">
-  <img
+  <Image
     src="/images/tutoring/main-hero-02.webp"
     alt="검정고시 과외 수업 이미지"
     className="exam-hero-image"
+    width={1672}
+    height={941}
+    sizes="(max-width: 760px) calc(100vw - 28px), (max-width: 980px) calc(100vw - 34px), 520px"
+    loading="lazy"
   />
 </div>
               <div className="exam-info-grid">
