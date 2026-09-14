@@ -236,6 +236,20 @@ function getBreadcrumbParent(page: TutoringPage) {
   return { name: page.지역, item: `${SITE_URL}/#regions` };
 }
 
+function getConsultIntentSentence(page: TutoringPage, serviceName: string) {
+  const serviceLabel = formatTutoringKeyword(`${page.지역} ${serviceName}`);
+
+  if (page.page_type.includes("exam")) {
+    return `${serviceLabel} 상담에서는 응시 예정 시기와 준비 과목, 현재 학습 공백을 확인한 뒤 수업료·가능 일정·선생님 프로필과 무료 모의수업 절차를 먼저 안내합니다.`;
+  }
+
+  if (page.slug.startsWith("online/") || page.지역 === "온라인") {
+    return `${serviceLabel} 상담에서는 학년·과목·현재 수준과 온라인 수업 환경을 확인한 뒤 선생님 프로필, 수업료, 무료 모의수업 가능 여부를 먼저 안내합니다.`;
+  }
+
+  return `${serviceLabel} 상담에서는 학년·과목·현재 수준과 ${page.지역} 수업 가능 일정을 확인한 뒤 선생님 프로필, 수업료, 무료 모의수업 절차를 먼저 안내합니다.`;
+}
+
 export async function generateMetadata({
   params,
 }: PageProps): Promise<Metadata> {
@@ -282,6 +296,7 @@ export default async function TutoringDetailPage({ params }: PageProps) {
   const middleImage = getTutoringImage(page, "middle");
   const subImage = getTutoringImage(page, "sub");
   const detailContent = getLocalTutoringDetailContent(page, focusLabel, serviceName);
+  const consultIntentSentence = getConsultIntentSentence(page, serviceName);
   const teacherAssignmentIntro = getTeacherAssignmentGuideIntro(page, serviceName);
   const lessonSteps = detailContent?.steps || [
     {
@@ -553,6 +568,8 @@ export default async function TutoringDetailPage({ params }: PageProps) {
                 <span>
                   {detailContent?.closingSentence ||
                     "현재 학년과 과목, 가장 어려워하는 부분부터 편하게 말씀해 주세요."}
+                  {" "}
+                  {consultIntentSentence}
                 </span>
                 <ConsultationProcessBox className="detailConsultSteps" />
               </div>

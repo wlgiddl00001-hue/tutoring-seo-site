@@ -73,18 +73,26 @@ export default function Home() {
           <div className="shell main-hero-layout">
             <div className="main-hero-copy">
               <p className="section-label">호빈샘 과외 · 전국 지역별 과외 안내</p>
-              <h1>전국 어디서든,<br />학생에게 맞는 과외를 <em>찾기 쉽게</em></h1>
+              <h1>전국 어디서든,<br />학생에게 맞는 <br className="mobile-title-break" />과외를 <em>찾기 쉽게</em></h1>
               <div className="main-hero-support">
                 <p className="hero-subtitle">
                   초등부터 고등까지, 지역과 과목에 맞춘 과외 안내.
                   국어·영어·수학·사회·과학·한국사 과외를 학생 수준에 맞춰 안내합니다.
                 </p>
+                <ul className="hero-trust-notes" aria-label="상담 전 안내">
+                  <li>상담만 받아도 비용이 발생하지 않습니다.</li>
+                  <li>수업 시작 전 수업료·가능 일정·선생님 프로필을 먼저 안내합니다.</li>
+                </ul>
                 <div className="hero-buttons">
                   <a className="primary-phone-button" href="tel:01082867620">
                     <span>상담 문의하기</span><strong>010-8286-7620</strong>
                   </a>
                   <Link className="secondary-button" href="#regions">우리 동네 과외 찾기 <ArrowIcon /></Link>
                 </div>
+                <ul className="hero-cta-notes" aria-label="무료 상담 진행 안내">
+                  <li>학년·과목·현재 수준을 확인한 뒤 학생에게 맞는 선생님 프로필을 안내해드립니다.</li>
+                  <li>무료 모의수업 후 정규수업 여부를 결정할 수 있습니다.</li>
+                </ul>
                 <ul className="hero-benefits">
                   <li><span>✓</span>학생별 현재 수준 확인</li>
                   <li><span>✓</span>학년·과목별 맞춤 안내</li>
@@ -149,6 +157,51 @@ export default function Home() {
           .main-hero .secondary-button {
             font-size: 16px;
             font-weight: 850;
+          }
+
+          .mobile-title-break {
+            display: none;
+          }
+
+          .hero-trust-notes,
+          .hero-cta-notes {
+            display: grid;
+            gap: 8px;
+            list-style: none;
+            margin: 18px 0 0;
+            padding: 0;
+            color: #344b42;
+            font-size: 15px;
+            font-weight: 800;
+            line-height: 1.65;
+          }
+
+          .hero-trust-notes li,
+          .hero-cta-notes li {
+            position: relative;
+            padding-left: 17px;
+          }
+
+          .hero-trust-notes li::before,
+          .hero-cta-notes li::before {
+            position: absolute;
+            top: 0;
+            left: 0;
+            color: var(--green);
+            content: "✓";
+            font-weight: 900;
+          }
+
+          .hero-trust-notes {
+            margin-top: 20px;
+            padding: 16px 18px;
+            border: 1px solid #d6e8df;
+            border-radius: 14px;
+            background: rgba(255, 255, 255, 0.78);
+          }
+
+          .hero-cta-notes {
+            color: #3b5147;
           }
 
           .main-hero .hero-benefits {
@@ -250,8 +303,40 @@ export default function Home() {
               font-size: 14px;
             }
 
+            .main-hero h1,
+            .main-hero .hero-subtitle,
+            .hero-trust-notes,
+            .hero-cta-notes,
+            .online-consult-prompt p {
+              max-width: 100%;
+              overflow-wrap: anywhere;
+              word-break: normal;
+            }
+
+            .main-hero h1 {
+              font-size: clamp(38px, 10.5vw, 44px);
+            }
+
+            .mobile-title-break {
+              display: block;
+            }
+
+            .hero-trust-notes,
+            .hero-cta-notes {
+              font-size: 14px;
+            }
+
             .main-hero-support {
               padding-left: 0;
+            }
+
+            .online-consult-prompt {
+              align-items: stretch;
+              flex-direction: column;
+            }
+
+            .online-consult-prompt a {
+              width: 100%;
             }
           }
 
@@ -338,6 +423,50 @@ export default function Home() {
             color: #52635a;
             font-size: 16px;
             font-weight: 650;
+          }
+
+          .online-consult-prompt {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 24px;
+            margin-top: 28px;
+            padding: 24px 26px;
+            border: 1px solid #d4e7dc;
+            border-radius: 16px;
+            background: #ffffff;
+            box-shadow: 0 14px 32px rgba(23, 107, 82, 0.08);
+          }
+
+          .online-consult-prompt strong {
+            display: block;
+            color: #193b2f;
+            font-size: 22px;
+            font-weight: 850;
+            line-height: 1.35;
+          }
+
+          .online-consult-prompt p {
+            margin: 8px 0 0;
+            color: #52635a;
+            font-size: 16px;
+            font-weight: 650;
+            line-height: 1.65;
+          }
+
+          .online-consult-prompt a {
+            display: inline-flex;
+            min-height: 48px;
+            flex: 0 0 auto;
+            align-items: center;
+            justify-content: center;
+            border-radius: 999px;
+            background: var(--green);
+            color: #ffffff;
+            font-size: 15px;
+            font-weight: 900;
+            padding: 0 22px;
+            box-shadow: 0 12px 24px rgba(23, 107, 82, 0.18);
           }
 
           .concern-section .main-section-heading .section-label {
@@ -431,6 +560,13 @@ export default function Home() {
                     </div>
                   </article>
               ))}
+            </div>
+            <div className="online-consult-prompt" aria-label="온라인 과외 상담 안내">
+              <div>
+                <strong>우리 아이도 온라인 과외가 맞을까요?</strong>
+                <p>학년·과목·현재 고민을 확인한 뒤 선생님 배정 가능 여부와 무료 모의수업을 안내합니다.</p>
+              </div>
+              <a href="#consult">온라인 과외 무료 상담 신청</a>
             </div>
           </div>
         </section>
