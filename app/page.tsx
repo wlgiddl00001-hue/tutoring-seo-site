@@ -91,7 +91,7 @@ export default function Home() {
                     <strong>무료 상담 신청</strong>
                   </a>
                   <a className="secondary-button hero-phone-button" href="tel:01082867620">
-                    <span>전화 상담</span><strong>010-8286-7620</strong>
+                    <strong>010-8286-7620</strong><span>전화 상담</span>
                   </a>
                   <Link className="secondary-button hero-region-button" href="#regions">우리 동네 과외 찾기 <ArrowIcon /></Link>
                 </div>
