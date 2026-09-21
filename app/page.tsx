@@ -73,26 +73,28 @@ export default function Home() {
           <div className="shell main-hero-layout">
             <div className="main-hero-copy">
               <p className="section-label">호빈샘 과외 · 전국 지역별 과외 안내</p>
+              <p className="hero-conversion-label">1대1 맞춤 과외 · 무료 상담</p>
               <h1>전국 어디서든,<br />학생에게 맞는 <br className="mobile-title-break" />과외를 <em>찾기 쉽게</em></h1>
               <div className="main-hero-support">
                 <p className="hero-subtitle">
-                  초등부터 고등까지, 지역과 과목에 맞춘 과외 안내.
-                  국어·영어·수학·사회·과학·한국사 과외를 학생 수준에 맞춰 안내합니다.
+                  초등부터 고등까지, 학생의 학년·과목·현재 수준을 확인한 뒤
+                  맞춤 선생님을 안내합니다.
                 </p>
-                <ul className="hero-trust-notes" aria-label="상담 전 안내">
+                <ul className="hero-trust-notes" aria-label="무료 상담 혜택 안내">
                   <li>상담만 받아도 비용이 발생하지 않습니다.</li>
+                  <li>학생의 학년·과목·현재 수준 확인 후 맞춤 선생님을 안내합니다.</li>
                   <li>수업 시작 전 수업료·가능 일정·선생님 프로필을 먼저 안내합니다.</li>
-                </ul>
-                <div className="hero-buttons">
-                  <a className="primary-phone-button" href="tel:01082867620">
-                    <span>상담 문의하기</span><strong>010-8286-7620</strong>
-                  </a>
-                  <Link className="secondary-button" href="#regions">우리 동네 과외 찾기 <ArrowIcon /></Link>
-                </div>
-                <ul className="hero-cta-notes" aria-label="무료 상담 진행 안내">
-                  <li>학년·과목·현재 수준을 확인한 뒤 학생에게 맞는 선생님 프로필을 안내해드립니다.</li>
                   <li>무료 모의수업 후 정규수업 여부를 결정할 수 있습니다.</li>
                 </ul>
+                <div className="hero-buttons">
+                  <a className="primary-phone-button hero-consult-button" href="#consult">
+                    <strong>무료 상담 신청</strong>
+                  </a>
+                  <a className="secondary-button hero-phone-button" href="tel:01082867620">
+                    <span>전화 상담</span><strong>010-8286-7620</strong>
+                  </a>
+                  <Link className="secondary-button hero-region-button" href="#regions">우리 동네 과외 찾기 <ArrowIcon /></Link>
+                </div>
                 <ul className="hero-benefits">
                   <li><span>✓</span>학생별 현재 수준 확인</li>
                   <li><span>✓</span>학년·과목별 맞춤 안내</li>
@@ -138,6 +140,18 @@ export default function Home() {
             padding-left: clamp(8px, 1vw, 16px);
           }
 
+          .hero-conversion-label {
+            display: inline-flex;
+            margin: 0 0 14px;
+            border-radius: 999px;
+            background: #e7f5ee;
+            color: #0f6f55;
+            font-size: 15px;
+            font-weight: 900;
+            line-height: 1;
+            padding: 10px 14px;
+          }
+
           .main-hero .hero-subtitle {
             color: #44564d;
             font-size: 20px;
@@ -157,6 +171,24 @@ export default function Home() {
           .main-hero .secondary-button {
             font-size: 16px;
             font-weight: 850;
+          }
+
+          .main-hero .hero-phone-button {
+            flex-direction: column;
+            gap: 2px;
+          }
+
+          .main-hero .hero-phone-button span {
+            font-size: 13px;
+          }
+
+          .main-hero .hero-phone-button strong {
+            font-size: 17px;
+          }
+
+          .main-hero .hero-region-button {
+            flex: 0 0 100%;
+            min-height: 50px;
           }
 
           .mobile-title-break {
@@ -291,6 +323,10 @@ export default function Home() {
           }
 
           @media (max-width: 760px) {
+            .main-hero {
+              padding: 24px 0 58px;
+            }
+
             .site-header .brand {
               gap: 14px;
             }
@@ -300,7 +336,14 @@ export default function Home() {
             }
 
             .main-hero-copy > .section-label {
+              margin-bottom: 8px;
               font-size: 14px;
+            }
+
+            .hero-conversion-label {
+              margin-bottom: 10px;
+              font-size: 13px;
+              padding: 8px 12px;
             }
 
             .main-hero h1,
@@ -314,7 +357,8 @@ export default function Home() {
             }
 
             .main-hero h1 {
-              font-size: clamp(38px, 10.5vw, 44px);
+              font-size: clamp(32px, 9vw, 39px);
+              line-height: 1.15;
             }
 
             .mobile-title-break {
@@ -323,7 +367,50 @@ export default function Home() {
 
             .hero-trust-notes,
             .hero-cta-notes {
+              gap: 3px;
+              font-size: 12px;
+              line-height: 1.45;
+            }
+
+            .hero-trust-notes {
+              margin-top: 10px;
+              padding: 9px 11px;
+            }
+
+            .main-hero .hero-subtitle {
+              margin-top: 12px;
               font-size: 14px;
+              line-height: 1.55;
+            }
+
+            .main-hero .hero-buttons {
+              display: grid;
+              grid-template-columns: 1fr 1fr;
+              min-height: 0;
+              gap: 8px;
+              margin-top: 12px;
+            }
+
+            .main-hero .hero-buttons > a {
+              min-height: 52px;
+              padding: 0 10px;
+            }
+
+            .main-hero .hero-consult-button strong {
+              font-size: 16px;
+            }
+
+            .main-hero .hero-phone-button strong {
+              font-size: 14px;
+            }
+
+            .main-hero .hero-region-button {
+              grid-column: 1 / -1;
+              min-height: 46px;
+            }
+
+            .main-hero .hero-benefits {
+              margin-top: 14px;
             }
 
             .main-hero-support {
