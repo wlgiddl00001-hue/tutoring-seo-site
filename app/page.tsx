@@ -129,7 +129,7 @@ export default function Home() {
           }
 
           .main-hero-copy > .section-label {
-            margin-bottom: 24px;
+            margin-bottom: 10px;
             text-align: center;
             font-size: 16px;
             font-weight: 900;
@@ -154,8 +154,19 @@ export default function Home() {
 
           .main-hero .hero-subtitle {
             color: #44564d;
-            font-size: 20px;
+            font-size: 18px;
             font-weight: 600;
+            line-height: 1.65;
+            margin-top: 16px;
+          }
+
+          .main-hero {
+            padding: 44px 0 70px;
+          }
+
+          .main-hero h1 {
+            font-size: clamp(46px, 4vw, 56px);
+            line-height: 1.16;
           }
 
           .main-hero .primary-phone-button span {
@@ -189,6 +200,16 @@ export default function Home() {
           .main-hero .hero-region-button {
             flex: 0 0 100%;
             min-height: 50px;
+          }
+
+          .main-hero .hero-buttons {
+            flex-wrap: wrap;
+            min-height: 0;
+            margin-top: 16px;
+          }
+
+          .main-hero .hero-buttons > a:not(.hero-region-button) {
+            min-height: 58px;
           }
 
           .mobile-title-break {
@@ -225,11 +246,14 @@ export default function Home() {
           }
 
           .hero-trust-notes {
-            margin-top: 20px;
-            padding: 16px 18px;
+            gap: 4px;
+            margin-top: 12px;
+            padding: 12px 16px;
             border: 1px solid #d6e8df;
             border-radius: 14px;
             background: rgba(255, 255, 255, 0.78);
+            font-size: 14px;
+            line-height: 1.45;
           }
 
           .hero-cta-notes {
