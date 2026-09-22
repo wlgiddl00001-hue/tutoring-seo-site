@@ -510,9 +510,14 @@ export default function Home() {
           }
 
           @media (max-width: 520px) {
-            .main-hero-photo,
+            .main-hero-photo {
+              aspect-ratio: 1672 / 941;
+              min-height: 0;
+            }
+
             .main-hero-photo img {
-              min-height: 320px;
+              min-height: 0;
+              object-position: center center;
             }
 
             .main-hero-placeholder {

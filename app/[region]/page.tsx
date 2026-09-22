@@ -337,7 +337,16 @@ export default async function TutoringDetailPage({ params }: PageProps) {
 
             <h1>{detailTitle}</h1>
 
-            <p className="detail-summary">{detailSummary}</p>
+            <ul className="detailTopGuideNotes hero-cta-notes" aria-label="무료 상담 진행 안내">
+              <li>학년·과목·현재 수준을 확인한 뒤 학생에게 맞는 선생님 프로필을 안내해드립니다.</li>
+              <li>무료 모의수업 후 정규수업 여부를 결정할 수 있습니다.</li>
+            </ul>
+
+            <ul className="detailTopGuideBenefits hero-benefits" aria-label="맞춤 과외 안내">
+              <li><span>✓</span>학생별 현재 수준 확인</li>
+              <li><span>✓</span>학년·과목별 맞춤 안내</li>
+              <li><span>✓</span>복습과 학습 과정 관리</li>
+            </ul>
 
             <section className="detailQuickConsultSection" aria-label="무료 상담 신청">
               <ConsultationFormCard
@@ -346,6 +355,8 @@ export default async function TutoringDetailPage({ params }: PageProps) {
                 variant="quick"
               />
             </section>
+
+            <p className="detail-summary">{detailSummary}</p>
 
             <div className="detail-meta">
               <span>호빈샘 과외</span>
