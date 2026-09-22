@@ -73,28 +73,25 @@ export default function Home() {
           <div className="shell main-hero-layout">
             <div className="main-hero-copy">
               <p className="section-label">호빈샘 과외 · 전국 지역별 과외 안내</p>
-              <p className="hero-conversion-label">1대1 맞춤 과외 · 무료 상담</p>
               <h1>전국 어디서든,<br />학생에게 맞는 <br className="mobile-title-break" />과외를 <em>찾기 쉽게</em></h1>
               <div className="main-hero-support">
                 <p className="hero-subtitle">
-                  초등부터 고등까지, 학생의 학년·과목·현재 수준을 확인한 뒤
-                  맞춤 선생님을 안내합니다.
+                  <span>초·중·고 1:1 맞춤 과외 · 무료 상담</span>
+                  <span>학생 수준 확인 → 선생님 프로필 안내 → 무료 모의수업</span>
                 </p>
-                <ul className="hero-trust-notes" aria-label="무료 상담 혜택 안내">
-                  <li>상담만 받아도 비용이 발생하지 않습니다.</li>
-                  <li>학생의 학년·과목·현재 수준 확인 후 맞춤 선생님을 안내합니다.</li>
-                  <li>수업 시작 전 수업료·가능 일정·선생님 프로필을 먼저 안내합니다.</li>
-                  <li>무료 모의수업 후 정규수업 여부를 결정할 수 있습니다.</li>
-                </ul>
                 <div className="hero-buttons">
-                  <a className="primary-phone-button hero-consult-button" href="#consult">
+                  <Link className="primary-phone-button hero-consult-button" href="#hero-consult">
                     <strong>무료 상담 신청</strong>
-                  </a>
+                  </Link>
                   <a className="secondary-button hero-phone-button" href="tel:01082867620">
                     <strong>010-8286-7620</strong><span>전화 상담</span>
                   </a>
                   <Link className="secondary-button hero-region-button" href="#regions">우리 동네 과외 찾기 <ArrowIcon /></Link>
                 </div>
+                <ul className="hero-cta-notes" aria-label="무료 상담 진행 안내">
+                  <li>학년·과목·현재 수준을 확인한 뒤 학생에게 맞는 선생님 프로필을 안내해드립니다.</li>
+                  <li>무료 모의수업 후 정규수업 여부를 결정할 수 있습니다.</li>
+                </ul>
                 <ul className="hero-benefits">
                   <li><span>✓</span>학생별 현재 수준 확인</li>
                   <li><span>✓</span>학년·과목별 맞춤 안내</li>
@@ -113,6 +110,12 @@ export default function Home() {
                 preload
               />
             </figure>
+          </div>
+        </section>
+
+        <section className="heroQuickConsultSection" id="hero-consult" aria-label="무료 상담 신청">
+          <div className="shell heroQuickConsultShell">
+            <ConsultationFormCard variant="quick" sourceLabel="메인 Hero 간편 상담폼" />
           </div>
         </section>
 
@@ -140,24 +143,18 @@ export default function Home() {
             padding-left: clamp(8px, 1vw, 16px);
           }
 
-          .hero-conversion-label {
-            display: inline-flex;
-            margin: 0 0 14px;
-            border-radius: 999px;
-            background: #e7f5ee;
-            color: #0f6f55;
-            font-size: 15px;
-            font-weight: 900;
-            line-height: 1;
-            padding: 10px 14px;
-          }
-
           .main-hero .hero-subtitle {
+            display: grid;
+            gap: 7px;
             color: #44564d;
             font-size: 18px;
-            font-weight: 600;
+            font-weight: 900;
             line-height: 1.65;
             margin-top: 16px;
+          }
+
+          .main-hero .hero-subtitle span {
+            display: block;
           }
 
           .main-hero {
@@ -182,6 +179,10 @@ export default function Home() {
           .main-hero .secondary-button {
             font-size: 16px;
             font-weight: 850;
+          }
+
+          .main-hero .hero-consult-button {
+            text-decoration: none;
           }
 
           .main-hero .hero-phone-button {
@@ -210,6 +211,39 @@ export default function Home() {
 
           .main-hero .hero-buttons > a:not(.hero-region-button) {
             min-height: 58px;
+          }
+
+          .heroQuickConsultSection {
+            margin-top: -56px;
+            padding: 0 0 72px;
+            background: #ffffff;
+            position: relative;
+            z-index: 2;
+          }
+
+          .heroQuickConsultShell {
+            max-width: 980px;
+          }
+
+          .heroQuickConsultSection .quickConsultForm {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr)) minmax(170px, 0.7fr);
+            align-items: end;
+            gap: 12px;
+            border-color: #cfe2d8;
+            border-radius: 18px;
+            padding: 20px;
+          }
+
+          .heroQuickConsultSection .quickConsultForm .consultAgree,
+          .heroQuickConsultSection .quickConsultForm .consultFormStatus {
+            grid-column: 1 / -1;
+          }
+
+          .heroQuickConsultSection .quickConsultForm .consultSubmitBtn {
+            grid-column: 4;
+            grid-row: 1;
+            min-height: 48px;
           }
 
           .mobile-title-break {
@@ -439,6 +473,30 @@ export default function Home() {
 
             .main-hero-support {
               padding-left: 0;
+            }
+
+            .hero-buttons {
+              flex-direction: column;
+            }
+
+            .main-hero .hero-phone-button,
+            .main-hero .hero-region-button {
+              flex: 1 1 auto;
+            }
+
+            .heroQuickConsultSection {
+              margin-top: -34px;
+              padding-bottom: 56px;
+            }
+
+            .heroQuickConsultSection .quickConsultForm {
+              grid-template-columns: 1fr;
+              padding: 18px;
+            }
+
+            .heroQuickConsultSection .quickConsultForm .consultSubmitBtn {
+              grid-column: auto;
+              grid-row: auto;
             }
 
             .online-consult-prompt {

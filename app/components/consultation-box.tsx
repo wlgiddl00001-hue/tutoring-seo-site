@@ -13,17 +13,19 @@ const consultSteps = [
 type ConsultationCardProps = {
   className?: string;
   sourceLabel?: string;
+  variant?: "full" | "quick";
 };
 
 function mergeClassName(baseClassName: string, className?: string) {
   return className ? `${baseClassName} ${className}` : baseClassName;
 }
 
-export function ConsultationFormCard({ className, sourceLabel }: ConsultationCardProps) {
+export function ConsultationFormCard({ className, sourceLabel, variant = "full" }: ConsultationCardProps) {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [statusMessage, setStatusMessage] = useState("");
+  const isQuick = variant === "quick";
 
-    async function handleSubmit(event: FormEvent<HTMLFormElement>) {
+  async function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
 
     const form = event.currentTarget;
@@ -31,7 +33,7 @@ export function ConsultationFormCard({ className, sourceLabel }: ConsultationCar
 
     const payload = {
       siteType: "기존 과외 홈페이지",
-      name: String(formData.get("name") || ""),
+      name: String(formData.get("name") || (isQuick ? "간편 상담 신청" : "")),
       grade: String(formData.get("grade") || ""),
       subject: String(formData.get("subject") || ""),
       phone: String(formData.get("phone") || ""),
@@ -72,26 +74,30 @@ export function ConsultationFormCard({ className, sourceLabel }: ConsultationCar
     }
   }
   return (
-    <form className={mergeClassName("consultFormCard", className)} onSubmit={handleSubmit}>
-      <div className="consultFormHead">
-        <strong>과외 상담 신청</strong>
-        <p>
-          학생의 학년과 희망 과목을 남겨주시면 방문 가능 여부와 선생님 배정 방향을
-          확인한 뒤 연락드립니다. 상담만 받아도 별도 비용은 없습니다.
-        </p>
-      </div>
+    <form className={mergeClassName(isQuick ? "consultFormCard quickConsultForm" : "consultFormCard", className)} onSubmit={handleSubmit}>
+      {!isQuick && (
+        <>
+          <div className="consultFormHead">
+            <strong>과외 상담 신청</strong>
+            <p>
+              학생의 학년과 희망 과목을 남겨주시면 방문 가능 여부와 선생님 배정 방향을
+              확인한 뒤 연락드립니다. 상담만 받아도 별도 비용은 없습니다.
+            </p>
+          </div>
 
-      <label className="consultField">
-        <span>이름</span>
-        <input
-          className="consultInput"
-          type="text"
-          name="name"
-          placeholder="예: 홍길동"
-          autoComplete="name"
-          required
-        />
-      </label>
+          <label className="consultField">
+            <span>이름</span>
+            <input
+              className="consultInput"
+              type="text"
+              name="name"
+              placeholder="예: 홍길동"
+              autoComplete="name"
+              required
+            />
+          </label>
+        </>
+      )}
 
       <label className="consultField">
         <span>학생 학년</span>
@@ -134,13 +140,17 @@ export function ConsultationFormCard({ className, sourceLabel }: ConsultationCar
       </label>
 
       <button type="submit" className="consultSubmitBtn" disabled={isSubmitting}>
-        {isSubmitting ? "접수 중입니다" : "무료 상담 신청하기"}
+        {isSubmitting ? "접수 중입니다" : isQuick ? "무료 상담 신청" : "무료 상담 신청하기"}
       </button>
 
-      <a href="tel:01082867620" className="consultPhoneBtn">
-        전화상담 010-8286-7620
-      </a>
-      <p className="consultFormNotice">무료 모의수업 후 정규수업 여부를 결정할 수 있으며, 상담 단계에서 수업료와 가능한 일정을 먼저 안내합니다.</p>
+      {!isQuick && (
+        <>
+          <a href="tel:01082867620" className="consultPhoneBtn">
+            전화상담 010-8286-7620
+          </a>
+          <p className="consultFormNotice">무료 모의수업 후 정규수업 여부를 결정할 수 있으며, 상담 단계에서 수업료와 가능한 일정을 먼저 안내합니다.</p>
+        </>
+      )}
       <p className="consultFormStatus" role="status" aria-live="polite">{statusMessage}</p>
     </form>
   );
