@@ -375,6 +375,14 @@ export default async function TutoringDetailPage({ params }: PageProps) {
 
             <p className="detail-summary">{detailSummary}</p>
 
+            <section className="detailQuickConsultSection" aria-label="무료 상담 신청">
+              <ConsultationFormCard
+                className="detailQuickConsultForm"
+                sourceLabel={`${page.지역} ${serviceName} 상단 간편 상담폼`}
+                variant="quick"
+              />
+            </section>
+
             <div className="detail-meta">
               <span>호빈샘 과외</span>
               <i />

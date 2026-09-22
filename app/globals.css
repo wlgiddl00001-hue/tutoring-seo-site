@@ -5770,6 +5770,39 @@ select {
   color: #176448;
 }
 
+.detailQuickConsultSection {
+  width: 100%;
+  margin: 24px 0 22px;
+}
+
+.detailQuickConsultForm {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr)) minmax(170px, 0.7fr);
+  align-items: end;
+  gap: 12px;
+  border-color: #cfe2d8;
+  border-radius: 18px;
+  padding: 20px;
+}
+
+.quickConsultForm .consultField,
+.quickConsultForm .consultInput,
+.quickConsultForm .consultSubmitBtn {
+  width: 100%;
+  min-width: 0;
+}
+
+.quickConsultForm .consultAgree,
+.quickConsultForm .consultFormStatus {
+  grid-column: 1 / -1;
+}
+
+.quickConsultForm .consultSubmitBtn {
+  grid-column: 4;
+  grid-row: 1;
+  min-height: 48px;
+}
+
 @media (max-width: 900px) {
   .mainConsultGrid,
   .detailConsultGrid {
@@ -5828,6 +5861,28 @@ select {
   .consultSubmitBtn,
   .consultPhoneBtn {
     width: 100%;
+  }
+
+  .detailQuickConsultSection {
+    margin: 20px 0 18px;
+  }
+
+  .quickConsultForm {
+    display: grid !important;
+    grid-template-columns: 1fr !important;
+    gap: 12px !important;
+    padding: 18px !important;
+  }
+
+  .quickConsultForm .consultAgree,
+  .quickConsultForm .consultFormStatus,
+  .quickConsultForm .consultSubmitBtn {
+    grid-column: auto !important;
+    grid-row: auto !important;
+  }
+
+  .quickConsultForm .consultAgree {
+    align-items: flex-start !important;
   }
 }
 /* 모바일 상단 카테고리 메뉴 강제 표시 */
