@@ -6069,7 +6069,7 @@ select {
     text-decoration: none;
     white-space: nowrap;
   }
-  .mobileHeaderActions a:nth-child(n + 5) { grid-column: span 4; }
+  .mobileHeaderActions a:nth-child(n + 5) { grid-column: span 3; }
   .mobileHeaderActions .mobileOnlineLink { background: #edf8f3; color: #126346; }
   .mobileHeaderActions .mobilePhoneLink { background: #176448; color: #fff; }
   .mobileHeaderActions .mobileConsultLink { border: 1px solid #bad9ca; background: #fff; color: #176448; }
@@ -6086,4 +6086,14 @@ select {
   .site-header .brand strong { font-size: 14px; }
   .mobileHeaderActions { gap: 4px; padding-inline: 7px; }
   .mobileHeaderActions a { padding-inline: 8px; font-size: 11px; }
+}
+
+.tuitionSection { padding: 52px 0; scroll-margin-top: 150px; }
+.tuitionTableWrap { overflow-x: auto; margin-top: 24px; }
+.tuitionTable { width: 100%; border-collapse: collapse; color: #183028; background: #fff; }
+.tuitionTable th, .tuitionTable td { border: 1px solid #dbe5df; padding: 16px 12px; text-align: center; }
+.tuitionTable thead th { background: #e8f4ed; }
+@media (max-width: 760px) {
+  .tuitionTable th, .tuitionTable td { padding: 12px 4px; font-size: 12px; }
+  .tuitionTable th { font-weight: 800; }
 }
