@@ -22,6 +22,7 @@ export function SiteHeader({ consultHref = "/#consult" }: SiteHeaderProps) {
           <Link href="/#exam">검정고시 과외</Link>
           <Link href="/#subjects">학년·과목</Link>
           <Link href="/#concerns">학습 고민</Link>
+          <Link href="/#tuition">수업료 안내</Link>
         </nav>
 
         <div className="siteHeaderActions header-actions">
@@ -39,7 +40,8 @@ export function SiteHeader({ consultHref = "/#consult" }: SiteHeaderProps) {
         <Link href="/#exam">검정고시 과외</Link>
         <Link href="/#subjects">학년·과목</Link>
         <Link href="/#concerns">학습 고민</Link>
-        <a className="mobilePhoneLink" href="tel:01082867620">☎ 010-8286-7620</a>
+        <Link href="/#tuition">수업료 안내</Link>
+        <a className="mobilePhoneLink" href="tel:01082867620" aria-label="010-8286-7620으로 전화 상담">전화 상담</a>
         <a className="mobileConsultLink" href={consultHref}>무료 상담</a>
       </div>
       <div className="mobileConsultBar" aria-label="모바일 빠른 상담">
