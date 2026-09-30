@@ -960,6 +960,23 @@ export default function Home() {
           </div>
         </section>
 
+        <section className="home-section tuitionSection" id="tuition">
+          <div className="shell">
+            <div className="section-heading"><small>TUITION</small><h2>과외 수업료</h2><p>1회 60분 기준 월 수업료</p></div>
+            <div className="tuitionTableWrap">
+              <table className="tuitionTable">
+                <thead><tr><th scope="col">학년</th><th scope="col">방문 주 1회(월 4회)</th><th scope="col">방문 주 2회(월 8회)</th><th scope="col">온라인 주 1회(월 4회)</th><th scope="col">온라인 주 2회(월 8회)</th></tr></thead>
+                <tbody>{[
+                  ["초등", "128,000원", "256,000원", "118,000원", "236,000원"],
+                  ["중등", "148,000원", "296,000원", "134,000원", "268,000원"],
+                  ["고1~고2", "168,000원", "336,000원", "154,000원", "308,000원"],
+                  ["고3", "188,000원", "376,000원", "164,000원", "328,000원"],
+                ].map(([grade, ...fees]) => <tr key={grade}><th scope="row">{grade}</th>{fees.map((fee, index) => <td key={index}>{fee}</td>)}</tr>)}</tbody>
+              </table>
+            </div>
+          </div>
+        </section>
+
         <section className="mainConsultSection" id="consult">
           <div className="shell mainConsultGrid">
             <div className="mainConsultText">
